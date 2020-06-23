@@ -1,20 +1,17 @@
 package com.thanmanhvinh.movieandnews.ui.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
-import com.thanmanhvinh.movieandnews.ui.base.FragmentBackStackManager
 import com.thanmanhvinh.movieandnews.ui.base.INavigatorActivity
-import kotlin.reflect.KClass
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
 
 class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
     override lateinit var currentFragment: BaseFragment<*>
-    private lateinit var mFragmentBackStackManager: FragmentBackStackManager
+    //private lateinit var mFragmentBackStackManager: FragmentBackStackManager
 
     override fun createViewModel(): Class<MainViewModel> {
         return MainViewModel::class.java
@@ -31,7 +28,6 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
     override fun bindViewModel() {
 
     }
-
 
 
     override fun onFragmentResumed(fragment: BaseFragment<*>) {
@@ -67,7 +63,6 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         }
         startActivity(intent)
     }
-
 
 
 

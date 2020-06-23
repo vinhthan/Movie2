@@ -29,14 +29,4 @@ class AppDataManager @Inject constructor(
 
 
 
-
-    //Detail
-
-/*    override fun doGetMovieNowPlayingDetail(): Observable<ResultsNowPlaying> {
-        return mApiService.doGetMovieNowPlayingDetail()
-    }
-
-    override fun doGetMoviePopularDetail(): Observable<MoviePopular> {
-        return mApiService.doGetMoviePopularDetail()
-    }*/
 }

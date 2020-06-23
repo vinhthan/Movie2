@@ -2,6 +2,7 @@ package com.thanmanhvinh.movieandnews.data.api
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MovieUpcoming(
     @SerializedName("dates")
@@ -41,12 +42,12 @@ data class MovieUpcoming(
         var voteAverage: Double,
         @SerializedName("vote_count")
         var voteCount: Int
-    ){
+    ): Serializable{
         fun getImageBackdropPathUpcoming(): String {
-            return "https://image.tmdb.org/t/p/w500/" + backdropPath
+            return "https://image.tmdb.org/t/p/w500/$backdropPath"
         }
         fun getImagePosterPathUpcoming(): String {
-            return "https://image.tmdb.org/t/p/w500/" + posterPath
+            return "https://image.tmdb.org/t/p/w500/$posterPath"
         }
 
     }

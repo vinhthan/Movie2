@@ -14,13 +14,4 @@ interface ApiHelper {
 
     fun doGetMovieTopRated():Observable<MovieTopRated>
 
-
-    //Detail
-
-
-/*    fun doGetMovieNowPlayingDetail(): Observable<MovieNowPlaying>
-
-    fun doGetMoviePopularDetail(): Observable<MoviePopular>*/
-
-
 }

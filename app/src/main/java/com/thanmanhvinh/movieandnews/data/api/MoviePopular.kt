@@ -2,6 +2,7 @@ package com.thanmanhvinh.movieandnews.data.api
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MoviePopular(
     var page: Int,
@@ -35,12 +36,12 @@ data class MoviePopular(
         var voteAverage: Double,
         @SerializedName("vote_count")
         var voteCount: Int
-    ){
+    ): Serializable{
         fun getImageBackdropPathPopular(): String {
-            return "https://image.tmdb.org/t/p/w500/" + backdropPath
+            return "https://image.tmdb.org/t/p/w500/$backdropPath"
         }
         fun getImagePosterPathPopular(): String {
-            return "https://image.tmdb.org/t/p/w500/" + posterPath
+            return "https://image.tmdb.org/t/p/w500/$posterPath"
         }
 
     }

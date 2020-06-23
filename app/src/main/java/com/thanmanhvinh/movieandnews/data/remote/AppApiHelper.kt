@@ -35,19 +35,4 @@ class AppApiHelper @Inject constructor() : ApiHelper {
 
 
 
-
-    //Detail
-
-/*    override fun doGetMovieNowPlayingDetail(): Observable<ResultsNowPlaying> {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING)
-            .build()
-            .getObjectObservable(ResultsNowPlaying::class.java)
-    }
-
-    override fun doGetMoviePopularDetail(): Observable<MoviePopular> {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_POPULAR)
-            .build()
-            .getObjectObservable(MoviePopular::class.java)
-    }*/
-
 }
