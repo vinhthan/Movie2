@@ -3,11 +3,10 @@ package com.thanmanhvinh.movieandnews.ui.base
 import android.os.Bundle
 import com.thanmanhvinh.movieandnews.data.DataManager
 import com.thanmanhvinh.movieandnews.di.module.ViewModelFactory
-import com.thanmanhvinh.movieandnews.utils.SchedulerProvider
+import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.tool_bar.*
 import javax.inject.Inject
 
 open abstract class BaseActivity<VM: BaseViewModel<*, *>>: DaggerAppCompatActivity() {

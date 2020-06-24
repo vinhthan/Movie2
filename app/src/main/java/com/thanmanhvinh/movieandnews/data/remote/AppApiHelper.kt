@@ -9,8 +9,8 @@ import javax.inject.Inject
 @Singleton
 class AppApiHelper @Inject constructor() : ApiHelper {
 
-    override fun doGetMovieNowPlaying(): Observable<MovieNowPlaying> {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING)
+    override fun doGetMovieNowPlaying(movieNowPlayingRequest: MovieNowPlayingRequest): Observable<MovieNowPlaying> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING1)
             .build()
             .getObjectObservable(MovieNowPlaying::class.java)
     }

@@ -1,4 +1,4 @@
-package com.thanmanhvinh.movieandnews.utils
+package com.thanmanhvinh.movieandnews.utils.rx
 
 import io.reactivex.Scheduler
 

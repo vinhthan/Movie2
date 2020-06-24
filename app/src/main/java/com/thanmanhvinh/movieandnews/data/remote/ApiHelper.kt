@@ -6,7 +6,7 @@ import io.reactivex.Observable
 
 interface ApiHelper {
 
-    fun doGetMovieNowPlaying(): Observable<MovieNowPlaying>
+    fun doGetMovieNowPlaying(movieNowPlayingRequest: MovieNowPlayingRequest): Observable<MovieNowPlaying>
 
     fun doGetMovieUpcoming(): Observable<MovieUpcoming>
 

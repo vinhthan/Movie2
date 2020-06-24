@@ -1,16 +1,15 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
+import com.thanmanhvinh.movieandnews.utils.recyclerview.RecyclerAdapter
+import kotlinx.android.synthetic.main.item_movie.view.*
 
+/*
 class MovieNowPlayingAdapter(
     val context: Context?,
     var list: MutableList<MovieNowPlaying.Results>,
@@ -50,4 +49,60 @@ class MovieNowPlayingAdapter(
         list.addAll(listMovie)
         notifyDataSetChanged()
     }
+}*/
+
+class MovieNowPlayingAdapter(
+    val context: Context?,
+    //val onClick: (MovieNowPlaying.Results) -> (Unit)
+    itemOnClickNowPlaying: ItemOnClickNowPlaying
+): RecyclerAdapter<MovieNowPlaying.Results>(context!!){
+
+    private val onClick: ItemOnClickNowPlaying = itemOnClickNowPlaying
+
+    override var layoutResource: Int = R.layout.item_movie
+
+    override fun createViewHolder(view: View): RecyclerView.ViewHolder {
+        return ViewHolder(view)
+    }
+
+/*    override fun binHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        *//*
+        holder..text = list[position].title
+        context?.let { Glide.with(it).load(list[position].getImagePosterPathNowPlaying()).into(holder.imgMovieNowPlaying) }
+
+        holder.itemView.setOnClickListener {
+            onClick.OnItemClickNowPlaying(position)
+        }*//*
+
+        if (holder is ViewHolder){
+            holder.bind(getItem(position))
+        }
+    }*/
+
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ViewHolder){
+            holder.bind(getItem(position))
+        }
+    }
+
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        fun bind(movie: MovieNowPlaying.Results){
+            itemView.setOnClickListener {
+                //onClick.OnItemClickNowPlaying(position)
+                onClick.OnItemClickNowPlaying(movie)
+            }
+            itemView.tvTitleMovieNowPlaying.text = movie.title
+            context?.let { Glide.with(it).load(movie.getImagePosterPathNowPlaying()).into(itemView.imgMovieNowPlaying) }
+        }
+    }
+
+
+
+
+/*    fun UpdateList(listMovie: MutableList<MovieNowPlaying.Results>){
+        list.clear()
+        list.addAll(listMovie)
+        notifyDataSetChanged()
+    }*/
+
 }

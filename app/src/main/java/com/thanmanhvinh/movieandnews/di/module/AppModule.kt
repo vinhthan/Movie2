@@ -7,8 +7,8 @@ import com.google.gson.GsonBuilder
 import com.thanmanhvinh.movieandnews.data.AppDataManager
 import com.thanmanhvinh.movieandnews.data.DataManager
 import com.thanmanhvinh.movieandnews.di.Preferences
-import com.thanmanhvinh.movieandnews.utils.AppSchedulerProvider
-import com.thanmanhvinh.movieandnews.utils.SchedulerProvider
+import com.thanmanhvinh.movieandnews.utils.rx.AppSchedulerProvider
+import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

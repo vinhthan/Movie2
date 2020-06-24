@@ -1,5 +1,6 @@
-package com.thanmanhvinh.movieandnews.utils
+package com.thanmanhvinh.movieandnews.utils.rx
 
+import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers

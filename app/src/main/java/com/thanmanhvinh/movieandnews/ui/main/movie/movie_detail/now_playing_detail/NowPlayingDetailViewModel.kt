@@ -13,35 +13,6 @@ class NowPlayingDetailViewModel : BaseViewModel<Any, Any>() {
     }
 
 
-/*    data class Output(
-        val detail: BehaviorSubject<MovieNowPlaying.Results>
-    )
 
-*//*    data class Input (
-        val position: Observable<MutableList<MovieNowPlaying.Results>>
-    )*//*
-
-
-    override fun transform(input: Any): Output {
-        val mDetail = BehaviorSubject.create<MovieNowPlaying.Results>()
-
-
-        doGetDetailNowPlaying().subscribe({result ->
-
-            if (result.results.size > 0){
-                mDetail.onNext(result.results[0])
-            }
-        }, { error ->
-            Log.d("TAG", "transform: $error")
-        }).addToDisposable()
-
-        return Output(mDetail)
-    }
-
-    private fun doGetDetailNowPlaying(): Observable<MovieNowPlaying> {
-        return mDataManager.doGetMovieNowPlaying()
-            .subscribeOn(mSchedulerProvider.io)
-            .observeOn(mSchedulerProvider.ui)
-    }*/
 
 }

@@ -1,11 +1,9 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie
 
-import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
@@ -13,13 +11,16 @@ import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
 import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import com.thanmanhvinh.movieandnews.utils.recyclerview.PageIndicator
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 
-class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular, ItemOnClickTopRated, ItemOnClickUpcoming{
+class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular, ItemOnClickTopRated, ItemOnClickUpcoming, PageIndicator{
+
+    override var triggerLoadMore: BehaviorSubject<Boolean> = BehaviorSubject.create()
+    override var triggerRefresh: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
     lateinit var listMovieUpcoming: MutableList<MovieUpcoming.Result>
@@ -40,13 +41,15 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     override fun bindViewModel() {
 
         val ouput = mViewModel.transform(
-            Any()
+            MovieViewModel.Input(
+                triggerLoadMore, triggerRefresh
+            )
         )
 
         with(ouput){
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
-                    mAdapterNowPlaying.UpdateList(list)
+                    mAdapterNowPlaying.updateList(list)
 
                 }.addToDisposable()
 
@@ -78,10 +81,11 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
 
     private fun showMovieNowPlaying(){
         listMovieNowPlaying = mutableListOf()
-        mAdapterNowPlaying = MovieNowPlayingAdapter(context, listMovieNowPlaying, this)
+        mAdapterNowPlaying = MovieNowPlayingAdapter(context, this)
         rcyNowPlaying.setHasFixedSize(true)
-        rcyNowPlaying.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyNowPlaying.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rcyNowPlaying.adapter = mAdapterNowPlaying
+        rcyNowPlaying.initLoadMore(refresh, this)
     }
 
     private fun showMovieUpcoming(){
@@ -110,37 +114,35 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
 
     
 
-    override fun OnItemClickNowPlaying(position: Int) {
-        val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
+    override fun OnItemClickNowPlaying(position: MovieNowPlaying.Results) {
+        val movieNowPlayingDetail: MovieNowPlaying.Results = position
         val bundle = Bundle()
-        bundle.putSerializable("MOVIE_NOW_PLAYING_DETAIL", movieNowPlayingDetail)
+        bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
-        //Toast.makeText(context, "now playing $position", Toast.LENGTH_SHORT).show()
     }
 
     override fun OnItemClickPopular(position: Int) {
         val moviePopularDetail: MoviePopular.Result = listMoviePopular[position]
         val bundle = Bundle()
-        bundle.putSerializable("MOVIE_POPULAR_DETAIL", moviePopularDetail)
+        bundle.putSerializable(AppConstants.MOVIE_POPULAR_DETAIL, moviePopularDetail)
         findNavController().navigate(R.id.popularDetailFragment, bundle)
-        //Toast.makeText(context, "popular $position", Toast.LENGTH_SHORT).show()
     }
 
     override fun OnItemClickTopRated(position: Int) {
         val movieTopRated: MovieTopRated.Results = listMovieTopRated[position]
         val bundle = Bundle()
-        bundle.putSerializable("MOVIE_TOP_RATED_DETAIL", movieTopRated)
+        bundle.putSerializable(AppConstants.MOVIE_TOP_RATED_DETAIL, movieTopRated)
         findNavController().navigate(R.id.topRatedDetailFragment, bundle)
-        //Toast.makeText(context, "top rated $position", Toast.LENGTH_SHORT).show()
     }
 
     override fun OnItemClickUpcoming(position: Int) {
         val movieUpcoming: MovieUpcoming.Result = listMovieUpcoming[position]
         val bundle = Bundle()
-        bundle.putSerializable("MOVIE_UPCOMING_DETAIL", movieUpcoming)
+        bundle.putSerializable(AppConstants.MOVIE_UPCOMING_DETAIL, movieUpcoming)
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
-        //Toast.makeText(context, "upcoming $position", Toast.LENGTH_SHORT).show()
     }
+
+
 
 }
 

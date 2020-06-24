@@ -2,7 +2,7 @@ package com.thanmanhvinh.movieandnews.ui.base
 
 import androidx.lifecycle.ViewModel
 import com.thanmanhvinh.movieandnews.data.DataManager
-import com.thanmanhvinh.movieandnews.utils.SchedulerProvider
+import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 

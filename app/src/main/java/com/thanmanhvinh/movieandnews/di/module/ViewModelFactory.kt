@@ -10,10 +10,9 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_deta
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailViewModel
-import com.thanmanhvinh.movieandnews.ui.main.news.NewsFragment
 import com.thanmanhvinh.movieandnews.ui.main.news.NewsViewModel
 import com.thanmanhvinh.movieandnews.ui.splash.SplashViewModel
-import com.thanmanhvinh.movieandnews.utils.SchedulerProvider
+import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 import javax.inject.Singleton

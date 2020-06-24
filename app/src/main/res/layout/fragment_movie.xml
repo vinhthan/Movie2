@@ -3,9 +3,9 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,16 +23,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyNowPlaying"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="300dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="MissingConstraints">
 
-        <androidx.recyclerview.widget.RecyclerView
+            <com.thanmanhvinh.movieandnews.utils.recyclerview.LoadMoreRecyclerView
+                android:id="@+id/rcyNowPlaying"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <com.thanmanhvinh.movieandnews.utils.recyclerview.LoadMoreRecyclerView
             android:id="@+id/rcyUpcoming"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,12 +57,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
             android:text="Upcoming"
             android:textColor="#ffffff"
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="@+id/rcyNowPlaying"
-            app:layout_constraintTop_toBottomOf="@+id/rcyNowPlaying" />
+            app:layout_constraintStart_toStartOf="@+id/refresh"
+            app:layout_constraintTop_toBottomOf="@+id/refresh"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/textView3"
@@ -65,7 +76,7 @@
             app:layout_constraintStart_toStartOf="@+id/rcyUpcoming"
             app:layout_constraintTop_toBottomOf="@+id/rcyUpcoming" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.thanmanhvinh.movieandnews.utils.recyclerview.LoadMoreRecyclerView
             android:id="@+id/rcyPopular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -87,7 +98,7 @@
             app:layout_constraintStart_toStartOf="@+id/rcyPopular"
             app:layout_constraintTop_toBottomOf="@+id/rcyPopular" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.thanmanhvinh.movieandnews.utils.recyclerview.LoadMoreRecyclerView
             android:id="@+id/rcyTopRated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

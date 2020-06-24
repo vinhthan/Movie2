@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.thanmanhvinh.movieandnews.data.DataManager
 import com.thanmanhvinh.movieandnews.di.module.ViewModelFactory
-import com.thanmanhvinh.movieandnews.utils.SchedulerProvider
+import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import dagger.android.support.DaggerFragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
-import kotlin.reflect.KClass
 
 open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
 

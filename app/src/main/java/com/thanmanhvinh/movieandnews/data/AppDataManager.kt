@@ -11,8 +11,8 @@ class AppDataManager @Inject constructor(
     private val mApiService: AppApiHelper
 ): DataManager {
 
-    override fun doGetMovieNowPlaying(): Observable<MovieNowPlaying> {
-        return mApiService.doGetMovieNowPlaying()
+    override fun doGetMovieNowPlaying(movieNowPlayingRequest: MovieNowPlayingRequest): Observable<MovieNowPlaying> {
+        return mApiService.doGetMovieNowPlaying(movieNowPlayingRequest)
     }
 
     override fun doGetMovieUpcoming(): Observable<MovieUpcoming> {
