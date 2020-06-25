@@ -10,25 +10,29 @@ import javax.inject.Inject
 class AppApiHelper @Inject constructor() : ApiHelper {
 
     override fun doGetMovieNowPlaying(movieNowPlayingRequest: MovieNowPlayingRequest): Observable<MovieNowPlaying> {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING1)
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING)
+            .addQueryParameter(movieNowPlayingRequest)
             .build()
             .getObjectObservable(MovieNowPlaying::class.java)
     }
 
-    override fun doGetMovieUpcoming(): Observable<MovieUpcoming> {
+    override fun doGetMovieUpcoming(movieUpcomingRequest: MovieUpcomingRequest): Observable<MovieUpcoming> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_UPCOMING)
+            .addQueryParameter(movieUpcomingRequest)
             .build()
             .getObjectObservable(MovieUpcoming::class.java)
     }
 
-    override fun doGetMoviePopular(): Observable<MoviePopular> {
+    override fun doGetMoviePopular(moviePopularRequest: MoviePopularRequest): Observable<MoviePopular> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_POPULAR)
+            .addQueryParameter(moviePopularRequest)
             .build()
             .getObjectObservable(MoviePopular::class.java)
     }
 
-    override fun doGetMovieTopRated(): Observable<MovieTopRated> {
+    override fun doGetMovieTopRated(movieTopRatedRequest: MovieTopRatedRequest): Observable<MovieTopRated> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_TOP_RATED)
+            .addQueryParameter(movieTopRatedRequest)
             .build()
             .getObjectObservable(MovieTopRated::class.java)
     }

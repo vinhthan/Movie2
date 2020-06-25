@@ -1,5 +1,6 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail
 
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
@@ -25,6 +26,8 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
                     showDetailPopular(it)
                 }.addToDisposable()
         }*/
+
+
 
     }
 

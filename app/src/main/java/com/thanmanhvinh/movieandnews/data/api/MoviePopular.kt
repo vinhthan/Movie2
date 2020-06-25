@@ -4,6 +4,13 @@ package com.thanmanhvinh.movieandnews.data.api
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+data class MoviePopularRequest(
+    @SerializedName("api_key")
+    var apiKey: String/*,
+    @SerializedName("page")
+    var page: Int*/
+)
+
 data class MoviePopular(
     var page: Int,
     @SerializedName("results")

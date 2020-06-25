@@ -6,9 +6,9 @@ import java.io.Serializable
 
 data class MovieNowPlayingRequest(
     @SerializedName("api_key")
-    var apiKey: String,
+    var apiKey: String/*,
     @SerializedName("page")
-    var page: Int
+    var page: Int*/
 )
 
 data class MovieNowPlaying(

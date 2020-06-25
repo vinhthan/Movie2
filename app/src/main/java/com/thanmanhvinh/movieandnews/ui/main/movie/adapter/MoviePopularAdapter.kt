@@ -20,8 +20,8 @@ class MoviePopularAdapter(
     private val onClick: ItemOnClickPopular = itemOnClick
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var titlePopular: TextView = itemView.findViewById(R.id.tvTitleMovieNowPlaying)
-        var imgPopular: ImageView = itemView.findViewById(R.id.imgMovieNowPlaying)
+        var titlePopular: TextView = itemView.findViewById(R.id.tvTitleMovie)
+        var imgPopular: ImageView = itemView.findViewById(R.id.imgMovie)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviePopularAdapter.ViewHolder {

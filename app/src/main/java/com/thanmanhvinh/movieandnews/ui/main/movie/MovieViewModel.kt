@@ -7,15 +7,15 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output>() {
+class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
 
-    private var page = AppConstants.LIST_PAGE
+/*    private var page = AppConstants.LIST_PAGE
     private var limit = AppConstants.LIST_LIMIT
 
     data class Input (
         val triggerLoadMore: Observable<Boolean>,
         val triggerRefresh: Observable<Boolean>
-    )
+    )*/
 
     data class Output(
         val listNowPlaying: Observable<MutableList<MovieNowPlaying.Results>>,
@@ -26,19 +26,20 @@ class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output
 
 
 
-    override fun transform(input: Input): Output {
+    override fun transform(input: Any): Output {
         val mListNowPlaying = BehaviorSubject.create<MutableList<MovieNowPlaying.Results>>()
         val mListUpcoming = BehaviorSubject.create<MutableList<MovieUpcoming.Result>>()
         val mListMoviePopular = BehaviorSubject.create<MutableList<MoviePopular.Result>>()
         val mListMovieTopRated = BehaviorSubject.create<MutableList<MovieTopRated.Results>>()
 
-        val refresh = input.triggerRefresh.filter { it }.map {
+/*        val refresh = input.triggerRefresh.filter { it }.map {
             page = 1
         }
         val loadMore = input.triggerLoadMore.filter { it }.map {
             page++
-        }
+        }*/
 
+/*        //GetMovieNowPlaying
         Observable.merge(refresh, loadMore)
             .switchMap {
                 doGetMovieNowPlaying(AppConstants.API_KEY, page)
@@ -48,27 +49,49 @@ class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output
                 }
             }.addToDisposable()
 
-/*        Observable.just(loadMore)
+        //GetMovieUpcoming
+        Observable.merge(refresh, loadMore)
             .switchMap {
-                doGetMovieNowPlaying(apiKey, page)
-            }.subscribe { result ->
-                result.results.let { list ->
-                    mListNowPlaying.onNext(list)
+                doGetMovieUpcoming(AppConstants.API_KEY, page)
+            }.subscribe {
+                it.results.let { list ->
+                    mListUpcoming.onNext(list)
+                }
+            }.addToDisposable()
+
+        //GetMoviePopular
+        Observable.merge(refresh, loadMore)
+            .switchMap {
+                doGetMoviePopular(AppConstants.API_KEY, page)
+            }.subscribe {
+                it.results.let { list ->
+                    mListMoviePopular.onNext(list)
+                }
+            }.addToDisposable()
+
+        //GetMovieTopRated
+        Observable.merge(refresh, loadMore)
+            .switchMap {
+                doGetMovieTopRated(AppConstants.API_KEY, page)
+            }.subscribe {
+                it.results.let { list ->
+                    mListMovieTopRated.onNext(list)
                 }
             }.addToDisposable()*/
 
 
-/*        doGetMovieNowPlaying(page).subscribe({ result ->
-            result.results.let {list ->
+
+
+        //
+        doGetMovieNowPlaying(AppConstants.API_KEY).subscribe({ result ->
+            result.results.let { list ->
                 mListNowPlaying.onNext(list)
             }
         }, { error ->
             Log.d("TAG", "transform: $error")
-        }).addToDisposable()*/
+        }).addToDisposable()
 
-
-        //
-        doGetMovieUpcoming().subscribe({ result ->
+        doGetMovieUpcoming(AppConstants.API_KEY).subscribe({ result ->
             result.results.let { list ->
                 mListUpcoming.onNext(list)
             }
@@ -77,7 +100,7 @@ class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output
         }).addToDisposable()
 
 
-        doGetMoviePopular().subscribe({ result ->
+        doGetMoviePopular(AppConstants.API_KEY).subscribe({ result ->
             result.results.let { list ->
                 mListMoviePopular.onNext(list)
             }
@@ -86,7 +109,7 @@ class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output
         }).addToDisposable()
 
 
-        doGetMovieTopRated().subscribe({ result ->
+        doGetMovieTopRated(AppConstants.API_KEY).subscribe({ result ->
             result.results.let {
                 mListMovieTopRated.onNext(it)
             }
@@ -99,26 +122,26 @@ class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output
         return Output(mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated)
     }
 
-    private fun doGetMovieNowPlaying(apiKey: String, page: Int): Observable<MovieNowPlaying> {
-        return mDataManager.doGetMovieNowPlaying(MovieNowPlayingRequest(apiKey, page))
+    private fun doGetMovieNowPlaying(apiKey: String): Observable<MovieNowPlaying> {
+        return mDataManager.doGetMovieNowPlaying(MovieNowPlayingRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }
 
-    private fun doGetMovieUpcoming(): Observable<MovieUpcoming> {
-        return mDataManager.doGetMovieUpcoming()
+    private fun doGetMovieUpcoming(apiKey: String): Observable<MovieUpcoming> {
+        return mDataManager.doGetMovieUpcoming(MovieUpcomingRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }
 
-    private fun doGetMoviePopular(): Observable<MoviePopular> {
-        return mDataManager.doGetMoviePopular()
+    private fun doGetMoviePopular(apiKey: String): Observable<MoviePopular> {
+        return mDataManager.doGetMoviePopular(MoviePopularRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }
 
-    private fun doGetMovieTopRated(): Observable<MovieTopRated> {
-        return mDataManager.doGetMovieTopRated()
+    private fun doGetMovieTopRated(apiKey: String): Observable<MovieTopRated> {
+        return mDataManager.doGetMovieTopRated(MovieTopRatedRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }

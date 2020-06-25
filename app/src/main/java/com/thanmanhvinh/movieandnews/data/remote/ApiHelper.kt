@@ -8,10 +8,10 @@ interface ApiHelper {
 
     fun doGetMovieNowPlaying(movieNowPlayingRequest: MovieNowPlayingRequest): Observable<MovieNowPlaying>
 
-    fun doGetMovieUpcoming(): Observable<MovieUpcoming>
+    fun doGetMovieUpcoming(movieUpcomingRequest: MovieUpcomingRequest): Observable<MovieUpcoming>
 
-    fun doGetMoviePopular(): Observable<MoviePopular>
+    fun doGetMoviePopular(moviePopularRequest: MoviePopularRequest): Observable<MoviePopular>
 
-    fun doGetMovieTopRated():Observable<MovieTopRated>
+    fun doGetMovieTopRated(movieTopRatedRequest: MovieTopRatedRequest):Observable<MovieTopRated>
 
 }

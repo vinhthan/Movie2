@@ -20,8 +20,8 @@ class MovieTopRatedAdapter(
     private val onClick: ItemOnClickTopRated = itemOnClick
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val titleTopRated: TextView = itemView.findViewById(R.id.tvTitleMovieNowPlaying)
-        val imgTopRated: ImageView = itemView.findViewById(R.id.imgMovieNowPlaying)
+        val titleTopRated: TextView = itemView.findViewById(R.id.tvTitleMovie)
+        val imgTopRated: ImageView = itemView.findViewById(R.id.imgMovie)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTopRatedAdapter.ViewHolder {

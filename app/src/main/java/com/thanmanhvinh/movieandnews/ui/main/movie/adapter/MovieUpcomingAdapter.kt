@@ -20,8 +20,8 @@ class MovieUpcomingAdapter(
     private val onClick: ItemOnClickUpcoming = itemOnClick
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var imgUpcoming: ImageView = itemView.findViewById(R.id.imgMovieNowPlaying)
-        var titleUpcoming: TextView = itemView.findViewById(R.id.tvTitleMovieNowPlaying)
+        var imgUpcoming: ImageView = itemView.findViewById(R.id.imgMovie)
+        var titleUpcoming: TextView = itemView.findViewById(R.id.tvTitleMovie)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

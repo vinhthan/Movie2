@@ -12,15 +12,14 @@ import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
-import com.thanmanhvinh.movieandnews.utils.recyclerview.PageIndicator
-import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 
-class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular, ItemOnClickTopRated, ItemOnClickUpcoming, PageIndicator{
+class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
+    ItemOnClickTopRated, ItemOnClickUpcoming {
 
-    override var triggerLoadMore: BehaviorSubject<Boolean> = BehaviorSubject.create()
-    override var triggerRefresh: BehaviorSubject<Boolean> = BehaviorSubject.create()
+/*    override var triggerLoadMore: BehaviorSubject<Boolean> = BehaviorSubject.create()
+    override var triggerRefresh: BehaviorSubject<Boolean> = BehaviorSubject.create()*/
 
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
     lateinit var listMovieUpcoming: MutableList<MovieUpcoming.Result>
@@ -40,16 +39,20 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
 
     override fun bindViewModel() {
 
-        val ouput = mViewModel.transform(
+/*        val ouput = mViewModel.transform(
             MovieViewModel.Input(
                 triggerLoadMore, triggerRefresh
             )
+        )*/
+
+        val ouput = mViewModel.transform(
+            Any()
         )
 
-        with(ouput){
+        with(ouput) {
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
-                    mAdapterNowPlaying.updateList(list)
+                    mAdapterNowPlaying.UpdateList(list)
 
                 }.addToDisposable()
 
@@ -76,49 +79,57 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         showMovieUpcoming()
         showMoviePopular()
         showMovieTopRated()
+        findNavController().navigateUp()
+
 
     }
 
-    private fun showMovieNowPlaying(){
+    private fun showMovieNowPlaying() {
         listMovieNowPlaying = mutableListOf()
-        mAdapterNowPlaying = MovieNowPlayingAdapter(context, this)
+        mAdapterNowPlaying = MovieNowPlayingAdapter(context, listMovieNowPlaying, this)
         rcyNowPlaying.setHasFixedSize(true)
-        rcyNowPlaying.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+        rcyNowPlaying.layoutManager =
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rcyNowPlaying.adapter = mAdapterNowPlaying
-        rcyNowPlaying.initLoadMore(refresh, this)
+        //rcyNowPlaying.initLoadMore(refreshNowPlaying, this)
     }
 
-    private fun showMovieUpcoming(){
+    private fun showMovieUpcoming() {
         listMovieUpcoming = mutableListOf()
         mAdapterUpcoming = MovieUpcomingAdapter(context, listMovieUpcoming, this)
         rcyUpcoming.setHasFixedSize(true)
-        rcyUpcoming.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyUpcoming.layoutManager =
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rcyUpcoming.adapter = mAdapterUpcoming
     }
 
-    private fun showMoviePopular(){
+    private fun showMoviePopular() {
         listMoviePopular = mutableListOf()
         mAdapterPopular = MoviePopularAdapter(context, listMoviePopular, this)
         rcyPopular.setHasFixedSize(true)
-        rcyPopular.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyPopular.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcyPopular.adapter = mAdapterPopular
     }
 
-    private fun showMovieTopRated(){
+    private fun showMovieTopRated() {
         listMovieTopRated = mutableListOf()
         mAdapterTopRated = MovieTopRatedAdapter(context, listMovieTopRated, this)
         rcyTopRated.setHasFixedSize(true)
-        rcyTopRated.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyTopRated.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcyTopRated.adapter = mAdapterTopRated
     }
 
-    
-
-    override fun OnItemClickNowPlaying(position: MovieNowPlaying.Results) {
-        val movieNowPlayingDetail: MovieNowPlaying.Results = position
+    //override fun OnItemClickNowPlaying(position: MovieNowPlaying.Results) {
+    override fun OnItemClickNowPlaying(position: Int) {
+        //val movieNowPlayingDetail: MovieNowPlaying.Results = position
+        val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
         val bundle = Bundle()
         bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
+
+
     }
 
     override fun OnItemClickPopular(position: Int) {
@@ -126,6 +137,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         val bundle = Bundle()
         bundle.putSerializable(AppConstants.MOVIE_POPULAR_DETAIL, moviePopularDetail)
         findNavController().navigate(R.id.popularDetailFragment, bundle)
+
     }
 
     override fun OnItemClickTopRated(position: Int) {
@@ -141,7 +153,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         bundle.putSerializable(AppConstants.MOVIE_UPCOMING_DETAIL, movieUpcoming)
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
     }
-
 
 
 }

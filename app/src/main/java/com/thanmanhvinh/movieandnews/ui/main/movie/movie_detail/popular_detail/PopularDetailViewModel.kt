@@ -7,8 +7,11 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 
-class PopularDetailViewModel: BaseViewModel<Any, PopularDetailViewModel.Output>() {
-    data class Output (
+class PopularDetailViewModel: BaseViewModel<Any, Any>() {
+    override fun transform(input: Any): Any {
+        TODO("Not yet implemented")
+    }
+/*    data class Output (
         val detailPopular: Observable<MoviePopular.Result>
     )
 
@@ -32,5 +35,5 @@ class PopularDetailViewModel: BaseViewModel<Any, PopularDetailViewModel.Output>(
         return mDataManager.doGetMoviePopular()
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
-    }
+    }*/
 }
