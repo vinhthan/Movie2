@@ -2,16 +2,27 @@ package com.thanmanhvinh.movieandnews.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.base.FragmentBackStackManager
 import com.thanmanhvinh.movieandnews.ui.base.INavigatorActivity
+import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_toolbar.*
+import java.lang.Appendable
+import kotlin.reflect.KClass
 
 class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
     override lateinit var currentFragment: BaseFragment<*>
-    //private lateinit var mFragmentBackStackManager: FragmentBackStackManager
+    private lateinit var mFragmentBackStackManager: FragmentBackStackManager
 
     override fun createViewModel(): Class<MainViewModel> {
         return MainViewModel::class.java
@@ -21,9 +32,20 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         return R.layout.activity_main
     }
 
-    override fun initView() {
 
+    override fun initView() {
+        mFragmentBackStackManager = FragmentBackStackManager(supportFragmentManager)
+        setSupportActionBar(toolBar)
+
+        val bundle = intent.getBundleExtra(AppConstants.HOME)
+/*        when{
+            bundle != null -> switchFragment(MovieFragment::class, false)
+        }*/
+        //switchFragment(MovieFragment::class, false)
+
+        //currentFragment.onButtonBackClick()
     }
+
 
     override fun bindViewModel() {
 
@@ -32,24 +54,24 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
     override fun onFragmentResumed(fragment: BaseFragment<*>) {
         currentFragment = fragment
+        //toolBar.visibility = if (fragment.showToolBar) View.VISIBLE else View.GONE
+        //tvTitleToolbar.text = getString(fragment.getTitleActionBar())
     }
 
-/*    override fun switchFragment(
+    override fun switchFragment(
         fragment: KClass<*>,
         addToBackStack: Boolean,
-        animation: Boolean,
         bundle: Bundle?
     ) {
         mFragmentBackStackManager.switchFragment(
             fragment,
             addToBackStack,
-            animation,
             bundle
         )
-    }*/
+    }
 
     override fun setAppBarTitle(title: String) {
-
+        tvTitleToolbar.text = title
     }
 
     override fun onBackPressed(bundle: Bundle?) {

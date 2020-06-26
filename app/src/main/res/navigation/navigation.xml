@@ -30,4 +30,34 @@
         android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment"
         android:label="fragment_popular_detail"
         tools:layout="@layout/fragment_popular_detail" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.news.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/movieSearchFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment"
+        android:label="fragment_movie_search"
+        tools:layout="@layout/fragment_movie_search" />
+    <fragment
+        android:id="@+id/seeAllNowPlayingFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment"
+        android:label="fragment_see_all_now_playing"
+        tools:layout="@layout/fragment_see_all_now_playing" />
+    <fragment
+        android:id="@+id/seeAllPopularFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.see_all.popular.SeeAllPopularFragment"
+        android:label="fragment_see_all_popular"
+        tools:layout="@layout/fragment_see_all_popular" />
+    <fragment
+        android:id="@+id/seeAllTopRatedFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.see_all.top_rated.SeeAllTopRatedFragment"
+        android:label="fragment_see_all_top_rated"
+        tools:layout="@layout/fragment_see_all_top_rated" />
+    <fragment
+        android:id="@+id/seeAllUpcomingFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.see_all.upcoming.SeeAllUpcomingFragment"
+        android:label="fragment_see_all_upcoming"
+        tools:layout="@layout/fragment_see_all_upcoming" />
 </navigation>

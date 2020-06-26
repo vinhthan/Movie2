@@ -45,7 +45,7 @@ class MovieNowPlayingAdapter(
     }
 
 
-    fun UpdateList(listMovie: MutableList<MovieNowPlaying.Results>){
+    fun updateList(listMovie: MutableList<MovieNowPlaying.Results>){
         list.clear()
         list.addAll(listMovie)
         notifyDataSetChanged()

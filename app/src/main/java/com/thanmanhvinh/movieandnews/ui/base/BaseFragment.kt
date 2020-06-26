@@ -14,6 +14,7 @@ import dagger.android.support.DaggerFragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
 open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
 
@@ -37,6 +38,8 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
     private var mIsAttached: Boolean = false
 
     private var isFirst = true
+
+    open var showToolBar: Boolean = true
 
     abstract fun createViewModel(): Class<VM>
 
@@ -64,7 +67,7 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //mNavigatorActivity.onFragmentResumed(this)
+        mNavigatorActivity.onFragmentResumed(this)
         if (mRootView == null) {
             mRootView = onCreateViewInternal(inflater, container)
         }
@@ -82,8 +85,11 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
-        bindViewModel()
+        if (isFirst){
+            bindViewModel()
+            initData()
+            isFirst = false
+        }
     }
 
     private fun setupUI(view: View) {
@@ -104,9 +110,9 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
         mNavigatorActivity.onBackPressed()
     }
 
-/*    fun switchFragment(fragment: KClass<*>) {
+    fun switchFragment(fragment: KClass<*>) {
         mNavigatorActivity.switchFragment(fragment)
-    }*/
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

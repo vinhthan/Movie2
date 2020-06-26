@@ -14,4 +14,7 @@ interface ApiHelper {
 
     fun doGetMovieTopRated(movieTopRatedRequest: MovieTopRatedRequest):Observable<MovieTopRated>
 
+    // Load more
+    fun doGetNowPlayingPage(movieNowPlayingRequestPage: MovieNowPlayingRequestPage): Observable<MovieNowPlaying>
+
 }

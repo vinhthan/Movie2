@@ -1,6 +1,7 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -13,6 +14,7 @@ import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 
 class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
@@ -35,7 +37,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
 
     override fun getResourceLayout(): Int = R.layout.fragment_movie
 
-    override fun getTitleActionBar(): Int = R.string.empty
+    override fun getTitleActionBar(): Int = R.string.discover
 
     override fun bindViewModel() {
 
@@ -52,23 +54,23 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         with(ouput) {
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
-                    mAdapterNowPlaying.UpdateList(list)
+                    mAdapterNowPlaying.updateList(list)
 
                 }.addToDisposable()
 
             listUpcoming.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
-                    mAdapterUpcoming.UpdateList(list)
+                    mAdapterUpcoming.updateList(list)
                 }.addToDisposable()
 
             listPopular.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
-                    mAdapterPopular.UpdateList(list)
+                    mAdapterPopular.updateList(list)
                 }.addToDisposable()
 
             listTopRated.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
-                    mAdapterTopRated.UpdateList(list)
+                    mAdapterTopRated.updateList(list)
                 }.addToDisposable()
 
         }
@@ -79,7 +81,37 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         showMovieUpcoming()
         showMoviePopular()
         showMovieTopRated()
-        findNavController().navigateUp()
+
+        //
+        imgSearch.setOnClickListener {
+            layout_discover.visibility = View.GONE
+            layout_search.visibility = View.VISIBLE
+        }
+
+        tvCancel.setOnClickListener {
+            layout_search.visibility = View.GONE
+            layout_discover.visibility = View.VISIBLE
+        }
+
+        imgGotoSearch.setOnClickListener {
+            findNavController().navigate(R.id.movieSearchFragment)
+            layout_discover.visibility = View.GONE
+            layout_search.visibility = View.VISIBLE
+        }
+
+        tvSeeAllNowPlaying.setOnClickListener {
+            findNavController().navigate(R.id.seeAllNowPlayingFragment)
+        }
+        tvSeeAllPopular.setOnClickListener {
+            findNavController().navigate(R.id.seeAllPopularFragment)
+        }
+        tvSeeAllTopRated.setOnClickListener {
+            findNavController().navigate(R.id.seeAllTopRatedFragment)
+        }
+        tvSeeAllUpcoming.setOnClickListener {
+            findNavController().navigate(R.id.seeAllUpcomingFragment)
+        }
+
 
 
     }
@@ -88,8 +120,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         listMovieNowPlaying = mutableListOf()
         mAdapterNowPlaying = MovieNowPlayingAdapter(context, listMovieNowPlaying, this)
         rcyNowPlaying.setHasFixedSize(true)
-        rcyNowPlaying.layoutManager =
-            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+        rcyNowPlaying.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rcyNowPlaying.adapter = mAdapterNowPlaying
         //rcyNowPlaying.initLoadMore(refreshNowPlaying, this)
     }

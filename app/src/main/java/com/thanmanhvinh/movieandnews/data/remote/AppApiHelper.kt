@@ -37,6 +37,12 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(MovieTopRated::class.java)
     }
 
+    override fun doGetNowPlayingPage(movieNowPlayingRequestPage: MovieNowPlayingRequestPage): Observable<MovieNowPlaying> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING)
+            .addQueryParameter(movieNowPlayingRequestPage)
+            .build()
+            .getObjectObservable(MovieNowPlaying::class.java)
+    }
 
 
 }

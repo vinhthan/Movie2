@@ -10,4 +10,6 @@ object AppConstants {
     const val API_KEY = "034bbd1b233d6726e0c7dc7f338657f9"
     const val LIST_PAGE = 1
     const val LIST_LIMIT = 20
+
+    const val HOME = "home"
 }

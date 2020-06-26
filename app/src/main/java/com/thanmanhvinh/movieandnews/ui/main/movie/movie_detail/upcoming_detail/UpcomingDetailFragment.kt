@@ -1,5 +1,6 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail
 
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
@@ -17,7 +18,12 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
 
     override fun getTitleActionBar(): Int = R.string.empty
 
+    override var showToolBar: Boolean = false
+
     override fun bindViewModel() {
+        imgBackDetail.setOnClickListener {
+            onButtonBackClick()
+        }
 
     }
 
@@ -28,13 +34,17 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
         }
 
         movieUpcoming?.let {
+            var languages = ""
             val imgBig = it.getImageBackdropPathUpcoming()
             val imgSmall = it.getImagePosterPathUpcoming()
             val date = it.releaseDate
             val vote = it.voteAverage
             val title = it.title
-            val popularity = it.popularity
             val overview = it.overview
+            val language = it.originalLanguage
+            if(language == "en"){
+                languages = "English"
+            }
 
             Glide.with(this).load(imgBig).into(imgBigDetail)
             Glide.with(this).load(imgSmall).into(imgSmallDetail)
@@ -42,7 +52,7 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
             tvDateDetail.text = date
             tvVoteDetail.text = vote.toString()
             tvOverviewDetail.text = overview
-            tvPopularityDetail.text = popularity.toString()
+            tvLanguageDetail.text = languages
         }
 
 

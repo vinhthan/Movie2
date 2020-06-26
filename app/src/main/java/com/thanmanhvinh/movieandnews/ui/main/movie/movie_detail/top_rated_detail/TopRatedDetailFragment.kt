@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
@@ -20,8 +21,12 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
 
     override fun getTitleActionBar(): Int = R.string.empty
 
-    override fun bindViewModel() {
+    override var showToolBar: Boolean = false
 
+    override fun bindViewModel() {
+        imgBackDetail.setOnClickListener {
+            onButtonBackClick()
+        }
     }
 
     override fun initData() {
@@ -31,13 +36,17 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
         }
 
         movieTopRated?.let {
+            var languages = ""
             val imgBig = it.getImageBackdropPathTopRated()
             val imgSmall = it.getImagePosterPathTopRated()
             val date = it.releaseDate
             val vote = it.voteAverage
             val title = it.title
-            val popularity = it.popularity
             val overview = it.overview
+            val language = it.originalLanguage
+            if (language == "en"){
+                languages = "English"
+            }
 
             Glide.with(this).load(imgBig).into(imgBigDetail)
             Glide.with(this).load(imgSmall).into(imgSmallDetail)
@@ -45,7 +54,7 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
             tvDateDetail.text = date
             tvVoteDetail.text = vote.toString()
             tvOverviewDetail.text = overview
-            tvPopularityDetail.text = popularity.toString()
+            tvLanguageDetail.text = languages
         }
     }
 

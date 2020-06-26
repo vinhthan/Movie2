@@ -15,7 +15,14 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
 
     override fun getTitleActionBar(): Int = R.string.empty
 
+    override var showToolBar: Boolean = false
+
     override fun bindViewModel() {
+
+        imgBackDetail.setOnClickListener {
+            onButtonBackClick()
+        }
+
 /*        val output = mViewModel.transform(
             Any()
         )
@@ -39,29 +46,24 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
         }
 
         moviePopular?.let {
+            var languages = ""
             val imgBig = it.getImageBackdropPathPopular()
             val imgSmall = it.getImagePosterPathPopular()
             val date = it.releaseDate
             val vote = it.voteAverage
             val title = it.title
-            val popularity = it.popularity
             val overview = it.overview
-
+            val language = it.originalLanguage
+            if (language == "en"){
+                languages = "English"
+            }
             Glide.with(this).load(imgBig).into(imgBigDetail)
             Glide.with(this).load(imgSmall).into(imgSmallDetail)
             tvTitleDetail.text = title
             tvDateDetail.text = date
             tvVoteDetail.text = vote.toString()
             tvOverviewDetail.text = overview
-            tvPopularityDetail.text = popularity.toString()
-
-/*            Glide.with(this).load(imgBig).into(imgBigPopular)
-            Glide.with(this).load(imgSmall).into(imgSmallPopular)
-            tvDatePopular.text = date
-            tvVotePopular.text = vote.toString()
-            tvTitlePopular.text = title
-            tvPopularPopularity.text = popularity.toString()
-            tvOverviewPopular.text = overview*/
+            tvLanguageDetail.text = languages
 
 
         }

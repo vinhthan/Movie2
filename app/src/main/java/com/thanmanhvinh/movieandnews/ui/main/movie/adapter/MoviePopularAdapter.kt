@@ -42,7 +42,7 @@ class MoviePopularAdapter(
         }
     }
 
-    fun UpdateList(listMovie: MutableList<MoviePopular.Result>){
+    fun updateList(listMovie: MutableList<MoviePopular.Result>){
         list.clear()
         list.addAll(listMovie)
         notifyDataSetChanged()

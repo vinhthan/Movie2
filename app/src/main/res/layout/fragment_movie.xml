@@ -7,22 +7,28 @@
     android:layout_height="match_parent"
     android:background="@color/back_ground_home">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.movie.MovieFragment">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/include_toolbar" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_5"
-            android:layout_marginTop="@dimen/margin_6"
+            android:layout_marginTop="@dimen/margin_11"
             android:text="@string/now_playing"
             android:textColor="@color/color_text_default"
             android:textSize="@dimen/size_16"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/include" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -135,7 +141,7 @@
             android:id="@+id/imageView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="@dimen/margin_6"
             app:layout_constraintBottom_toBottomOf="@+id/tvSeeAllUpcoming"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSeeAllUpcoming"
@@ -145,7 +151,7 @@
             android:id="@+id/tvSeeAllUpcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/margin_10"
             android:text="@string/see_all"
             android:textColor="@color/color_text_see_all"
             android:textSize="@dimen/size_14"
@@ -157,7 +163,7 @@
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="@dimen/margin_6"
             app:layout_constraintBottom_toBottomOf="@+id/tvSeeAllPopular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSeeAllPopular"
@@ -167,7 +173,7 @@
             android:id="@+id/tvSeeAllPopular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/margin_10"
             android:text="@string/see_all"
             android:textColor="@color/color_text_see_all"
             android:textSize="@dimen/size_14"
@@ -179,7 +185,7 @@
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/margin_4"
             app:layout_constraintBottom_toBottomOf="@+id/tvSeeAllTopRated"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSeeAllTopRated"
@@ -189,7 +195,7 @@
             android:id="@+id/tvSeeAllTopRated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/margin_10"
             android:text="@string/see_all"
             android:textColor="@color/color_text_see_all"
             android:textSize="@dimen/size_14"

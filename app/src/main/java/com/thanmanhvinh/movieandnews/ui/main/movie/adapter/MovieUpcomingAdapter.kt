@@ -14,7 +14,7 @@ import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 class MovieUpcomingAdapter(
     val context: Context?,
     var list: MutableList<MovieUpcoming.Result>,
-    var itemOnClick: ItemOnClickUpcoming
+    itemOnClick: ItemOnClickUpcoming
 ) : RecyclerView.Adapter<MovieUpcomingAdapter.ViewHolder>(){
 
     private val onClick: ItemOnClickUpcoming = itemOnClick
@@ -42,7 +42,7 @@ class MovieUpcomingAdapter(
         }
     }
 
-    fun UpdateList(listMovie: MutableList<MovieUpcoming.Result>){
+    fun updateList(listMovie: MutableList<MovieUpcoming.Result>){
         list.clear()
         list.addAll(listMovie)
         notifyDataSetChanged()

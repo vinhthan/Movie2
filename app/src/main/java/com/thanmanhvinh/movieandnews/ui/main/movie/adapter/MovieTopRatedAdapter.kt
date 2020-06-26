@@ -42,7 +42,7 @@ class MovieTopRatedAdapter(
         }
     }
 
-    fun UpdateList(listMovie: MutableList<MovieTopRated.Results>){
+    fun updateList(listMovie: MutableList<MovieTopRated.Results>){
         list.clear()
         list.addAll(listMovie)
         notifyDataSetChanged()

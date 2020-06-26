@@ -8,12 +8,11 @@ interface INavigatorActivity {
 
     fun onFragmentResumed(fragment: BaseFragment<*>)
 
-/*    fun switchFragment(
+    fun switchFragment(
         fragment: KClass<*>,
         addToBackStack: Boolean = true,
-        animation: Boolean = true,
         bundle: Bundle? = null
-    )*/
+    )
 
     fun setAppBarTitle(title: String)
 

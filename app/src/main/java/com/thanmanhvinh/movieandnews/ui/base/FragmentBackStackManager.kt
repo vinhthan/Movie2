@@ -9,6 +9,11 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_deta
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.popular.SeeAllPopularFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.top_rated.SeeAllTopRatedFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.upcoming.SeeAllUpcomingFragment
 import com.thanmanhvinh.movieandnews.ui.main.news.NewsFragment
 import java.lang.Exception
 import kotlin.reflect.KClass
@@ -24,13 +29,18 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             UpcomingDetailFragment::class -> UpcomingDetailFragment()
             TopRatedDetailFragment::class -> TopRatedDetailFragment()
             PopularDetailFragment::class -> PopularDetailFragment()
+            MovieSearchFragment::class -> MovieSearchFragment()
+            SeeAllNowPlayingFragment::class -> SeeAllNowPlayingFragment()
+            SeeAllPopularFragment::class -> SeeAllPopularFragment()
+            SeeAllTopRatedFragment::class -> SeeAllTopRatedFragment()
+            SeeAllUpcomingFragment::class -> SeeAllUpcomingFragment()
 
 
             else -> throw Exception("fragment not found")
         }
     }
 
-/*    fun switchFragment(
+    fun switchFragment(
         fragment: KClass<*>,
         addToBackStack: Boolean,
         bundle: Bundle?
@@ -47,6 +57,6 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             ft.addToBackStack(tag)
         }
         ft.commit()
-    }*/
+    }
 
 }

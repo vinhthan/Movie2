@@ -11,6 +11,13 @@ data class MoviePopularRequest(
     var page: Int*/
 )
 
+data class MoviePopularRequestPage(
+    @SerializedName("api_key")
+    var apiKey: String,
+    @SerializedName("page")
+    var page: Int
+)
+
 data class MoviePopular(
     var page: Int,
     @SerializedName("results")

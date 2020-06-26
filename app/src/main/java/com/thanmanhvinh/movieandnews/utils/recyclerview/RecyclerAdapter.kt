@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.thanmanhvinh.movieandnews.R
 
 
-/*abstract class RecyclerAdapter<T>(
+abstract class RecyclerAdapter<T>(
     context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,7 +30,7 @@ import com.thanmanhvinh.movieandnews.R
         }
     }
 
-    fun updateList(list: List<T>) {
+    fun updateListSeeAll(list: List<T>) {
         if (mRecyclerView.isRefresh()) {
             mList.clear()
             mRecyclerView.endRefresh()
@@ -127,7 +127,6 @@ class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 }
-*/
 
 
 

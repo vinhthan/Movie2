@@ -11,6 +11,13 @@ data class MovieUpcomingRequest(
     var page: Int*/
 )
 
+data class MovieUpcomingRequestPage(
+    @SerializedName("api_key")
+    var apiKey: String,
+    @SerializedName("page")
+    var page: Int
+)
+
 data class MovieUpcoming(
     @SerializedName("dates")
     var dates: Dates,

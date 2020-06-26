@@ -11,6 +11,13 @@ data class MovieTopRatedRequest(
     var page: Int*/
 )
 
+data class MovieTopRatedRequestPage(
+    @SerializedName("api_key")
+    var apiKey: String,
+    @SerializedName("page")
+    var page: Int
+)
+
 data class MovieTopRated(
     @SerializedName("page")
     var page: Int,

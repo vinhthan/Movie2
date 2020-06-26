@@ -10,6 +10,11 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_deta
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.popular.SeeAllPopularViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.top_rated.SeeAllTopRatedViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.upcoming.SeeAllUpcomingViewModel
 import com.thanmanhvinh.movieandnews.ui.main.news.NewsViewModel
 import com.thanmanhvinh.movieandnews.ui.splash.SplashViewModel
 import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
@@ -32,6 +37,11 @@ class ViewModelFactory @Inject constructor(
             UpcomingDetailViewModel::class.java -> UpcomingDetailViewModel() as T
             TopRatedDetailViewModel::class.java -> TopRatedDetailViewModel() as T
             PopularDetailViewModel::class.java -> PopularDetailViewModel() as T
+            MovieSearchViewModel::class.java -> MovieSearchViewModel() as T
+            SeeAllNowPlayingViewModel::class.java -> SeeAllNowPlayingViewModel() as T
+            SeeAllPopularViewModel::class.java -> SeeAllPopularViewModel() as T
+            SeeAllTopRatedViewModel::class.java -> SeeAllTopRatedViewModel() as T
+            SeeAllUpcomingViewModel::class.java -> SeeAllUpcomingViewModel() as T
 
 
             else -> throw IllegalArgumentException("Unknown ViewModel class ${modelClass.simpleName}")

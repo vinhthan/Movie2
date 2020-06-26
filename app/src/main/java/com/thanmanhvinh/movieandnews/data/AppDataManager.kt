@@ -27,6 +27,9 @@ class AppDataManager @Inject constructor(
         return mApiService.doGetMovieTopRated(movieTopRatedRequest)
     }
 
+    override fun doGetNowPlayingPage(movieNowPlayingRequestPage: MovieNowPlayingRequestPage): Observable<MovieNowPlaying> {
+        return mApiService.doGetNowPlayingPage(movieNowPlayingRequestPage)
+    }
 
 
 }

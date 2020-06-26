@@ -7,6 +7,7 @@ import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.include_toolbar.*
 import javax.inject.Inject
 
 open abstract class BaseActivity<VM: BaseViewModel<*, *>>: DaggerAppCompatActivity() {
@@ -33,7 +34,7 @@ open abstract class BaseActivity<VM: BaseViewModel<*, *>>: DaggerAppCompatActivi
         super.onCreate(savedInstanceState)
         viewModel = ViewModelFactory(schedulerProvider, dataManager).create(createViewModel())
         setContentView(getContentView())
-        //setSupportActionBar(toolBar)
+        setSupportActionBar(toolBar)
         initView()
         bindViewModel()
 
