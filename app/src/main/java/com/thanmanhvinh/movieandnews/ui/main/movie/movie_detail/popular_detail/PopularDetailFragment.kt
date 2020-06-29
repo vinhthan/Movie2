@@ -5,6 +5,7 @@ import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import kotlinx.android.synthetic.main.include_detail.*
 
 
@@ -40,7 +41,7 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
 
     override fun initData() {
 
-        val bundle = arguments?.getSerializable("MOVIE_POPULAR_DETAIL")
+        val bundle = arguments?.getSerializable(AppConstants.MOVIE_POPULAR_DETAIL)
         val moviePopular = bundle?.let {
             bundle as MoviePopular.Result
         }

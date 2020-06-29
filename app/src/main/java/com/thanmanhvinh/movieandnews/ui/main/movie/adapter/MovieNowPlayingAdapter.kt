@@ -14,10 +14,10 @@ import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
 class MovieNowPlayingAdapter(
     val context: Context?,
     var list: MutableList<MovieNowPlaying.Results>,
-    itemOnClickNowPlaying: ItemOnClickNowPlaying
+    itemOnClickToDetail: ItemOnClickNowPlaying
 ): RecyclerView.Adapter<MovieNowPlayingAdapter.ViewHolder>() {
 
-    private val onClick: ItemOnClickNowPlaying = itemOnClickNowPlaying
+    private val onClick: ItemOnClickNowPlaying = itemOnClickToDetail
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var imgMovieNowPlaying: ImageView = itemView.findViewById(R.id.imgMovie)

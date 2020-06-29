@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import kotlinx.android.synthetic.main.fragment_popular_detail.*
 import kotlinx.android.synthetic.main.fragment_top_rated_detailragment.*
 import kotlinx.android.synthetic.main.include_detail.*
@@ -30,7 +31,7 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
     }
 
     override fun initData() {
-        val bundle = arguments?.getSerializable("MOVIE_TOP_RATED_DETAIL")
+        val bundle = arguments?.getSerializable(AppConstants.MOVIE_TOP_RATED_DETAIL)
         val movieTopRated = bundle?.let {
             bundle as MovieTopRated.Results
         }

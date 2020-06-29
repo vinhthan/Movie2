@@ -5,6 +5,7 @@ import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import kotlinx.android.synthetic.main.fragment_upcoming_detail.*
 import kotlinx.android.synthetic.main.include_detail.*
 
@@ -28,7 +29,7 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
     }
 
     override fun initData() {
-        val bundle = arguments?.getSerializable("MOVIE_UPCOMING_DETAIL")
+        val bundle = arguments?.getSerializable(AppConstants.MOVIE_UPCOMING_DETAIL)
         val movieUpcoming = bundle?.let {
             bundle as MovieUpcoming.Result
         }

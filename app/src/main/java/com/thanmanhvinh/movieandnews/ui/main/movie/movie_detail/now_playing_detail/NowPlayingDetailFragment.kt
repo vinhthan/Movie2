@@ -1,18 +1,18 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail
 
-import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
-import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
+import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
 
 
 class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
+
+    private var id = BehaviorSubject.create<MovieDetail>()
+
     override fun createViewModel(): Class<NowPlayingDetailViewModel> =
         NowPlayingDetailViewModel::class.java
 
@@ -21,6 +21,26 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
     override fun getTitleActionBar(): Int = R.string.empty
 
     override fun bindViewModel() {
+        val id = (arguments?.get("abc") as? MovieDetail)
+        if (id == null){
+
+            Toast.makeText(context, "id $id", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val output = mViewModel.transform(
+            NowPlayingDetailViewModel.Input(
+                id
+            )
+        )
+        with(output) {
+            detail.observeOn(schedulerProvider.ui)
+                .subscribe { data ->
+                    showDetail(data)
+                }.addToDisposable()
+        }
+
+
         imgBackDetail.setOnClickListener {
             onButtonBackClick()
         }
@@ -29,7 +49,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
     override var showToolBar: Boolean = false
 
     override fun initData() {
-        val bundle  = arguments?.getSerializable("MOVIE_NOW_PLAYING_DETAIL")
+/*        val bundle  = arguments?.getSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL)
         val movieNowPlaying = bundle?.let {
             bundle as MovieNowPlaying.Results
         }
@@ -53,8 +73,15 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
             tvVoteDetail.text = vote.toString()
             tvOverviewDetail.text = overview
             tvLanguageDetail.text = languages
-        }
+        }*/
 
+
+    }
+
+    private fun showDetail(movieDetail: MovieDetail) {
+        context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
+        context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
+        tvTitleDetail.text = movieDetail.title
     }
 
 }

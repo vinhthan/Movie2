@@ -16,5 +16,11 @@ interface ApiHelper {
 
     // Load more
     fun doGetNowPlayingPage(movieNowPlayingRequestPage: MovieNowPlayingRequestPage): Observable<MovieNowPlaying>
+    fun doGetPopularPage(moviePopularRequestPage: MoviePopularRequestPage): Observable<MoviePopular>
+    fun doGetTopRatedPage(movieTopRatedRequestPage: MovieTopRatedRequestPage): Observable<MovieTopRated>
+    fun doGetUpcomingPage(movieUpcomingRequestPage: MovieUpcomingRequestPage): Observable<MovieUpcoming>
+
+    // Detail
+    fun doGetMovieDetail(id: Int, movieDetailRequest: MovieDetailRequest): Observable<MovieDetail>
 
 }

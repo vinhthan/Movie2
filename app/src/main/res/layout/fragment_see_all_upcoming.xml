@@ -3,15 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_10"
+    android:background="@color/back_ground_home"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.main.movie.see_all.upcoming.SeeAllUpcomingFragment">
+    tools:context=".ui.main.movie.see_all.upcoming.SeeAllUpcomingFragment"
+    tools:ignore="RtlSymmetry">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:text="Upcoming"
+                android:textColor="@color/color_text_default"
+                android:textSize="@dimen/size_17" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshSeeAllUpcoming"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingTop="@dimen/margin_10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <com.thanmanhvinh.movieandnews.utils.recyclerview.LoadMoreRecyclerView
             android:id="@+id/rcySeeAllUpcoming"

@@ -2,6 +2,7 @@ package com.thanmanhvinh.movieandnews.ui.main.movie
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -20,9 +21,6 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
     ItemOnClickTopRated, ItemOnClickUpcoming {
 
-/*    override var triggerLoadMore: BehaviorSubject<Boolean> = BehaviorSubject.create()
-    override var triggerRefresh: BehaviorSubject<Boolean> = BehaviorSubject.create()*/
-
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
     lateinit var listMovieUpcoming: MutableList<MovieUpcoming.Result>
     lateinit var listMoviePopular: MutableList<MoviePopular.Result>
@@ -32,7 +30,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     lateinit var mAdapterPopular: MoviePopularAdapter
     lateinit var mAdapterTopRated: MovieTopRatedAdapter
 
-
     override fun createViewModel(): Class<MovieViewModel> = MovieViewModel::class.java
 
     override fun getResourceLayout(): Int = R.layout.fragment_movie
@@ -40,12 +37,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     override fun getTitleActionBar(): Int = R.string.discover
 
     override fun bindViewModel() {
-
-/*        val ouput = mViewModel.transform(
-            MovieViewModel.Input(
-                triggerLoadMore, triggerRefresh
-            )
-        )*/
 
         val ouput = mViewModel.transform(
             Any()
@@ -113,7 +104,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         }
 
 
-
     }
 
     private fun showMovieNowPlaying() {
@@ -122,7 +112,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         rcyNowPlaying.setHasFixedSize(true)
         rcyNowPlaying.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rcyNowPlaying.adapter = mAdapterNowPlaying
-        //rcyNowPlaying.initLoadMore(refreshNowPlaying, this)
     }
 
     private fun showMovieUpcoming() {
@@ -152,9 +141,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         rcyTopRated.adapter = mAdapterTopRated
     }
 
-    //override fun OnItemClickNowPlaying(position: MovieNowPlaying.Results) {
     override fun OnItemClickNowPlaying(position: Int) {
-        //val movieNowPlayingDetail: MovieNowPlaying.Results = position
         val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
         val bundle = Bundle()
         bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)

@@ -5,18 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_ground_home"
-    android:paddingTop="@dimen/margin_10"
     android:paddingBottom="@dimen/margin_10"
-    android:paddingStart="@dimen/margin_10"
-    tools:context=".ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment">
+    tools:context=".ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment"
+    tools:ignore="RtlSymmetry">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:text="Now playing"
+                android:textColor="@color/color_text_default"
+                android:textSize="@dimen/size_17" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshSeeAllNowPlaying"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingTop="@dimen/margin_10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <com.thanmanhvinh.movieandnews.utils.recyclerview.LoadMoreRecyclerView
             android:id="@+id/rcySeeAllNowPlaying"

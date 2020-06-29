@@ -6,6 +6,8 @@ object ApiEndPoint {
     const val ENDPOINT_MOVIE_NOW_PLAYING = "https://api.themoviedb.org/3/movie/now_playing"
     const val ENDPOINT_MOVIE_POPULAR = "https://api.themoviedb.org/3/movie/popular"
 
+    const val ENDPOINT_MOVIE_DETAIL = "https://api.themoviedb.org/3/movie/{movie_id}"//157336
+
 
 }
 

@@ -31,5 +31,21 @@ class AppDataManager @Inject constructor(
         return mApiService.doGetNowPlayingPage(movieNowPlayingRequestPage)
     }
 
+    override fun doGetPopularPage(moviePopularRequestPage: MoviePopularRequestPage): Observable<MoviePopular> {
+        return mApiService.doGetPopularPage(moviePopularRequestPage)
+    }
+
+    override fun doGetTopRatedPage(movieTopRatedRequestPage: MovieTopRatedRequestPage): Observable<MovieTopRated> {
+        return mApiService.doGetTopRatedPage(movieTopRatedRequestPage)
+    }
+
+    override fun doGetUpcomingPage(movieUpcomingRequestPage: MovieUpcomingRequestPage): Observable<MovieUpcoming> {
+        return mApiService.doGetUpcomingPage(movieUpcomingRequestPage)
+    }
+
+    override fun doGetMovieDetail(id: Int, movieDetailRequest: MovieDetailRequest): Observable<MovieDetail> {
+        return mApiService.doGetMovieDetail(id, movieDetailRequest)
+    }
+
 
 }

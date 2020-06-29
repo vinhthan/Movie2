@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
+import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
 import com.thanmanhvinh.movieandnews.utils.recyclerview.RecyclerAdapter
-import kotlinx.android.synthetic.main.item_movie.view.*
 import kotlinx.android.synthetic.main.item_movie_see_all.view.*
 
 class SeeAllNowPlayingAdapter(
-    val context: Context?
+    val context: Context?,
     //val onClick: (MovieNowPlaying.Results) -> (Unit)
-    //itemOnClickNowPlaying: ItemOnClickNowPlaying
+    itemOnClickNowPlaying: ItemOnClickNowPlaying
 ): RecyclerAdapter<MovieNowPlaying.Results>(context!!){
 
-    //private val onClick: ItemOnClickNowPlaying = itemOnClickNowPlaying
+    private val onClick: ItemOnClickNowPlaying = itemOnClickNowPlaying
 
     override var layoutResource: Int = R.layout.item_movie_see_all
 
@@ -33,9 +33,9 @@ class SeeAllNowPlayingAdapter(
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(movie: MovieNowPlaying.Results){
             itemView.setOnClickListener {
-                //onClick(movie)
+                onClick.OnItemClickNowPlaying(position)
             }
-            itemView.tvSeeAll.text = movie.title
+            itemView.tvTitleSeeAll.text = movie.title
             context?.let { Glide.with(it).load(movie.getImagePosterPathNowPlaying()).into(itemView.imgSeeAll) }
         }
     }
