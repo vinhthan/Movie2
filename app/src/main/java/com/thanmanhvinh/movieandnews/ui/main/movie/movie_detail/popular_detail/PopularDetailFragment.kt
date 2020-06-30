@@ -1,15 +1,18 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail
 
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
-import com.thanmanhvinh.movieandnews.data.api.MoviePopular
+import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
 
 
 class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
+
+    private var id = BehaviorSubject.create<Int>()
+
     override fun createViewModel(): Class<PopularDetailViewModel> = PopularDetailViewModel::class.java
 
     override fun getResourceLayout(): Int = R.layout.fragment_popular_detail
@@ -20,8 +23,22 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
 
     override fun bindViewModel() {
 
-        imgBackDetail.setOnClickListener {
-            onButtonBackClick()
+        val movieId = arguments?.getInt(AppConstants.ID_MOVIE)
+        movieId?.let {
+            id.onNext(it)
+        }
+
+        val output = mViewModel.transform(
+            PopularDetailViewModel.Input(
+                id
+            )
+        )
+
+        with(output){
+            detail.observeOn(schedulerProvider.ui)
+                .subscribe { data ->
+                    showDetail(data)
+                }.addToDisposable()
         }
 
 /*        val output = mViewModel.transform(
@@ -35,41 +52,20 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
                 }.addToDisposable()
         }*/
 
-
+        imgBackDetail.setOnClickListener {
+            onButtonBackClick()
+        }
 
     }
 
     override fun initData() {
 
-        val bundle = arguments?.getSerializable(AppConstants.MOVIE_POPULAR_DETAIL)
-        val moviePopular = bundle?.let {
-            bundle as MoviePopular.Result
-        }
+    }
 
-        moviePopular?.let {
-            var languages = ""
-            val imgBig = it.getImageBackdropPathPopular()
-            val imgSmall = it.getImagePosterPathPopular()
-            val date = it.releaseDate
-            val vote = it.voteAverage
-            val title = it.title
-            val overview = it.overview
-            val language = it.originalLanguage
-            if (language == "en"){
-                languages = "English"
-            }
-            Glide.with(this).load(imgBig).into(imgBigDetail)
-            Glide.with(this).load(imgSmall).into(imgSmallDetail)
-            tvTitleDetail.text = title
-            tvDateDetail.text = date
-            tvVoteDetail.text = vote.toString()
-            tvOverviewDetail.text = overview
-            tvLanguageDetail.text = languages
-
-
-        }
-
-
+    private fun showDetail(movie: MovieDetail){
+        context?.let { Glide.with(it).load(movie.getImageBackdropPath()).into(imgBigDetail) }
+        context?.let { Glide.with(it).load(movie.getImagePosterPath()).into(imgSmallDetail) }
+        tvTitleDetail.text = movie.title
     }
 
 

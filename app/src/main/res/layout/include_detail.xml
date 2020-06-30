@@ -5,6 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tvH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="hour"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvH2"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/tvM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="minute"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvH2"
+        app:layout_constraintEnd_toStartOf="@+id/tvH4"
+        app:layout_constraintTop_toTopOf="@+id/tvH2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvH4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="m"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvH2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvH2"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvH2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="4dp"
+        android:text="h"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvM"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:text="country"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/tvDateDetail"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
     <ImageView
         android:id="@+id/imageView11"
         android:layout_width="wrap_content"
@@ -129,7 +191,7 @@
         android:layout_marginTop="@dimen/margin_5"
         android:layout_marginEnd="@dimen/margin_6"
         android:layout_marginBottom="@dimen/margin_16"
-        android:text="TextView"
+        android:text="overview"
         android:textColor="@color/color_text_default"
         android:textSize="@dimen/size_14"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -159,9 +221,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyGenresDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/margin_17"
-        app:layout_constraintEnd_toEndOf="@+id/tvTitleDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvTitleDetail"
         app:layout_constraintTop_toBottomOf="@+id/tvTitleDetail" />

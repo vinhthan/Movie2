@@ -37,6 +37,10 @@ class SeeAllNowPlayingFragment : BaseFragment<SeeAllNowPlayingViewModel>(), Page
         with(output){
             listMovie.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
+                    /**
+                     * right now mList have data
+                     */
+                    mList.addAll(list)
                     mAdapter.updateListSeeAll(list)
                 }.addToDisposable()
         }
@@ -56,8 +60,14 @@ class SeeAllNowPlayingFragment : BaseFragment<SeeAllNowPlayingViewModel>(), Page
     }
 
     override fun OnItemClickNowPlaying(position: Int) {
-        findNavController().navigate(R.id.nowPlayingDetailFragment)
-        Toast.makeText(context, "click $position", Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        if (mList.size > 0) {
+            val movie = mList[position]
+            val id = movie.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
+        findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
+        //Toast.makeText(context, "click $position", Toast.LENGTH_SHORT).show()
     }
 
 

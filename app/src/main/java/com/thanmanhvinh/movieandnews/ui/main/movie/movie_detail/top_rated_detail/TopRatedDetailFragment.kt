@@ -8,14 +8,19 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
+import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_popular_detail.*
 import kotlinx.android.synthetic.main.fragment_top_rated_detailragment.*
 import kotlinx.android.synthetic.main.include_detail.*
 
 class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
+
+    private var id = BehaviorSubject.create<Int>()
+
     override fun createViewModel(): Class<TopRatedDetailViewModel> = TopRatedDetailViewModel::class.java
 
     override fun getResourceLayout(): Int = R.layout.fragment_top_rated_detailragment
@@ -28,35 +33,34 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
         imgBackDetail.setOnClickListener {
             onButtonBackClick()
         }
+
+        val output = mViewModel.transform(
+            TopRatedDetailViewModel.Input(
+                id
+            )
+        )
+
+        val movieId = arguments?.getInt(AppConstants.ID_MOVIE)
+        movieId?.let {
+            id.onNext(it)
+        }
+
+        with(output){
+            detail.observeOn(schedulerProvider.ui)
+                .subscribe {
+                    showDetail(it)
+                }
+        }
     }
 
     override fun initData() {
-        val bundle = arguments?.getSerializable(AppConstants.MOVIE_TOP_RATED_DETAIL)
-        val movieTopRated = bundle?.let {
-            bundle as MovieTopRated.Results
-        }
 
-        movieTopRated?.let {
-            var languages = ""
-            val imgBig = it.getImageBackdropPathTopRated()
-            val imgSmall = it.getImagePosterPathTopRated()
-            val date = it.releaseDate
-            val vote = it.voteAverage
-            val title = it.title
-            val overview = it.overview
-            val language = it.originalLanguage
-            if (language == "en"){
-                languages = "English"
-            }
+    }
 
-            Glide.with(this).load(imgBig).into(imgBigDetail)
-            Glide.with(this).load(imgSmall).into(imgSmallDetail)
-            tvTitleDetail.text = title
-            tvDateDetail.text = date
-            tvVoteDetail.text = vote.toString()
-            tvOverviewDetail.text = overview
-            tvLanguageDetail.text = languages
-        }
+    private fun showDetail(movieDetail: MovieDetail) {
+        context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
+        context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
+        tvTitleDetail.text = movieDetail.title
     }
 
 }

@@ -6,6 +6,7 @@ object AppConstants {
     const val MOVIE_POPULAR_DETAIL = "MOVIE_POPULAR_DETAIL"
     const val MOVIE_TOP_RATED_DETAIL = "MOVIE_TOP_RATED_DETAIL"
     const val MOVIE_UPCOMING_DETAIL = "MOVIE_UPCOMING_DETAIL"
+    const val ID_MOVIE = "ID_MOVIE"
 
 
     const val API_KEY = "034bbd1b233d6726e0c7dc7f338657f9"

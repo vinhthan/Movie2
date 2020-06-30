@@ -11,6 +11,7 @@ import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickTopRated
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import com.thanmanhvinh.movieandnews.utils.recyclerview.PageIndicator
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_see_all_top_rated.*
@@ -40,6 +41,7 @@ class SeeAllTopRatedFragment : BaseFragment<SeeAllTopRatedViewModel>(), PageIndi
         with(output){
             listMovie.subscribeOn(schedulerProvider.ui)
                 .subscribe { list ->
+                    mList.addAll(list)
                     mAdapter.updateListSeeAll(list)
                 }.addToDisposable()
         }
@@ -60,7 +62,13 @@ class SeeAllTopRatedFragment : BaseFragment<SeeAllTopRatedViewModel>(), PageIndi
     }
 
     override fun OnItemClickTopRated(position: Int) {
-        findNavController().navigate(R.id.topRatedDetailFragment)
+        val bundle = Bundle()
+        if (mList.size > 0){
+            val movie = mList[position]
+            val id = movie.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
+        findNavController().navigate(R.id.topRatedDetailFragment, bundle)
     }
 
 

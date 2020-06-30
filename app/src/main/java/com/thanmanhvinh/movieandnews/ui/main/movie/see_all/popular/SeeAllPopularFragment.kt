@@ -1,5 +1,6 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.see_all.popular
 
+import android.os.Bundle
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -7,6 +8,7 @@ import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickPopular
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import com.thanmanhvinh.movieandnews.utils.recyclerview.PageIndicator
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_see_all_popular.*
@@ -36,6 +38,7 @@ class SeeAllPopularFragment : BaseFragment<SeeAllPopularViewModel>(), PageIndica
         with(output){
             listMovie.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
+                    mList.addAll(list)
                     mAdapter.updateListSeeAll(list)
                 }.addToDisposable()
         }
@@ -55,7 +58,13 @@ class SeeAllPopularFragment : BaseFragment<SeeAllPopularViewModel>(), PageIndica
     }
 
     override fun OnItemClickPopular(position: Int) {
-        findNavController().navigate(R.id.popularDetailFragment)
+        val bundle = Bundle()
+        if (mList.size > 0){
+            val movie = mList[position]
+            val id = movie.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
+        findNavController().navigate(R.id.popularDetailFragment, bundle)
     }
 
 

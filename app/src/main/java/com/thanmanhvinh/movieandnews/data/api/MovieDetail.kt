@@ -2,18 +2,12 @@ package com.thanmanhvinh.movieandnews.data.api
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MovieDetailRequest (
-/*    @SerializedName("movie_id")
-    var movieId: Int,*/
     @SerializedName("api_key")
     var apiKey: String
 )
-
-/*data class MovieDetailPathParameter(
-    @SerializedName("movie_id")
-    var movieId: Int
-)*/
 
 data class MovieDetail(
     var adult: Boolean,
@@ -53,7 +47,7 @@ data class MovieDetail(
     var voteAverage: Double,
     @SerializedName("vote_count")
     var voteCount: Int
-) {
+) : Serializable {
     data class BelongsToCollection(
         @SerializedName("backdrop_path")
         var backdropPath: String,

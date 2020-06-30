@@ -1,39 +1,42 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail
 
 import android.util.Log
-import com.thanmanhvinh.movieandnews.data.api.MoviePopular
+import com.thanmanhvinh.movieandnews.data.api.MovieDetail
+import com.thanmanhvinh.movieandnews.data.api.MovieDetailRequest
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import java.util.*
 
-class PopularDetailViewModel: BaseViewModel<Any, Any>() {
-    override fun transform(input: Any): Any {
-        TODO("Not yet implemented")
-    }
-/*    data class Output (
-        val detailPopular: Observable<MoviePopular.Result>
+class PopularDetailViewModel: BaseViewModel<PopularDetailViewModel.Input, PopularDetailViewModel.Output>() {
+    data class Input (
+        val id: Observable<Int>
     )
 
+    data class Output (
+        val detail: Observable<MovieDetail>
+    )
 
-    override fun transform(input: Any): Output {
-        val mDetailPopular = BehaviorSubject.create<MoviePopular.Result>()
+    override fun transform(input: Input): Output {
+        val mDetail = BehaviorSubject.create<MovieDetail>()
 
-        doGetDetailPopular().subscribe({result ->
-            if (result.results.size > 0) {
-                mDetailPopular.onNext(result.results[0])
-            }
+        input.id.flatMap { doGetDetail(it, AppConstants.API_KEY)}
+                .subscribeOn(mSchedulerProvider.io)
+                .observeOn(mSchedulerProvider.ui)
+                .subscribe({
+                    mDetail.onNext(it)
+                },{
+                    Log.d("TAG", "error $it")
+                }).addToDisposable()
 
-        },{error ->
-            Log.d("TAG", "transform: $error")
-        }).addToDisposable()
-
-        return Output(mDetailPopular)
+        return Output(mDetail)
     }
 
-    private fun doGetDetailPopular(): Observable<MoviePopular>{
-        return mDataManager.doGetMoviePopular()
+    private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail>{
+        return mDataManager.doGetMovieDetail(id, MovieDetailRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
-    }*/
+    }
+
+
 }

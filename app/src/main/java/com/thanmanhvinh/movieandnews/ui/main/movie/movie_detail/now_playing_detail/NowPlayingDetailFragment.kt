@@ -1,17 +1,21 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail
 
-import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
 
 
 class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
 
-    private var id = BehaviorSubject.create<MovieDetail>()
+    private var id = BehaviorSubject.create<Int>()
+    private lateinit var mList: MutableList<MovieDetail.Genre>
+    private lateinit var mAdapter: GenresDetailAdapter
 
     override fun createViewModel(): Class<NowPlayingDetailViewModel> =
         NowPlayingDetailViewModel::class.java
@@ -20,12 +24,13 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
 
     override fun getTitleActionBar(): Int = R.string.empty
 
-    override fun bindViewModel() {
-        val id = (arguments?.get("abc") as? MovieDetail)
-        if (id == null){
+    override var showToolBar: Boolean = false
 
-            Toast.makeText(context, "id $id", Toast.LENGTH_SHORT).show()
-            return
+    override fun bindViewModel() {
+
+        val movieId = arguments?.getInt(AppConstants.ID_MOVIE)
+        movieId?.let {
+            id.onNext(it)
         }
 
         val output = mViewModel.transform(
@@ -33,10 +38,16 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
                 id
             )
         )
+
         with(output) {
             detail.observeOn(schedulerProvider.ui)
                 .subscribe { data ->
                     showDetail(data)
+                }.addToDisposable()
+
+            listGenres.observeOn(schedulerProvider.ui)
+                .subscribe { list ->
+                    mAdapter.upDateGenres(list)
                 }.addToDisposable()
         }
 
@@ -46,9 +57,11 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
         }
     }
 
-    override var showToolBar: Boolean = false
-
     override fun initData() {
+
+        showGenres()
+
+
 /*        val bundle  = arguments?.getSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL)
         val movieNowPlaying = bundle?.let {
             bundle as MovieNowPlaying.Results
@@ -75,13 +88,33 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
             tvLanguageDetail.text = languages
         }*/
 
-
     }
 
     private fun showDetail(movieDetail: MovieDetail) {
         context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
         context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
         tvTitleDetail.text = movieDetail.title
+        val language = movieDetail.originalLanguage
+        if (language == "en"){
+            tvLanguageDetail.text = "English"
+        }
+        tvDateDetail.text = movieDetail.releaseDate
+        var runtime = movieDetail.runtime
+        var h = runtime / 60
+        var m = runtime % 60
+        tvH.text = h.toString()
+        tvM.text = m.toString()
+        tvOverviewDetail.text = movieDetail.overview
+        tvVoteDetail.text = movieDetail.voteAverage.toString()
+
+    }
+
+    private fun showGenres(){
+        mList = mutableListOf()
+        mAdapter = GenresDetailAdapter(context, mList)
+        rcyGenresDetail.setHasFixedSize(true)
+        rcyGenresDetail.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+        rcyGenresDetail.adapter = mAdapter
     }
 
 }

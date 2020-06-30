@@ -110,7 +110,8 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         listMovieNowPlaying = mutableListOf()
         mAdapterNowPlaying = MovieNowPlayingAdapter(context, listMovieNowPlaying, this)
         rcyNowPlaying.setHasFixedSize(true)
-        rcyNowPlaying.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+        rcyNowPlaying.layoutManager =
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rcyNowPlaying.adapter = mAdapterNowPlaying
     }
 
@@ -142,33 +143,49 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     }
 
     override fun OnItemClickNowPlaying(position: Int) {
-        val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
+/*        val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
         val bundle = Bundle()
-        bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)
+        bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)*/
+
+        val bundle = Bundle()
+        if (listMovieNowPlaying.size > 0) {
+            val movieNowPlaying = listMovieNowPlaying[position]
+            val id = movieNowPlaying.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
-
-
     }
 
     override fun OnItemClickPopular(position: Int) {
-        val moviePopularDetail: MoviePopular.Result = listMoviePopular[position]
-        val bundle = Bundle()
-        bundle.putSerializable(AppConstants.MOVIE_POPULAR_DETAIL, moviePopularDetail)
-        findNavController().navigate(R.id.popularDetailFragment, bundle)
 
+        val bundle = Bundle()
+        if (listMoviePopular.size > 0){
+            val moviePopular = listMoviePopular[position]
+            val id = moviePopular.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
+        findNavController().navigate(R.id.popularDetailFragment, bundle)
     }
 
     override fun OnItemClickTopRated(position: Int) {
-        val movieTopRated: MovieTopRated.Results = listMovieTopRated[position]
+
         val bundle = Bundle()
-        bundle.putSerializable(AppConstants.MOVIE_TOP_RATED_DETAIL, movieTopRated)
+        if (listMovieTopRated.size > 0) {
+            val movieTopRated = listMovieTopRated[position]
+            val id = movieTopRated.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
         findNavController().navigate(R.id.topRatedDetailFragment, bundle)
     }
 
     override fun OnItemClickUpcoming(position: Int) {
-        val movieUpcoming: MovieUpcoming.Result = listMovieUpcoming[position]
+
         val bundle = Bundle()
-        bundle.putSerializable(AppConstants.MOVIE_UPCOMING_DETAIL, movieUpcoming)
+        if (listMovieUpcoming.size > 0) {
+            val movieUpcoming = listMovieUpcoming[position]
+            val id = movieUpcoming.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
     }
 

@@ -8,44 +8,53 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class NowPlayingDetailViewModel : BaseViewModel<NowPlayingDetailViewModel.Input, NowPlayingDetailViewModel.Output>() {
+class NowPlayingDetailViewModel :
+    BaseViewModel<NowPlayingDetailViewModel.Input, NowPlayingDetailViewModel.Output>() {
 
     data class Input(
-        val movieDetail: MovieDetail
+        val id: Observable<Int>
     )
 
-   data class Output (
-        val detail: Observable<MovieDetail>
+    data class Output(
+        val detail: Observable<MovieDetail>,
+        val listGenres: BehaviorSubject<MutableList<MovieDetail.Genre>>
     )
 
     override fun transform(input: Input): Output {
-        val mMovieDetail: BehaviorSubject<MovieDetail> = BehaviorSubject.createDefault(input.movieDetail)
-        val movies = mMovieDetail.value
-
-
-
         val mDetail = BehaviorSubject.create<MovieDetail>()
-        val mId = BehaviorSubject.create<MovieDetail>()
-        //input.id.subscribe(mId)
-        val idInt = mId.value ?: ""
+        val mListGenres = BehaviorSubject.create<MutableList<MovieDetail.Genre>>()
 
-        if (movies != null) {
-            doGetDetail(movies, AppConstants.API_KEY).subscribe({ data ->
-                mDetail.onNext(data)
-            }, { error ->
-                Log.d("TAG", "error: $error")
+        input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+            .subscribe({
+                mDetail.onNext(it)
+                it.genres.let {listGenres ->
+                    mListGenres.onNext(listGenres as MutableList<MovieDetail.Genre>)
+                }
+            }, {
+                Log.d("TAG", "error $it")
             }).addToDisposable()
-        }
 
 
-        return Output(mDetail)
+
+        /* mDetail.flatMap { movie ->
+             doGetDetail(movie.id, AppConstants.API_KEY)
+         }.subscribe({detail ->
+             detail.let {
+                 mDetail.onNext(it)
+             }
+         },{error ->
+             Log.d("TAG", "error $error")
+         }).addToDisposable()*/
+
+        return Output(mDetail, mListGenres)
     }
 
-    private fun doGetDetail(id: MovieDetail, apiKey: String): Observable<MovieDetail>{
-        return mDataManager.doGetMovieDetail(id.id, MovieDetailRequest(apiKey))
+    private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail> {
+        return mDataManager.doGetMovieDetail(id, MovieDetailRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }
-
 
 }

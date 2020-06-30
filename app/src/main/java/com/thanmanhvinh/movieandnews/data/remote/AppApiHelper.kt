@@ -9,6 +9,9 @@ import javax.inject.Inject
 @Singleton
 class AppApiHelper @Inject constructor() : ApiHelper {
 
+    /**
+     * Load 1 page at home screen
+     */
     override fun doGetMovieNowPlaying(movieNowPlayingRequest: MovieNowPlayingRequest): Observable<MovieNowPlaying> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING)
             .addQueryParameter(movieNowPlayingRequest)
@@ -37,6 +40,9 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(MovieTopRated::class.java)
     }
 
+    /**
+     * Load more
+     */
     override fun doGetNowPlayingPage(movieNowPlayingRequestPage: MovieNowPlayingRequestPage): Observable<MovieNowPlaying> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_NOW_PLAYING)
             .addQueryParameter(movieNowPlayingRequestPage)
@@ -65,10 +71,13 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(MovieUpcoming::class.java)
     }
 
+    /**
+     * Detail
+     */
     override fun doGetMovieDetail(id: Int, movieDetailRequest: MovieDetailRequest): Observable<MovieDetail> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_DETAIL)
-            .addQueryParameter(movieDetailRequest)
             .addPathParameter("movie_id", id.toString())
+            .addQueryParameter(movieDetailRequest)
             .build()
             .getObjectObservable(MovieDetail::class.java)
     }
