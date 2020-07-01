@@ -60,4 +60,14 @@
         android:name="com.thanmanhvinh.movieandnews.ui.main.movie.see_all.upcoming.SeeAllUpcomingFragment"
         android:label="fragment_see_all_upcoming"
         tools:layout="@layout/fragment_see_all_upcoming" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" />
+    <fragment
+        android:id="@+id/playVideoFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.play_video.PlayVideoFragment"
+        android:label="fragment_play_video"
+        tools:layout="@layout/fragment_play_video" />
 </navigation>

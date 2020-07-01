@@ -8,33 +8,33 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
+import kotlinx.android.synthetic.main.item_countries.view.*
 
-class GenresDetailAdapter(
+class CountryDetailAdapter(
     val context: Context?,
-    val list: MutableList<MovieDetail.Genre>
-): RecyclerView.Adapter<GenresDetailAdapter.ViewHolder>() {
-
+    private val listCountries: MutableList<MovieDetail.ProductionCountry>
+) : RecyclerView.Adapter<CountryDetailAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_genres, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_countries, parent, false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return listCountries.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvItemGenres.text = list[position].name
+        holder.tvCountryDetail.text = listCountries[position].iso31661
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var tvItemGenres: TextView = itemView.findViewById(R.id.tvItemGenres)
+        var tvCountryDetail: TextView = itemView.findViewById(R.id.tvItemCountry)
     }
 
-    fun upDateGenres(genres: MutableList<MovieDetail.Genre>){
-        list.clear()
-        list.addAll(genres)
+    fun updateCountries(countries: MutableList<MovieDetail.ProductionCountry>){
+        listCountries.clear()
+        listCountries.addAll(countries)
         notifyDataSetChanged()
     }
 }

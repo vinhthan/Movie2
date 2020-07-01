@@ -44,10 +44,17 @@ class AppDataManager @Inject constructor(
     }
 
     /**
-     * Detail
+     * Get detail
      */
     override fun doGetMovieDetail(id: Int, movieDetailRequest: MovieDetailRequest): Observable<MovieDetail> {
         return mApiService.doGetMovieDetail(id, movieDetailRequest)
+    }
+
+    /**
+     * Get video
+     */
+    override fun doGetMovieVideo(id: Int, movieVideoRequest: MovieVideoRequest): Observable<MovieVideo> {
+        return mApiService.doGetMovieVideo(id, movieVideoRequest)
     }
 
 

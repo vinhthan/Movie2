@@ -8,6 +8,12 @@
 
     <include layout="@layout/include_toolbar"/>
 
+    <TextView
+        android:text="Search fragment"
+        android:textSize="26sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyMovieSearch"
         android:layout_marginTop="@dimen/margin_5"

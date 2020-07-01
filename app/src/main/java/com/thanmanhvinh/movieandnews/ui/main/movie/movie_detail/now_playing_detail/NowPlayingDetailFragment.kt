@@ -1,10 +1,14 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail
 
-import androidx.recyclerview.widget.GridLayoutManager
+import android.os.Bundle
+import android.view.View
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.CountryDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
@@ -14,8 +18,10 @@ import kotlinx.android.synthetic.main.include_detail.*
 class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
 
     private var id = BehaviorSubject.create<Int>()
-    private lateinit var mList: MutableList<MovieDetail.Genre>
-    private lateinit var mAdapter: GenresDetailAdapter
+    private lateinit var mListGenres: MutableList<MovieDetail.Genre>
+    private lateinit var mListCountries: MutableList<MovieDetail.ProductionCountry>
+    private lateinit var mAdapterGenres: GenresDetailAdapter
+    private lateinit var mAdapterCountries: CountryDetailAdapter
 
     override fun createViewModel(): Class<NowPlayingDetailViewModel> =
         NowPlayingDetailViewModel::class.java
@@ -46,20 +52,41 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
                 }.addToDisposable()
 
             listGenres.observeOn(schedulerProvider.ui)
-                .subscribe { list ->
-                    mAdapter.upDateGenres(list)
+                .subscribe { listGenres ->
+                    mAdapterGenres.upDateGenres(listGenres)
                 }.addToDisposable()
+
+            listCountries.observeOn(schedulerProvider.ui)
+                .subscribe { listCountries ->
+                    mAdapterCountries.updateCountries(listCountries)
+                }.addToDisposable()
+
+/*            video.observeOn(schedulerProvider.ui)
+                .subscribe { listMovie ->
+                    //showMovieVideo()
+                }*/
+
         }
 
 
         imgBackDetail.setOnClickListener {
             onButtonBackClick()
         }
+
+        imgPlayDetail.setOnClickListener {
+            val bundleId = Bundle()
+            if (movieId != null){
+                bundleId.putInt(AppConstants.ID_MOVIE, movieId)
+            }
+            findNavController().navigate(R.id.videoFragment, bundleId)
+        }
     }
 
     override fun initData() {
 
         showGenres()
+        showCountry()
+        showViewAllOverview()
 
 
 /*        val bundle  = arguments?.getSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL)
@@ -96,7 +123,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
         tvTitleDetail.text = movieDetail.title
         val language = movieDetail.originalLanguage
         if (language == "en"){
-            tvLanguageDetail.text = "English"
+            tvLanguageDetail.text = getText(R.string.english)
         }
         tvDateDetail.text = movieDetail.releaseDate
         var runtime = movieDetail.runtime
@@ -110,11 +137,31 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
     }
 
     private fun showGenres(){
-        mList = mutableListOf()
-        mAdapter = GenresDetailAdapter(context, mList)
-        rcyGenresDetail.setHasFixedSize(true)
-        rcyGenresDetail.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-        rcyGenresDetail.adapter = mAdapter
+        mListGenres = mutableListOf()
+        mAdapterGenres = GenresDetailAdapter(context, mListGenres)
+        //rcyGenresDetail.setHasFixedSize(true)
+        rcyGenresDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyGenresDetail.adapter = mAdapterGenres
+
+    }
+
+    private fun showCountry(){
+        mListCountries = mutableListOf()
+        mAdapterCountries = CountryDetailAdapter(context, mListCountries)
+        rcyCountryDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyCountryDetail.adapter = mAdapterCountries
+    }
+
+    private fun showViewAllOverview(){
+        var lineCount: Int = tvOverviewDetail.lineCount
+        if (lineCount == 3){
+            tvViewAllOverviewDetail.visibility = View.GONE
+        }
+        tvOverviewDetail.maxLines = 3
+        tvViewAllOverviewDetail.setOnClickListener {
+            tvOverviewDetail.maxLines = Int.MAX_VALUE
+            tvViewAllOverviewDetail.visibility = View.GONE
+        }
     }
 
 }

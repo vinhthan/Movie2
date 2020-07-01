@@ -23,8 +23,13 @@ interface ApiHelper {
     fun doGetUpcomingPage(movieUpcomingRequestPage: MovieUpcomingRequestPage): Observable<MovieUpcoming>
 
     /**
-     * Detail
+     * Get detail
      */
     fun doGetMovieDetail(id: Int, movieDetailRequest: MovieDetailRequest): Observable<MovieDetail>
+
+    /**
+     * Get video
+     */
+    fun doGetMovieVideo(id: Int, movieVideoRequest: MovieVideoRequest): Observable<MovieVideo>
 
 }

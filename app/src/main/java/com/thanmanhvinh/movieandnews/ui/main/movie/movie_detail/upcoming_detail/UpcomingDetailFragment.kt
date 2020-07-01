@@ -1,20 +1,27 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail
 
+import android.os.Bundle
+import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
-import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.CountryDetailAdapter
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.android.synthetic.main.fragment_upcoming_detail.*
 import kotlinx.android.synthetic.main.include_detail.*
 
 
 class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
 
     private var id = BehaviorSubject.create<Int>()
+    private lateinit var mListGenres: MutableList<MovieDetail.Genre>
+    private lateinit var mAdapterGenres: GenresDetailAdapter
+    private lateinit var mListCountries: MutableList<MovieDetail.ProductionCountry>
+    private lateinit var mAdapterCountry: CountryDetailAdapter
 
     override fun createViewModel(): Class<UpcomingDetailViewModel> =
         UpcomingDetailViewModel::class.java
@@ -26,9 +33,6 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
     override var showToolBar: Boolean = false
 
     override fun bindViewModel() {
-        imgBackDetail.setOnClickListener {
-            onButtonBackClick()
-        }
 
         val output = mViewModel.transform(
             UpcomingDetailViewModel.Input(
@@ -45,19 +49,81 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
             detail.subscribe {
                 showDetail(it)
             }
+
+            listGenres.observeOn(schedulerProvider.ui)
+                .subscribe { list ->
+                    mAdapterGenres.upDateGenres(list)
+                }.addToDisposable()
+
+            listCountries.observeOn(schedulerProvider.ui)
+                .subscribe { list ->
+                    mAdapterCountry.updateCountries(list)
+                }.addToDisposable()
+
         }
 
+        imgBackDetail.setOnClickListener {
+            onButtonBackClick()
+        }
+
+        imgPlayDetail.setOnClickListener {
+            val bundleId = Bundle()
+            if (movieId != null){
+                bundleId.putInt(AppConstants.ID_MOVIE, movieId)
+                findNavController().navigate(R.id.videoFragment, bundleId)
+            }
+        }
 
     }
 
     override fun initData() {
-
+        showViewAllOverview()
+        showGenres()
+        showCountries()
     }
 
-    private fun showDetail(movie: MovieDetail){
-        context?.let { Glide.with(it).load(movie.getImageBackdropPath()).into(imgBigDetail) }
-        context?.let { Glide.with(it).load(movie.getImagePosterPath()).into(imgSmallDetail) }
-        tvTitleDetail.text = movie.title
+    private fun showDetail(movieDetail: MovieDetail){
+        context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
+        context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
+        tvTitleDetail.text = movieDetail.title
+        val language = movieDetail.originalLanguage
+        if (language == "en"){
+            tvLanguageDetail.text = getText(R.string.english)
+        }
+        tvDateDetail.text = movieDetail.releaseDate
+        var runtime = movieDetail.runtime
+        var h = runtime / 60
+        var m = runtime % 60
+        tvH.text = h.toString()
+        tvM.text = m.toString()
+        tvOverviewDetail.text = movieDetail.overview
+        tvVoteDetail.text = movieDetail.voteAverage.toString()
+    }
+
+    private fun showViewAllOverview(){
+        var lineCount: Int = tvOverviewDetail.lineCount
+        if (lineCount == 3){
+            tvViewAllOverviewDetail.visibility = View.GONE
+        }
+        tvOverviewDetail.maxLines = 3
+        tvViewAllOverviewDetail.setOnClickListener {
+            tvOverviewDetail.maxLines = Int.MAX_VALUE
+            tvViewAllOverviewDetail.visibility = View.GONE
+        }
+    }
+
+    private fun showGenres(){
+        mListGenres = mutableListOf()
+        mAdapterGenres = GenresDetailAdapter(context, mListGenres)
+        rcyGenresDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyGenresDetail.adapter = mAdapterGenres
+    }
+
+    private fun showCountries(){
+        mListCountries = mutableListOf()
+        mAdapterCountry = CountryDetailAdapter(context, mListCountries)
+        rcyCountryDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyCountryDetail.adapter = mAdapterCountry
     }
 
 

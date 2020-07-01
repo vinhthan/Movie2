@@ -13,4 +13,10 @@
     <string name="search">"" Search</string>
     <string name="cancel">Cancel</string>
     <string name="discover">Discover</string>
+    <string name="div_10">" " / 10</string>
+
+
+    <string name="english">English</string>
+
+
 </resources>

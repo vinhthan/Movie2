@@ -10,6 +10,8 @@ object AppConstants {
 
 
     const val API_KEY = "034bbd1b233d6726e0c7dc7f338657f9"
+    const val LINK_YOU_TOBE = "https://www.youtube.com/watch?v="
+    const val SEND_LINK = "SEND_LINK"
     const val LIST_PAGE = 1
     const val LIST_LIMIT = 20
 

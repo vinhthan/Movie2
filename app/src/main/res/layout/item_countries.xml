@@ -7,23 +7,12 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tvItemGenres"
+        android:id="@+id/tvItemCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_2"
-        android:text="Genres"
+        android:layout_marginStart="@dimen/margin_4"
         android:textColor="@color/color_text_default"
         android:textSize="@dimen/size_13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvFence"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/margin_4"
-        android:background="@color/color_text_default"
-        app:layout_constraintBottom_toBottomOf="@+id/tvItemGenres"
-        app:layout_constraintStart_toEndOf="@+id/tvItemGenres"
-        app:layout_constraintTop_toTopOf="@+id/tvItemGenres" />
 </androidx.constraintlayout.widget.ConstraintLayout>

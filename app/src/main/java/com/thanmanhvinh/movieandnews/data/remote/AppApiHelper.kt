@@ -72,7 +72,7 @@ class AppApiHelper @Inject constructor() : ApiHelper {
     }
 
     /**
-     * Detail
+     * Get detail
      */
     override fun doGetMovieDetail(id: Int, movieDetailRequest: MovieDetailRequest): Observable<MovieDetail> {
         return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_DETAIL)
@@ -80,6 +80,17 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .addQueryParameter(movieDetailRequest)
             .build()
             .getObjectObservable(MovieDetail::class.java)
+    }
+
+    /**
+     * Get video
+     */
+    override fun doGetMovieVideo(id: Int, movieVideoRequest: MovieVideoRequest): Observable<MovieVideo> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_VIDEO)
+            .addPathParameter("movie_id", id.toString())
+            .addQueryParameter(movieVideoRequest)
+            .build()
+            .getObjectObservable(MovieVideo::class.java)
     }
 
 
