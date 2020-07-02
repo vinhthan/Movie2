@@ -62,9 +62,9 @@
         tools:layout="@layout/fragment_see_all_upcoming" />
     <fragment
         android:id="@+id/videoFragment"
-        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.VideoFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoFragment"
         android:label="fragment_video"
-        tools:layout="@layout/fragment_video" />
+        tools:layout="@layout/fragment_list_video" />
     <fragment
         android:id="@+id/playVideoFragment"
         android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.play_video.PlayVideoFragment"

@@ -10,8 +10,7 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_deta
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailViewModel
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.VideoFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.VideoViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.play_video.PlayVideoViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingViewModel
@@ -45,7 +44,7 @@ class ViewModelFactory @Inject constructor(
             SeeAllPopularViewModel::class.java -> SeeAllPopularViewModel() as T
             SeeAllTopRatedViewModel::class.java -> SeeAllTopRatedViewModel() as T
             SeeAllUpcomingViewModel::class.java -> SeeAllUpcomingViewModel() as T
-            VideoViewModel::class.java -> VideoViewModel() as T
+            ListVideoViewModel::class.java -> ListVideoViewModel() as T
             PlayVideoViewModel::class.java -> PlayVideoViewModel() as T
 
 

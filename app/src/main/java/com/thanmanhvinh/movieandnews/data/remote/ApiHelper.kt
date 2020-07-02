@@ -32,4 +32,12 @@ interface ApiHelper {
      */
     fun doGetMovieVideo(id: Int, movieVideoRequest: MovieVideoRequest): Observable<MovieVideo>
 
+    /**
+     * Search movie
+     */
+    fun doGetMovieSearch(movieSearchRequest: MovieSearchRequest): Observable<MovieSearch>
+
+
+
+
 }

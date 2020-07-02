@@ -2,21 +2,13 @@ package com.thanmanhvinh.movieandnews.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.base.FragmentBackStackManager
 import com.thanmanhvinh.movieandnews.ui.base.INavigatorActivity
-import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import java.lang.Appendable
 import kotlin.reflect.KClass
 
 class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
@@ -44,10 +36,13 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         //switchFragment(MovieFragment::class, false)
 
         //currentFragment.onButtonBackClick()
+
+
     }
 
 
     override fun bindViewModel() {
+
 
     }
 
@@ -56,6 +51,12 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         currentFragment = fragment
         //toolBar.visibility = if (fragment.showToolBar) View.VISIBLE else View.GONE
         //tvTitleToolbar.text = getString(fragment.getTitleActionBar())
+
+/*        toolBar.visibility = if (fragment.showToolBar) View.VISIBLE else View.GONE
+        tvTitleToolbar.text = getString(fragment.getTitleActionBar())*/
+        /*if(fragment.isRegisterFragment){
+            toolBar.background = getDrawable(R.drawable.bg_toolbar_register)
+        }*/
     }
 
     override fun switchFragment(
@@ -85,7 +86,6 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         }
         startActivity(intent)
     }
-
 
 
 /*    override fun onCreate(savedInstanceState: Bundle?) {

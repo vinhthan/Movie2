@@ -74,22 +74,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         showMovieTopRated()
 
         //
-        imgSearch.setOnClickListener {
-            layout_discover.visibility = View.GONE
-            layout_search.visibility = View.VISIBLE
-        }
-
-        tvCancel.setOnClickListener {
-            layout_search.visibility = View.GONE
-            layout_discover.visibility = View.VISIBLE
-        }
-
-        imgGotoSearch.setOnClickListener {
-            findNavController().navigate(R.id.movieSearchFragment)
-            layout_discover.visibility = View.GONE
-            layout_search.visibility = View.VISIBLE
-        }
-
         tvSeeAllNowPlaying.setOnClickListener {
             findNavController().navigate(R.id.seeAllNowPlayingFragment)
         }
@@ -102,6 +86,19 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         tvSeeAllUpcoming.setOnClickListener {
             findNavController().navigate(R.id.seeAllUpcomingFragment)
         }
+
+
+        //
+        imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.movieSearchFragment)
+/*            layout_discover.visibility = View.GONE
+            layout_search.visibility = View.VISIBLE*/
+        }
+
+/*        tvCancel.setOnClickListener {
+            layout_discover.visibility = View.VISIBLE
+            layout_search.visibility = View.GONE
+        }*/
 
 
     }

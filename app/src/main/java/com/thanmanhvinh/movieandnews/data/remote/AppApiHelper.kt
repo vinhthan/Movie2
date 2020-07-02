@@ -93,5 +93,24 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(MovieVideo::class.java)
     }
 
+    /**
+     * Search movie
+     */
+    override fun doGetMovieSearch(movieSearchRequest: MovieSearchRequest): Observable<MovieSearch> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_SEARCH)
+            .addQueryParameter(movieSearchRequest)
+            .build()
+            .getObjectObservable(MovieSearch::class.java)
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

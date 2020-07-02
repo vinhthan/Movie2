@@ -9,7 +9,7 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_deta
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.VideoFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.play_video.PlayVideoFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment
@@ -36,7 +36,7 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             SeeAllPopularFragment::class -> SeeAllPopularFragment()
             SeeAllTopRatedFragment::class -> SeeAllTopRatedFragment()
             SeeAllUpcomingFragment::class -> SeeAllUpcomingFragment()
-            VideoFragment::class -> VideoFragment()
+            ListVideoFragment::class -> ListVideoFragment()
             PlayVideoFragment::class -> PlayVideoFragment()
 
 

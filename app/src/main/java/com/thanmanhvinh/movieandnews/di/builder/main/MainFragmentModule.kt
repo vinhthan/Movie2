@@ -1,12 +1,11 @@
 package com.thanmanhvinh.movieandnews.di.builder.main
 
-import android.graphics.Movie
 import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
-import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.VideoFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.play_video.PlayVideoFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment
@@ -54,7 +53,7 @@ abstract class MainFragmentModule {
     abstract fun seeAllUpcomingFragment(): SeeAllUpcomingFragment
 
     @ContributesAndroidInjector
-    abstract fun videoFragment(): VideoFragment
+    abstract fun videoFragment(): ListVideoFragment
 
     @ContributesAndroidInjector
     abstract fun playVideoFragment(): PlayVideoFragment

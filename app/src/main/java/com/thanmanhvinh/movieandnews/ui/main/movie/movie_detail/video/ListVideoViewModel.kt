@@ -8,7 +8,7 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class VideoViewModel: BaseViewModel<VideoViewModel.Input, VideoViewModel.Output>() {
+class ListVideoViewModel: BaseViewModel<ListVideoViewModel.Input, ListVideoViewModel.Output>() {
     data class Input (
         val id: Observable<Int>
     )

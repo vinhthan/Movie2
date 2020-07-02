@@ -57,5 +57,18 @@ class AppDataManager @Inject constructor(
         return mApiService.doGetMovieVideo(id, movieVideoRequest)
     }
 
+    /**
+     * Key words
+     */
+    override fun doGetMovieSearch(movieSearchRequest: MovieSearchRequest): Observable<MovieSearch> {
+        return mApiService.doGetMovieSearch(movieSearchRequest)
+    }
+
+
+
+
+
+
+
 
 }

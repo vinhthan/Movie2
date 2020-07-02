@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieVideo
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
-import kotlinx.android.synthetic.main.item_video.view.*
 
-class VideoAdapter(
+class ListVideoAdapter(
     val context: Context?,
     private val listVideo: MutableList<MovieVideo.Result>,
     itemOnClickToDetail: ItemOnClickNowPlaying
-): RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+): RecyclerView.Adapter<ListVideoAdapter.ViewHolder>() {
 
     private val onClick: ItemOnClickNowPlaying = itemOnClickToDetail
 
@@ -31,10 +31,11 @@ class VideoAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvTitleVideo.text = listVideo[position].name
-
+        var key = listVideo[position].key
         var linkVideo = AppConstants.LINK_YOU_TOBE + listVideo[position].key
         holder.tvLinkVideoYouTobe.text = linkVideo
+        context?.let { Glide.with(it).load("https://i3.ytimg.com/vi/$key/hqdefault.jpg").into(holder.imgThumnaiVideo) }
+        holder.tvTitleVideo.text = listVideo[position].name
 
         holder.itemView.setOnClickListener {
             onClick.OnItemClickNowPlaying(position)
@@ -42,9 +43,10 @@ class VideoAdapter(
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        //var imgVideo: ImageView = itemView.findViewById(R.id.imgVideo)
+        var imgThumnaiVideo: ImageView = itemView.findViewById(R.id.imgThumnaiYouTobe)
         var tvTitleVideo: TextView = itemView.findViewById(R.id.tvTitleVideo)
         var tvLinkVideoYouTobe: TextView = itemView.findViewById(R.id.tvLinkVideoYouTobe)
+        var tvKeyVideo: TextView = itemView.findViewById(R.id.tvKeyVideo)
     }
 
     fun updateVideo(movie: MutableList<MovieVideo.Result>){

@@ -8,13 +8,17 @@ object ApiEndPoint {
 
     const val ENDPOINT_MOVIE_DETAIL = "https://api.themoviedb.org/3/movie/{movie_id}"//157336
     const val ENDPOINT_MOVIE_VIDEO = "https://api.themoviedb.org/3/movie/{movie_id}/videos"//157336
+    const val ENDPOINT_MOVIE_SEARCH = "https://api.themoviedb.org/3/search/movie"
 
 
 }
 
+//{movie_id}: 157336
 //api key: 034bbd1b233d6726e0c7dc7f338657f9
 //url: https://api.themoviedb.org/3/movie/popular?api_key=034bbd1b233d6726e0c7dc7f338657f9&page=1
 //poster: https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
 
-//key: 5lGoQhFb4NM
+//key video: 5lGoQhFb4NM
 //video: https://www.youtube.com/watch?v=5lGoQhFb4NM
+
+//image from youtube: https://i3.ytimg.com/vi/5lGoQhFb4NM/hqdefault.jpg

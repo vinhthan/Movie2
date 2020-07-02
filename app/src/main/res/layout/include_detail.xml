@@ -334,5 +334,16 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintBottom_toBottomOf="@+id/webView"
+        app:layout_constraintEnd_toEndOf="@+id/webView"
+        app:layout_constraintStart_toStartOf="@+id/webView"
+        app:layout_constraintTop_toTopOf="@+id/webView"
+        app:srcCompat="@drawable/bg_gradient" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

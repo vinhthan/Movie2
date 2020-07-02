@@ -9,29 +9,31 @@ import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.android.synthetic.main.fragment_video.*
+import kotlinx.android.synthetic.main.fragment_list_video.*
 
-class VideoFragment : BaseFragment<VideoViewModel>(), ItemOnClickNowPlaying {
+class ListVideoFragment : BaseFragment<ListVideoViewModel>(), ItemOnClickNowPlaying {
 
     private var id: BehaviorSubject<Int> = BehaviorSubject.create()
 
     private lateinit var mList: MutableList<MovieVideo.Result>
-    private lateinit var mAdapter: VideoAdapter
+    private lateinit var mAdapter: ListVideoAdapter
 
-    override fun createViewModel(): Class<VideoViewModel> = VideoViewModel::class.java
+    override fun createViewModel(): Class<ListVideoViewModel> = ListVideoViewModel::class.java
 
-    override fun getResourceLayout(): Int = R.layout.fragment_video
+    override fun getResourceLayout(): Int = R.layout.fragment_list_video
 
     override fun getTitleActionBar(): Int = R.string.empty
 
     override fun bindViewModel() {
+        //Glide.with (this).load ( "https://inthecheesefactory.com/uploads/source/glidepicasso/cover.jpg").into(imgDemo)
+
         val movieId = arguments?.getInt(AppConstants.ID_MOVIE)
         movieId?.let {
             id.onNext(it)
         }
 
         val output = mViewModel.transform(
-            VideoViewModel.Input(
+            ListVideoViewModel.Input(
                 id
             )
         )
@@ -43,19 +45,29 @@ class VideoFragment : BaseFragment<VideoViewModel>(), ItemOnClickNowPlaying {
                 }.addToDisposable()
         }
 
+/*        var tv = tvKeyVideo
+        context?.let { Glide.with(it).load("http://i3.ytimg.com/vi/$tvKeyVideo/hqdefault.jpg").into(imgThumnaiYouTobe) }*/
+
 
     }
 
     override fun initData() {
         showListVideo()
+
+
+
     }
 
     private fun showListVideo(){
         mList = mutableListOf()
-        mAdapter = VideoAdapter(context, mList, this)
+        mAdapter = ListVideoAdapter(context, mList, this)
         rcyVideo.setHasFixedSize(true)
         rcyVideo.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyVideo.adapter = mAdapter
+
+        //
+
+
     }
 
     override fun OnItemClickNowPlaying(position: Int) {
@@ -66,6 +78,7 @@ class VideoFragment : BaseFragment<VideoViewModel>(), ItemOnClickNowPlaying {
         }
         findNavController().navigate(R.id.playVideoFragment, bundle)
     }
+
 
 
 }
