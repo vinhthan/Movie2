@@ -1,12 +1,14 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
 import android.util.Log
+import android.widget.Toast
 import com.thanmanhvinh.movieandnews.data.api.MovieSearch
 import com.thanmanhvinh.movieandnews.data.api.MovieSearchRequest
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 
 class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearchViewModel.Output>() {
 
@@ -22,7 +24,6 @@ class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearc
     override fun transform(input: Input): Output {
         val mEdtSearch: BehaviorSubject<String> = BehaviorSubject.create()
         val mLoadList = BehaviorSubject.create<MutableList<MovieSearch.Result>>()
-        val mGotoSearch = BehaviorSubject.create<Boolean>()
 
         with(input){
             edtSearch.subscribe(mEdtSearch)
@@ -35,7 +36,7 @@ class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearc
                             mLoadList.onNext(list as MutableList<MovieSearch.Result>)
                         }
                     }, {
-                        Log.d("TAG", "error $it")
+                        //Log.d("TAGS", "error $it")
                     })
             }.addToDisposable()
 

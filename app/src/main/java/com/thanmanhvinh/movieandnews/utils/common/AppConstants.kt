@@ -16,4 +16,5 @@ object AppConstants {
     const val LIST_LIMIT = 20
 
     const val HOME = "home"
+    const val EN = "en"
 }

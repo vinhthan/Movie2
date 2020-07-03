@@ -103,14 +103,16 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(MovieSearch::class.java)
     }
 
-
-
-
-
-
-
-
-
+    /**
+     * Get review
+     */
+    override fun doGetReview(id: Int, movieReviewRequest: MovieReviewRequest): Observable<MovieReview> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_REVIEW)
+            .addPathParameter("movie_id", id.toString())
+            .addQueryParameter(movieReviewRequest)
+            .build()
+            .getObjectObservable(MovieReview::class.java)
+    }
 
 
 }

@@ -26,10 +26,12 @@ class GenresDetailAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvItemGenres.text = list[position].name
+
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvItemGenres: TextView = itemView.findViewById(R.id.tvItemGenres)
+        var tvFence: TextView = itemView.findViewById(R.id.tvFence)
     }
 
     fun upDateGenres(genres: MutableList<MovieDetail.Genre>){

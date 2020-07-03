@@ -1,6 +1,7 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thanmanhvinh.movieandnews.R
@@ -25,7 +26,6 @@ class ListVideoFragment : BaseFragment<ListVideoViewModel>(), ItemOnClickNowPlay
     override fun getTitleActionBar(): Int = R.string.empty
 
     override fun bindViewModel() {
-        //Glide.with (this).load ( "https://inthecheesefactory.com/uploads/source/glidepicasso/cover.jpg").into(imgDemo)
 
         val movieId = arguments?.getInt(AppConstants.ID_MOVIE)
         movieId?.let {
@@ -38,47 +38,40 @@ class ListVideoFragment : BaseFragment<ListVideoViewModel>(), ItemOnClickNowPlay
             )
         )
 
-        with(output){
+        with(output) {
             video.observeOn(schedulerProvider.ui)
                 .subscribe { listVideo ->
                     mAdapter.updateVideo(listVideo)
+                    if (listVideo.size == 0){
+                        tvNotificationVideo.visibility = View.VISIBLE
+                    }else{
+                        tvNotificationVideo.visibility = View.GONE
+                    }
                 }.addToDisposable()
         }
-
-/*        var tv = tvKeyVideo
-        context?.let { Glide.with(it).load("http://i3.ytimg.com/vi/$tvKeyVideo/hqdefault.jpg").into(imgThumnaiYouTobe) }*/
-
 
     }
 
     override fun initData() {
         showListVideo()
 
-
-
     }
 
-    private fun showListVideo(){
+    private fun showListVideo() {
         mList = mutableListOf()
         mAdapter = ListVideoAdapter(context, mList, this)
         rcyVideo.setHasFixedSize(true)
         rcyVideo.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyVideo.adapter = mAdapter
-
-        //
-
-
     }
 
     override fun OnItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
-        if (mList.size > 0){
+        if (mList.size > 0) {
             val video = AppConstants.LINK_YOU_TOBE + mList[position].key
             bundle.putString(AppConstants.SEND_LINK, video)
         }
         findNavController().navigate(R.id.playVideoFragment, bundle)
     }
-
-
 
 }

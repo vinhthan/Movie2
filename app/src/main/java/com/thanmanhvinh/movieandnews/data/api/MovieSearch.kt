@@ -39,12 +39,12 @@ data class MovieSearch(
         var title: String,
         var video: Boolean,
         @SerializedName("vote_average")
-        var voteAverage: Int,
+        var voteAverage: Double,
         @SerializedName("vote_count")
-        var voteCount: Int
+        var voteCount: Double
     ): Serializable {
-        fun getImagePosterPath (): String{
-            return "https://image.tmdb.org/t/p/w500/$posterPath"
+        fun getImageBackdropPath (): String{
+            return "https://image.tmdb.org/t/p/w500/$backdropPath"
         }
     }
 }

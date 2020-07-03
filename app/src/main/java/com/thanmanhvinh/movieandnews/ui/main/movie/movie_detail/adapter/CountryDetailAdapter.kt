@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
-import kotlinx.android.synthetic.main.item_countries.view.*
 
 class CountryDetailAdapter(
     val context: Context?,

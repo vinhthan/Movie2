@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -31,7 +32,10 @@ class MovieSearchAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvTitleMovieSearch.text = list[position].title
-        context?.let { Glide.with(it).load(list[position].getImagePosterPath()).into(holder.imgMovieSearch) }
+        context?.let { Glide.with(it).load(list[position].getImageBackdropPath()).into(holder.imgMovieSearch) }
+        var voteAverage = list[position].voteAverage / 2 //rate star default 10 score scale -> / 2 return 5 score scale
+        holder.ratingBar.rating = voteAverage.toFloat()
+
 
         holder.itemView.setOnClickListener {
             onClick.OnItemClickNowPlaying(position)
@@ -42,6 +46,7 @@ class MovieSearchAdapter(
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvTitleMovieSearch: TextView = itemView.findViewById(R.id.tvTitleMovieSearch)
         var imgMovieSearch: ImageView = itemView.findViewById(R.id.imgMovieSearch)
+        var ratingBar: RatingBar = itemView.findViewById(R.id.ratingBar)
     }
 
     fun updateListMovieSearch(movie: MutableList<MovieSearch.Result>){

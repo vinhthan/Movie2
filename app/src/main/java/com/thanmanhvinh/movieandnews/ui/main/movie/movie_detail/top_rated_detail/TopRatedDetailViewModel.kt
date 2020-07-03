@@ -1,9 +1,7 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail
 
 import android.util.Log
-import com.thanmanhvinh.movieandnews.data.api.MovieDetail
-import com.thanmanhvinh.movieandnews.data.api.MovieDetailRequest
-import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
+import com.thanmanhvinh.movieandnews.data.api.*
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
@@ -17,17 +15,17 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
     data class Output (
         val detail: Observable<MovieDetail>,
         val listGenres: Observable<MutableList<MovieDetail.Genre>>,
-        val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>
+        val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>,
+        val listReview: Observable<MutableList<MovieReview.Result>>
     )
 
     override fun transform(input: Input): Output {
         val mDetail = BehaviorSubject.create<MovieDetail>()
         val mListGenres = BehaviorSubject.create<MutableList<MovieDetail.Genre>>()
         val mListCountries = BehaviorSubject.create<MutableList<MovieDetail.ProductionCountry>>()
+        val mListReview = BehaviorSubject.create<MutableList<MovieReview.Result>>()
 
         input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
-            .subscribeOn(mSchedulerProvider.io)
-            .observeOn(mSchedulerProvider.ui)
             .subscribe({detail ->
                 mDetail.onNext(detail)
 
@@ -40,15 +38,30 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
                 }
 
             },{
-                Log.d("TAG", "reeor $it")
+                //Log.d("TAG", "reeor $it")
+            }).addToDisposable()
+
+        input.id.flatMap { doGetReview(it, AppConstants.API_KEY) }
+            .subscribe({review ->
+                review.results.let { list ->
+                    mListReview.onNext(list as MutableList<MovieReview.Result>)
+                }
+            },{
+                //Log.d("TAG", "error $it")
             }).addToDisposable()
 
 
-        return Output(mDetail, mListGenres, mListCountries)
+        return Output(mDetail, mListGenres, mListCountries, mListReview)
     }
 
     private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail>{
         return mDataManager.doGetMovieDetail(id, MovieDetailRequest(apiKey))
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+    }
+
+    private fun doGetReview(id: Int, apiKey: String): Observable<MovieReview>{
+        return mDataManager.doGetReview(id, MovieReviewRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }

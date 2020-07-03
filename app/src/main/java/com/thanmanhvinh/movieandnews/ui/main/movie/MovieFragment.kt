@@ -46,25 +46,24 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterNowPlaying.updateList(list)
-
-                }.addToDisposable()
+                }
 
             listUpcoming.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterUpcoming.updateList(list)
-                }.addToDisposable()
+                }
 
             listPopular.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterPopular.updateList(list)
-                }.addToDisposable()
+                }
 
             listTopRated.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterTopRated.updateList(list)
-                }.addToDisposable()
+                }
 
-        }
+        }.addToDisposable()
     }
 
     override fun initData() {

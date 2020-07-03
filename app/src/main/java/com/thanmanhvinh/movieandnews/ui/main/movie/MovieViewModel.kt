@@ -32,63 +32,13 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
         val mListMoviePopular = BehaviorSubject.create<MutableList<MoviePopular.Result>>()
         val mListMovieTopRated = BehaviorSubject.create<MutableList<MovieTopRated.Results>>()
 
-/*        val refresh = input.triggerRefresh.filter { it }.map {
-            page = 1
-        }
-        val loadMore = input.triggerLoadMore.filter { it }.map {
-            page++
-        }*/
-
-/*        //GetMovieNowPlaying
-        Observable.merge(refresh, loadMore)
-            .switchMap {
-                doGetMovieNowPlaying(AppConstants.API_KEY, page)
-            }.subscribe {
-                it.results.let {list ->
-                    mListNowPlaying.onNext(list)
-                }
-            }.addToDisposable()
-
-        //GetMovieUpcoming
-        Observable.merge(refresh, loadMore)
-            .switchMap {
-                doGetMovieUpcoming(AppConstants.API_KEY, page)
-            }.subscribe {
-                it.results.let { list ->
-                    mListUpcoming.onNext(list)
-                }
-            }.addToDisposable()
-
-        //GetMoviePopular
-        Observable.merge(refresh, loadMore)
-            .switchMap {
-                doGetMoviePopular(AppConstants.API_KEY, page)
-            }.subscribe {
-                it.results.let { list ->
-                    mListMoviePopular.onNext(list)
-                }
-            }.addToDisposable()
-
-        //GetMovieTopRated
-        Observable.merge(refresh, loadMore)
-            .switchMap {
-                doGetMovieTopRated(AppConstants.API_KEY, page)
-            }.subscribe {
-                it.results.let { list ->
-                    mListMovieTopRated.onNext(list)
-                }
-            }.addToDisposable()*/
-
-
-
-
         //
         doGetMovieNowPlaying(AppConstants.API_KEY).subscribe({ result ->
             result.results.let { list ->
                 mListNowPlaying.onNext(list)
             }
         }, { error ->
-            Log.d("TAG", "transform: $error")
+            //Log.d("TAG", "transform: $error")
         }).addToDisposable()
 
         doGetMovieUpcoming(AppConstants.API_KEY).subscribe({ result ->
@@ -96,7 +46,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListUpcoming.onNext(list)
             }
         }, { error ->
-            Log.d("TAG", "transform: $error")
+            //Log.d("TAG", "transform: $error")
         }).addToDisposable()
 
 
@@ -105,7 +55,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListMoviePopular.onNext(list)
             }
         }, { error ->
-            Log.d("TAG", "transform: $error")
+            //Log.d("TAG", "transform: $error")
         }).addToDisposable()
 
 
@@ -114,7 +64,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListMovieTopRated.onNext(it)
             }
         }, { error ->
-            Log.d("TAG", "transform: $error")
+            //Log.d("TAG", "transform: $error")
         }).addToDisposable()
 
 

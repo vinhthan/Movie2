@@ -12,7 +12,6 @@ import java.util.*
 class SeeAllNowPlayingViewModel: BaseViewModel<SeeAllNowPlayingViewModel.Input, SeeAllNowPlayingViewModel.Output>() {
 
     private var page = AppConstants.LIST_PAGE
-    private var limit = AppConstants.LIST_LIMIT
 
     data class Input (
         val triggerRefresh: Observable<Boolean>,

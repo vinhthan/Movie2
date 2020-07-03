@@ -3,17 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginStart="@dimen/margin_5"
+    android:layout_marginEnd="@dimen/margin_5"
+    android:background="@color/back_ground_home"
     tools:context=".ui.main.movie.movie_search.MovieSearchFragment">
 
     <include layout="@layout/include_toolbar"/>
-
-    <TextView
-        android:text="Search fragment"
-        android:textSize="26sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyMovieSearch"

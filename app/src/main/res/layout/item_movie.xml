@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="136dp"
-    android:layout_height="227dp"
+    android:layout_width="@dimen/margin_136"
+    android:layout_height="@dimen/margin_227"
     android:background="@drawable/bg_image_detail"
     android:layout_marginEnd="@dimen/margin_5">
 
@@ -28,6 +28,7 @@
         android:textAlignment="center"
         android:textColor="@color/color_text_default"
         android:textSize="@dimen/size_14"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imgMovie"
         app:layout_constraintHorizontal_bias="0.0"

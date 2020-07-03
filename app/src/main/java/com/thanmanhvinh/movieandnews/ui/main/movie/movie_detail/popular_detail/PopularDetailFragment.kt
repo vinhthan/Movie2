@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
+import com.thanmanhvinh.movieandnews.data.api.MovieReview
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.CountryDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.ReviewDetailAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
@@ -23,6 +25,8 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
     private lateinit var mListCountries: MutableList<MovieDetail.ProductionCountry>
     private lateinit var mAdapterGenres: GenresDetailAdapter
     private lateinit var mAdapterCountry: CountryDetailAdapter
+    private lateinit var mListReview: MutableList<MovieReview.Result>
+    private lateinit var mAdapterReview: ReviewDetailAdapter
 
     override fun createViewModel(): Class<PopularDetailViewModel> = PopularDetailViewModel::class.java
 
@@ -49,19 +53,23 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
             detail.observeOn(schedulerProvider.ui)
                 .subscribe { data ->
                     showDetail(data)
-                }.addToDisposable()
+                }
 
             listGenres.observeOn(schedulerProvider.ui)
                 .subscribe{list ->
                     mAdapterGenres.upDateGenres(list)
-                }.addToDisposable()
+                }
 
             listCountries.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterCountry.updateCountries(list)
-                }.addToDisposable()
+                }
 
-        }
+            listReview.observeOn(schedulerProvider.ui)
+                .subscribe { listReview ->
+                    mAdapterReview.updateReview(listReview)
+                }
+        }.addToDisposable()
 
 /*        val output = mViewModel.transform(
             Any()
@@ -92,6 +100,7 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
         showViewAllOverview()
         showGenres()
         showCountries()
+        showReview()
     }
 
     private fun showDetail(movieDetail: MovieDetail){
@@ -99,7 +108,7 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
         context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
         tvTitleDetail.text = movieDetail.title
         val language = movieDetail.originalLanguage
-        if (language == "en"){
+        if (language == AppConstants.EN){
             tvLanguageDetail.text = getText(R.string.english)
         }
         tvDateDetail.text = movieDetail.releaseDate
@@ -115,12 +124,12 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
     private fun showViewAllOverview(){
         var lineCount: Int = tvOverviewDetail.lineCount
         if (lineCount == 3){
-            tvViewAllOverviewDetail.visibility = View.GONE
+            tvViewAllOverview.visibility = View.GONE
         }
         tvOverviewDetail.maxLines = 3
-        tvViewAllOverviewDetail.setOnClickListener {
+        tvViewAllOverview.setOnClickListener {
             tvOverviewDetail.maxLines = Int.MAX_VALUE
-            tvViewAllOverviewDetail.visibility = View.GONE
+            tvViewAllOverview.visibility = View.GONE
         }
     }
 
@@ -136,6 +145,13 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>() {
         mAdapterCountry = CountryDetailAdapter(context, mListCountries)
         rcyCountryDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcyCountryDetail.adapter = mAdapterCountry
+    }
+
+    private fun showReview(){
+        mListReview = mutableListOf()
+        mAdapterReview = ReviewDetailAdapter(context, mListReview)
+        rcyReview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rcyReview.adapter = mAdapterReview
     }
 
 

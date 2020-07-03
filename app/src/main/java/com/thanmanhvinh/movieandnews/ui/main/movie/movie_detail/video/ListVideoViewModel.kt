@@ -28,7 +28,7 @@ class ListVideoViewModel: BaseViewModel<ListVideoViewModel.Input, ListVideoViewM
                     mVideo.onNext(listVideo as MutableList<MovieVideo.Result>)
                 }
             },{
-                Log.d("TAG", "error $it")
+                //Log.d("TAG", "error $it")
             }).addToDisposable()
 
 

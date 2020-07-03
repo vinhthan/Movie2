@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
+import com.thanmanhvinh.movieandnews.data.api.MovieReview
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.CountryDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.ReviewDetailAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
+import kotlinx.android.synthetic.main.item_review.*
 
 
 class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
@@ -22,6 +25,8 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
     private lateinit var mListCountries: MutableList<MovieDetail.ProductionCountry>
     private lateinit var mAdapterGenres: GenresDetailAdapter
     private lateinit var mAdapterCountries: CountryDetailAdapter
+    private lateinit var mListReview: MutableList<MovieReview.Result>
+    private lateinit var mAdapterReview: ReviewDetailAdapter
 
     override fun createViewModel(): Class<NowPlayingDetailViewModel> =
         NowPlayingDetailViewModel::class.java
@@ -49,24 +54,24 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
             detail.observeOn(schedulerProvider.ui)
                 .subscribe { data ->
                     showDetail(data)
-                }.addToDisposable()
+                }
 
             listGenres.observeOn(schedulerProvider.ui)
                 .subscribe { listGenres ->
                     mAdapterGenres.upDateGenres(listGenres)
-                }.addToDisposable()
+                }
 
             listCountries.observeOn(schedulerProvider.ui)
                 .subscribe { listCountries ->
                     mAdapterCountries.updateCountries(listCountries)
-                }.addToDisposable()
+                }
 
-/*            video.observeOn(schedulerProvider.ui)
-                .subscribe { listMovie ->
-                    //showMovieVideo()
-                }*/
+            listReview.observeOn(schedulerProvider.ui)
+                .subscribe { listReview ->
+                    mAdapterReview.updateReview(listReview)
+                }
 
-        }
+        }.addToDisposable()
 
 
         imgBackDetail.setOnClickListener {
@@ -87,6 +92,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
         showGenres()
         showCountry()
         showViewAllOverview()
+        showReview()
 
 
 /*        val bundle  = arguments?.getSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL)
@@ -122,7 +128,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
         context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
         tvTitleDetail.text = movieDetail.title
         val language = movieDetail.originalLanguage
-        if (language == "en"){
+        if (language == AppConstants.EN){
             tvLanguageDetail.text = getText(R.string.english)
         }
         tvDateDetail.text = movieDetail.releaseDate
@@ -155,13 +161,20 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
     private fun showViewAllOverview(){
         var lineCount: Int = tvOverviewDetail.lineCount
         if (lineCount == 3){
-            tvViewAllOverviewDetail.visibility = View.GONE
+            tvViewAllOverview.visibility = View.GONE
         }
         tvOverviewDetail.maxLines = 3
-        tvViewAllOverviewDetail.setOnClickListener {
+        tvViewAllOverview.setOnClickListener {
             tvOverviewDetail.maxLines = Int.MAX_VALUE
-            tvViewAllOverviewDetail.visibility = View.GONE
+            tvViewAllOverview.visibility = View.GONE
         }
+    }
+
+    private fun showReview(){
+        mListReview = mutableListOf()
+        mAdapterReview = ReviewDetailAdapter(context, mListReview)
+        rcyReview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rcyReview.adapter = mAdapterReview
     }
 
 }

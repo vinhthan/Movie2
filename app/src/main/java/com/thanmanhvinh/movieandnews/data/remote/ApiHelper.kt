@@ -37,6 +37,11 @@ interface ApiHelper {
      */
     fun doGetMovieSearch(movieSearchRequest: MovieSearchRequest): Observable<MovieSearch>
 
+    /**
+     * Get review
+     */
+    fun doGetReview(id: Int, movieReviewRequest: MovieReviewRequest): Observable<MovieReview>
+
 
 
 

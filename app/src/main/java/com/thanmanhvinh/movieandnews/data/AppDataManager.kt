@@ -64,11 +64,12 @@ class AppDataManager @Inject constructor(
         return mApiService.doGetMovieSearch(movieSearchRequest)
     }
 
-
-
-
-
-
+    /**
+     * Get review
+     */
+    override fun doGetReview(id: Int, movieReviewRequest: MovieReviewRequest): Observable<MovieReview> {
+        return mApiService.doGetReview(id, movieReviewRequest)
+    }
 
 
 }

@@ -1,10 +1,7 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail
 
 import android.util.Log
-import com.thanmanhvinh.movieandnews.data.api.MovieDetail
-import com.thanmanhvinh.movieandnews.data.api.MovieDetailRequest
-import com.thanmanhvinh.movieandnews.data.api.MovieVideo
-import com.thanmanhvinh.movieandnews.data.api.MovieVideoRequest
+import com.thanmanhvinh.movieandnews.data.api.*
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
@@ -20,19 +17,17 @@ class NowPlayingDetailViewModel :
     data class Output(
         val detail: Observable<MovieDetail>,
         val listGenres: Observable<MutableList<MovieDetail.Genre>>,
-        val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>
-        //val video: Observable<MutableList<MovieVideo.Result>>
+        val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>,
+        val listReview: Observable<MutableList<MovieReview.Result>>
     )
 
     override fun transform(input: Input): Output {
         val mDetail = BehaviorSubject.create<MovieDetail>()
         val mListGenres = BehaviorSubject.create<MutableList<MovieDetail.Genre>>()
         val mListCountries = BehaviorSubject.create<MutableList<MovieDetail.ProductionCountry>>()
-        //val mVideo = BehaviorSubject.create<MutableList<MovieVideo.Result>>()
+        val mListReview = BehaviorSubject.create<MutableList<MovieReview.Result>>()
 
         input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
-            .subscribeOn(mSchedulerProvider.io)
-            .observeOn(mSchedulerProvider.ui)
             .subscribe({detail ->
                 mDetail.onNext(detail)
 
@@ -45,7 +40,16 @@ class NowPlayingDetailViewModel :
                 }
 
             }, {
-                Log.d("TAG", "error $it")
+                //Log.d("TAG", "error $it")
+            }).addToDisposable()
+
+        input.id.flatMap { doGetReview(it, AppConstants.API_KEY) }
+            .subscribe({review ->
+                review.results.let { list ->
+                    mListReview.onNext(list as MutableList<MovieReview.Result>)
+                }
+            },{
+                //Log.d("TAG", "error $it")
             }).addToDisposable()
 
 /*        input.id.flatMap { doGetMovieVideo(it, AppConstants.API_KEY) }
@@ -68,7 +72,7 @@ class NowPlayingDetailViewModel :
              Log.d("TAG", "error $error")
          }).addToDisposable()*/
 
-        return Output(mDetail, mListGenres, mListCountries)
+        return Output(mDetail, mListGenres, mListCountries, mListReview)
     }
 
     private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail> {
@@ -77,10 +81,10 @@ class NowPlayingDetailViewModel :
             .observeOn(mSchedulerProvider.ui)
     }
 
-/*    private fun doGetMovieVideo(id: Int, apiKey: String): Observable<MovieVideo>{
-        return mDataManager.doGetMovieVideo(id, MovieVideoRequest(apiKey))
+    private fun doGetReview(id: Int, apiKey: String): Observable<MovieReview>{
+        return mDataManager.doGetReview(id, MovieReviewRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
-    }*/
+    }
 
 }

@@ -9,7 +9,6 @@ import io.reactivex.subjects.BehaviorSubject
 
 class SeeAllTopRatedViewModel: BaseViewModel<SeeAllTopRatedViewModel.Input, SeeAllTopRatedViewModel.Output>() {
     private var page = AppConstants.LIST_PAGE
-    private var limit = AppConstants.LIST_LIMIT
 
     data class Input (
         val triggerRefresh: Observable<Boolean>,

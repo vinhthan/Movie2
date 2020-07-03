@@ -12,7 +12,6 @@ class SeeAllPopularViewModel :
     BaseViewModel<SeeAllPopularViewModel.Input, SeeAllPopularViewModel.Ouput>() {
 
     private var page = AppConstants.LIST_PAGE
-    private var limit = AppConstants.LIST_LIMIT
 
     data class Input(
         val triggerRefresh: Observable<Boolean>,
