@@ -6,6 +6,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thanmanhvinh.movieandnews.data.AppDataManager
 import com.thanmanhvinh.movieandnews.data.DataManager
+import com.thanmanhvinh.movieandnews.data.local.AppPreferencesHelper
+import com.thanmanhvinh.movieandnews.data.local.PreferencesHelper
 import com.thanmanhvinh.movieandnews.di.Preferences
 import com.thanmanhvinh.movieandnews.utils.rx.AppSchedulerProvider
 import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
@@ -44,6 +46,14 @@ class AppModule {
     fun provideGson(): Gson? {
         return GsonBuilder().setLenient().create()
     }
+
+    @Provides
+    @Singleton
+    fun providerPreferencesHelper(appPreferencesHelper: AppPreferencesHelper): PreferencesHelper {
+        return appPreferencesHelper
+    }
+
+
 
 
 

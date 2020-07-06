@@ -50,6 +50,9 @@ class SeeAllTopRatedFragment : BaseFragment<SeeAllTopRatedViewModel>(), PageIndi
 
     override fun initData() {
         showTopRated()
+        imgBackTopRatedSeeAll.setOnClickListener {
+            onButtonBackClick()
+        }
     }
 
     private fun showTopRated(){

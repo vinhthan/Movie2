@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
@@ -38,6 +39,7 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             SeeAllUpcomingFragment::class -> SeeAllUpcomingFragment()
             ListVideoFragment::class -> ListVideoFragment()
             PlayVideoFragment::class -> PlayVideoFragment()
+            LoginFragment::class -> LoginFragment()
 
 
             else -> throw Exception("fragment not found")

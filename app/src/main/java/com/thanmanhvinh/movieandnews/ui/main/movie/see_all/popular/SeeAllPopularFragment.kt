@@ -46,6 +46,9 @@ class SeeAllPopularFragment : BaseFragment<SeeAllPopularViewModel>(), PageIndica
 
     override fun initData() {
         showSeeAllPopular()
+        imgBackPopularSeeAll.setOnClickListener {
+            onButtonBackClick()
+        }
     }
 
     private fun showSeeAllPopular(){

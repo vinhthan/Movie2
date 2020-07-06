@@ -42,6 +42,17 @@ interface ApiHelper {
      */
     fun doGetReview(id: Int, movieReviewRequest: MovieReviewRequest): Observable<MovieReview>
 
+    /**
+     * get token
+     */
+    fun doGetToken(tokenRequest: TokenRequest): Observable<Token>
+
+    /**
+     * Login
+     */
+    fun doLogin(loginRequest: LoginRequest): Observable<Login>
+
+
 
 
 

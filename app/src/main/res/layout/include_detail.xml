@@ -3,14 +3,15 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/back_ground_home"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:background="@color/back_ground_home">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/back_ground_home">
 
         <TextView
             android:id="@+id/tvH"
@@ -143,7 +144,7 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
             android:background="@drawable/bg_image_detail"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1.165"
             app:layout_constraintStart_toStartOf="@+id/webView"
             app:layout_constraintTop_toBottomOf="@+id/webView"
@@ -293,6 +294,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View all"
+            android:paddingTop="@dimen/margin_2"
+            android:paddingBottom="@dimen/margin_2"
+            android:paddingStart="@dimen/margin_2"
+            android:textColor="@color/color_text_see_all"
+            android:textSize="@dimen/size_14"
+            app:layout_constraintEnd_toEndOf="@+id/tvOverviewDetail"
+            app:layout_constraintTop_toBottomOf="@+id/tvOverviewDetail" />
+
+        <TextView
+            android:id="@+id/tvCollapseOverview"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collapse"
             android:textColor="@color/color_text_see_all"
             android:textSize="@dimen/size_14"
             app:layout_constraintEnd_toEndOf="@+id/tvOverviewDetail"
@@ -311,7 +326,7 @@
                 android:id="@+id/imgBigDetail"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -322,8 +337,9 @@
                 android:id="@+id/imgBackDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:padding="@dimen/margin_10"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_left" />
@@ -356,11 +372,14 @@
             android:id="@+id/rcyReview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_8"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvOverviewDetail"
-            app:layout_constraintTop_toBottomOf="@+id/tvOverviewDetail" />
+            app:layout_constraintTop_toBottomOf="@+id/tvOverviewDetail"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

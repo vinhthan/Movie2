@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/movieFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/movieFragment"
@@ -70,4 +70,8 @@
         android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.play_video.PlayVideoFragment"
         android:label="fragment_play_video"
         tools:layout="@layout/fragment_play_video" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

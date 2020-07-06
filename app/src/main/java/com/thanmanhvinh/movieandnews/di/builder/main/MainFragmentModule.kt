@@ -1,6 +1,7 @@
 package com.thanmanhvinh.movieandnews.di.builder.main
 
 import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
@@ -57,5 +58,8 @@ abstract class MainFragmentModule {
 
     @ContributesAndroidInjector
     abstract fun playVideoFragment(): PlayVideoFragment
+
+    @ContributesAndroidInjector
+    abstract fun loginFragment(): LoginFragment
 
 }

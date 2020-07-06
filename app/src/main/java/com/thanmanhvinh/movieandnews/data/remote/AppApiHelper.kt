@@ -114,5 +114,25 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(MovieReview::class.java)
     }
 
+    /**
+     * get token
+     */
+    override fun doGetToken(tokenRequest: TokenRequest): Observable<Token> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_TOKEN)
+            .addQueryParameter(tokenRequest)
+            .build()
+            .getObjectObservable(Token::class.java)
+    }
+
+    /**
+     * login
+     */
+    override fun doLogin(loginRequest: LoginRequest): Observable<Login> {
+        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_MOVIE_LOGIN)
+            .addBodyParameter(loginRequest)
+            .build()
+            .getObjectObservable(Login::class.java)
+    }
+
 
 }

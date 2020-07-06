@@ -35,6 +35,7 @@ class MovieSearchAdapter(
         context?.let { Glide.with(it).load(list[position].getImageBackdropPath()).into(holder.imgMovieSearch) }
         var voteAverage = list[position].voteAverage / 2 //rate star default 10 score scale -> / 2 return 5 score scale
         holder.ratingBar.rating = voteAverage.toFloat()
+        //holder.ratingBar.isEnabled = false
 
 
         holder.itemView.setOnClickListener {

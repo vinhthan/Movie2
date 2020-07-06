@@ -48,6 +48,9 @@ class SeeAllNowPlayingFragment : BaseFragment<SeeAllNowPlayingViewModel>(), Page
 
     override fun initData() {
         showNowPlaying()
+        imgBackNowPlayingSeeAll.setOnClickListener {
+            onButtonBackClick()
+        }
     }
 
     private fun showNowPlaying(){

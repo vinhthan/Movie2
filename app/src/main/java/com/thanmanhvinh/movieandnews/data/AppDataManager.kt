@@ -1,6 +1,7 @@
 package com.thanmanhvinh.movieandnews.data
 
 import com.thanmanhvinh.movieandnews.data.api.*
+import com.thanmanhvinh.movieandnews.data.local.PreferencesHelper
 import com.thanmanhvinh.movieandnews.data.remote.AppApiHelper
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -8,6 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AppDataManager @Inject constructor(
+    private val mPreferencesHelper: PreferencesHelper,
     private val mApiService: AppApiHelper
 ): DataManager {
 
@@ -70,6 +72,40 @@ class AppDataManager @Inject constructor(
     override fun doGetReview(id: Int, movieReviewRequest: MovieReviewRequest): Observable<MovieReview> {
         return mApiService.doGetReview(id, movieReviewRequest)
     }
+
+    /**
+     * get token
+     */
+    override fun doGetToken(tokenRequest: TokenRequest): Observable<Token> {
+        return mApiService.doGetToken(tokenRequest)
+    }
+
+    /**
+     * login
+     */
+    override fun doLogin(loginRequest: LoginRequest): Observable<Login> {
+        return mApiService.doLogin(loginRequest)
+    }
+
+    //
+    override val accessToken: String = mPreferencesHelper.accessToken
+    override val username: String = mPreferencesHelper.username
+    override val password: String = mPreferencesHelper.password
+
+    /**
+     * get token
+     */
+    override fun savePassword(password: String) {
+        mPreferencesHelper.savePassword(password)
+    }
+
+    /**
+     * login
+     */
+    override fun setAccessToken(token: String) {
+        mPreferencesHelper.setAccessToken(token)
+    }
+
 
 
 }

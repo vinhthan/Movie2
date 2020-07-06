@@ -42,6 +42,7 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
+        android:isIndicator="true"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/margin_40"
         android:layout_marginTop="@dimen/margin_5"

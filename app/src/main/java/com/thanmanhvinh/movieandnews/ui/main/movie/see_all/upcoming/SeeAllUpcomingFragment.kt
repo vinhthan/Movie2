@@ -48,6 +48,9 @@ class SeeAllUpcomingFragment : BaseFragment<SeeAllUpcomingViewModel>(), PageIndi
 
     override fun initData() {
         showSeeAllUpcoming()
+        imgBackUpcomingSeeAll.setOnClickListener {
+            onButtonBackClick()
+        }
     }
 
     private fun showSeeAllUpcoming(){

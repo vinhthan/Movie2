@@ -47,6 +47,10 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <TextView
+        android:visibility="visible"
+        android:paddingTop="@dimen/margin_2"
+        android:paddingStart="@dimen/margin_2"
+        android:paddingBottom="@dimen/margin_2"
         android:id="@+id/tvViewAllReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,5 +58,20 @@
         android:textColor="@color/color_text_see_all"
         android:textSize="@dimen/size_14"
         app:layout_constraintEnd_toEndOf="@+id/tvContentReview"
+        app:layout_constraintTop_toBottomOf="@+id/tvContentReview" />
+
+    <TextView
+        android:id="@+id/tvCollapseReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_2"
+        android:paddingStart="@dimen/margin_2"
+        android:paddingBottom="@dimen/margin_2"
+        android:layout_marginEnd="@dimen/margin_2"
+        android:text="Collapse"
+        android:textColor="@color/color_text_see_all"
+        android:textSize="@dimen/size_14"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvContentReview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,5 +18,9 @@
 
     <string name="english">English</string>
 
+    <string name="empty_username">Empty username</string>
+    <string name="empty_password">Empty password</string>
+
+
 
 </resources>

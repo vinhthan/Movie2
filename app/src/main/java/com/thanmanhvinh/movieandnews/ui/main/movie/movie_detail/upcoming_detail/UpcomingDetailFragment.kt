@@ -117,6 +117,12 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>() {
         tvViewAllOverview.setOnClickListener {
             tvOverviewDetail.maxLines = Int.MAX_VALUE
             tvViewAllOverview.visibility = View.GONE
+            tvCollapseOverview.visibility = View.VISIBLE
+        }
+        tvCollapseOverview.setOnClickListener {
+            tvOverviewDetail.maxLines = 3
+            tvCollapseOverview.visibility= View.GONE
+            tvViewAllOverview.visibility = View.VISIBLE
         }
     }
 

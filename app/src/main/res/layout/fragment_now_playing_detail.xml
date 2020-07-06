@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back_ground_home"
     tools:context=".ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment">
 
 

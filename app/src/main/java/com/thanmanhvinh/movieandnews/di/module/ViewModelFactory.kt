@@ -6,6 +6,7 @@ import com.thanmanhvinh.movieandnews.data.DataManager
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.ui.main.MainViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.MovieViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailViewModel
@@ -46,6 +47,7 @@ class ViewModelFactory @Inject constructor(
             SeeAllUpcomingViewModel::class.java -> SeeAllUpcomingViewModel() as T
             ListVideoViewModel::class.java -> ListVideoViewModel() as T
             PlayVideoViewModel::class.java -> PlayVideoViewModel() as T
+            LoginViewModel::class.java -> LoginViewModel() as T
 
 
             else -> throw IllegalArgumentException("Unknown ViewModel class ${modelClass.simpleName}")

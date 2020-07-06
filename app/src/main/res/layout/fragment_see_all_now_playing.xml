@@ -18,19 +18,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:gravity="center"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginEnd="@dimen/margin_16"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgBackNowPlayingSeeAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="@dimen/margin_10"
+                android:paddingEnd="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_10"
+                android:src="@drawable/left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:foregroundGravity="center"
                 android:text="Now playing"
                 android:textColor="@color/color_text_default"
-                android:textSize="@dimen/size_17" />
-        </LinearLayout>
+                android:textSize="@dimen/size_17"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

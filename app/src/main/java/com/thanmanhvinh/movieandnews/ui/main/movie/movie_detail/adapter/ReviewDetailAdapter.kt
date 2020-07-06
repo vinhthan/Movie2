@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieReview
@@ -30,6 +31,13 @@ class ReviewDetailAdapter(
         holder.tvViewAllReview.setOnClickListener {
             holder.tvContentReview.maxLines = Int.MAX_VALUE
             holder.tvViewAllReview.visibility = View.GONE
+            holder.tvCollapseReview.visibility = View.VISIBLE
+        }
+        holder.tvCollapseReview.setOnClickListener {
+            holder.tvContentReview.maxLines = 2
+            holder.tvCollapseReview.visibility = View.GONE
+            holder.tvViewAllReview.visibility = View.VISIBLE
+            Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -37,6 +45,7 @@ class ReviewDetailAdapter(
         var tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
         var tvContentReview: TextView = itemView.findViewById(R.id.tvContentReview)
         var tvViewAllReview: TextView = itemView.findViewById(R.id.tvViewAllReview)
+        var tvCollapseReview: TextView = itemView.findViewById(R.id.tvCollapseReview)
     }
 
     fun updateReview(review: MutableList<MovieReview.Result>){
