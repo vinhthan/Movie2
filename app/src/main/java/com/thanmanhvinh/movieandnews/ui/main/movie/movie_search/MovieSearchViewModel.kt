@@ -10,14 +10,15 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearchViewModel.Output>() {
+class MovieSearchViewModel :
+    BaseViewModel<MovieSearchViewModel.Input, MovieSearchViewModel.Output>() {
 
-    data class Input (
+    data class Input(
         val edtSearch: Observable<String>,
         val triggerSearch: Observable<Unit>
     )
 
-    data class Output (
+    data class Output(
         val loadList: Observable<MutableList<MovieSearch.Result>>
     )
 
@@ -25,13 +26,13 @@ class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearc
         val mEdtSearch: BehaviorSubject<String> = BehaviorSubject.create()
         val mLoadList = BehaviorSubject.create<MutableList<MovieSearch.Result>>()
 
-        with(input){
+        with(input) {
             edtSearch.subscribe(mEdtSearch)
 
             triggerSearch.subscribe {
                 val edtSearchStr = mEdtSearch.value ?: ""
                 doGetMovieSearch(AppConstants.API_KEY, edtSearchStr)
-                    .subscribe({movie ->
+                    .subscribe({ movie ->
                         movie.results.let { list ->
                             mLoadList.onNext(list as MutableList<MovieSearch.Result>)
                         }
@@ -40,7 +41,7 @@ class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearc
                     })
             }.addToDisposable()
 
-            }
+        }
 
 /*        doGetMovieSearch(AppConstants.API_KEY, mEdtSearch.toString())
             .subscribe({movie ->
@@ -54,7 +55,7 @@ class MovieSearchViewModel: BaseViewModel<MovieSearchViewModel.Input, MovieSearc
         return Output(mLoadList)
     }
 
-    private fun doGetMovieSearch(apiKey: String, query: String): Observable<MovieSearch>{
+    private fun doGetMovieSearch(apiKey: String, query: String): Observable<MovieSearch> {
         return mDataManager.doGetMovieSearch(MovieSearchRequest(apiKey, query))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)

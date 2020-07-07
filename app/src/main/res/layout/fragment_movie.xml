@@ -203,6 +203,18 @@
             app:layout_constraintEnd_toStartOf="@+id/imageView7"
             app:layout_constraintTop_toTopOf="@+id/textView4" />
 
+        <TextView
+            android:id="@+id/tvLogin"
+            android:padding="@dimen/margin_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Login"
+            android:textColor="@color/color_text_default"
+            app:layout_constraintBottom_toBottomOf="@+id/include"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/include" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

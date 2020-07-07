@@ -129,7 +129,7 @@ class AppApiHelper @Inject constructor() : ApiHelper {
      */
     override fun doLogin(loginRequest: LoginRequest): Observable<Login> {
         return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_MOVIE_LOGIN)
-            .addBodyParameter(loginRequest)
+            .addQueryParameter(loginRequest)
             .build()
             .getObjectObservable(Login::class.java)
     }

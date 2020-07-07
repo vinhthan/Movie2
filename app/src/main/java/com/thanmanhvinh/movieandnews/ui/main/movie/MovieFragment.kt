@@ -6,21 +6,24 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.jakewharton.rxbinding3.view.clicks
 import com.thanmanhvinh.movieandnews.R
-import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
-import com.thanmanhvinh.movieandnews.data.api.MoviePopular
-import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
-import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
+import com.thanmanhvinh.movieandnews.data.api.*
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import java.util.concurrent.TimeUnit
 
 
 class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
     ItemOnClickTopRated, ItemOnClickUpcoming {
 
+    //private var tokenRequest = BehaviorSubject.create<String>()
+
+    private lateinit var sendToken: String
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
     lateinit var listMovieUpcoming: MutableList<MovieUpcoming.Result>
     lateinit var listMoviePopular: MutableList<MoviePopular.Result>
@@ -46,24 +49,45 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterNowPlaying.updateList(list)
-                }
+                }.addToDisposable()
 
             listUpcoming.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterUpcoming.updateList(list)
-                }
+                }.addToDisposable()
 
             listPopular.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterPopular.updateList(list)
-                }
+                }.addToDisposable()
 
             listTopRated.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterTopRated.updateList(list)
-                }
+                }.addToDisposable()
 
-        }.addToDisposable()
+            token.observeOn(schedulerProvider.ui)
+                .subscribe { tokens ->
+                    tokens.requestToken.let { tok ->
+                        sendToken = tok
+                    }
+                }.addToDisposable()
+
+        }
+
+        tvLogin.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString(AppConstants.TOKEN, sendToken)
+            findNavController().navigate(R.id.loginFragment, bundle)
+            Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
+        }
+
+
+/*        tvLogin.setOnClickListener {
+            val bundle = Bundle()
+            //bundle.putString(AppConstants.TOKEN)
+            findNavController().navigate(R.id.loginFragment, bundle)
+        }*/
     }
 
     override fun initData() {
@@ -86,18 +110,10 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             findNavController().navigate(R.id.seeAllUpcomingFragment)
         }
 
-
         //
         imgSearch.setOnClickListener {
             findNavController().navigate(R.id.movieSearchFragment)
-/*            layout_discover.visibility = View.GONE
-            layout_search.visibility = View.VISIBLE*/
         }
-
-/*        tvCancel.setOnClickListener {
-            layout_discover.visibility = View.VISIBLE
-            layout_search.visibility = View.GONE
-        }*/
 
 
     }
@@ -142,7 +158,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
 /*        val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
         val bundle = Bundle()
         bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)*/
-
         val bundle = Bundle()
         if (listMovieNowPlaying.size > 0) {
             val movieNowPlaying = listMovieNowPlaying[position]
@@ -153,9 +168,8 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     }
 
     override fun OnItemClickPopular(position: Int) {
-
         val bundle = Bundle()
-        if (listMoviePopular.size > 0){
+        if (listMoviePopular.size > 0) {
             val moviePopular = listMoviePopular[position]
             val id = moviePopular.id
             bundle.putInt(AppConstants.ID_MOVIE, id)
@@ -164,7 +178,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     }
 
     override fun OnItemClickTopRated(position: Int) {
-
         val bundle = Bundle()
         if (listMovieTopRated.size > 0) {
             val movieTopRated = listMovieTopRated[position]
@@ -175,7 +188,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     }
 
     override fun OnItemClickUpcoming(position: Int) {
-
         val bundle = Bundle()
         if (listMovieUpcoming.size > 0) {
             val movieUpcoming = listMovieUpcoming[position]
@@ -184,6 +196,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         }
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
     }
+
 
 
 }

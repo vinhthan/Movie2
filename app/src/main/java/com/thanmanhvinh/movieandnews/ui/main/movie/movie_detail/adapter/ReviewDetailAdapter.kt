@@ -37,7 +37,7 @@ class ReviewDetailAdapter(
             holder.tvContentReview.maxLines = 2
             holder.tvCollapseReview.visibility = View.GONE
             holder.tvViewAllReview.visibility = View.VISIBLE
-            Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
         }
     }
 

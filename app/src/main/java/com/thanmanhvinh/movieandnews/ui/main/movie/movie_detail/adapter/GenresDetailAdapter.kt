@@ -26,7 +26,9 @@ class GenresDetailAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvItemGenres.text = list[position].name
-
+        if (position == list.size - 1){
+            holder.tvFence.visibility = View.GONE
+        }
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

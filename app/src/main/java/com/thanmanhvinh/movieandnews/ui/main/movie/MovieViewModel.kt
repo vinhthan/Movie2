@@ -21,9 +21,9 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
         val listNowPlaying: Observable<MutableList<MovieNowPlaying.Results>>,
         val listUpcoming: Observable<MutableList<MovieUpcoming.Result>>,
         val listPopular: Observable<MutableList<MoviePopular.Result>>,
-        val listTopRated: Observable<MutableList<MovieTopRated.Results>>
+        val listTopRated: Observable<MutableList<MovieTopRated.Results>>,
+        val token: Observable<Token>
     )
-
 
 
     override fun transform(input: Any): Output {
@@ -31,6 +31,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
         val mListUpcoming = BehaviorSubject.create<MutableList<MovieUpcoming.Result>>()
         val mListMoviePopular = BehaviorSubject.create<MutableList<MoviePopular.Result>>()
         val mListMovieTopRated = BehaviorSubject.create<MutableList<MovieTopRated.Results>>()
+        val mToken = BehaviorSubject.create<Token>()
 
         //
         doGetMovieNowPlaying(AppConstants.API_KEY).subscribe({ result ->
@@ -67,9 +68,16 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
             //Log.d("TAG", "transform: $error")
         }).addToDisposable()
 
+        doGetToken(AppConstants.API_KEY)
+            .subscribe({token ->
+                mToken.onNext(token)
+            },{error ->
+                Log.d("TAG", "error $error")
+            }).addToDisposable()
 
 
-        return Output(mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated)
+
+        return Output(mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated, mToken)
     }
 
     private fun doGetMovieNowPlaying(apiKey: String): Observable<MovieNowPlaying> {
@@ -96,5 +104,10 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
             .observeOn(mSchedulerProvider.ui)
     }
 
+    private fun doGetToken(apiKey: String): Observable<Token> {
+        return mDataManager.doGetToken(TokenRequest(apiKey))
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+    }
 
 }

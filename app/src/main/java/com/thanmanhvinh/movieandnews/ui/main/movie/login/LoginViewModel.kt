@@ -13,67 +13,74 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class LoginViewModel: BaseViewModel<LoginViewModel.Input, LoginViewModel.Output>() {
+class LoginViewModel : BaseViewModel<LoginViewModel.Input, LoginViewModel.Output>() {
     lateinit var context: Context
-    lateinit var tok: String
+
     data class Input(
+        val token: Observable<String>,
         val username: Observable<String>,
         val password: Observable<String>,
         val triggerLogin: Observable<Unit>
     )
 
-    data class Output (
-        val token: Observable<Token>,
-        val login: Observable<Boolean>
+    data class Output(
+        val login: Observable<Login>
     )
 
     override fun transform(input: Input): Output {
         val mUsername: BehaviorSubject<String> = BehaviorSubject.create()
         val mPassword: BehaviorSubject<String> = BehaviorSubject.create()
-        val mToken = BehaviorSubject.create<Token>()
-        val mLogin = BehaviorSubject.create<Boolean>()
+        val mLogin = BehaviorSubject.create<Login>()
+        //val mError = BehaviorSubject.create<String>()
 
-        with(input){
+
+        with(input) {
             username.subscribe(mUsername)
             password.subscribe(mPassword)
-            triggerLogin.map {
+/*            triggerLogin.subscribe {
                 val usernameStr = mUsername.value ?: ""
                 val passwordStr = mPassword.value ?: ""
-                val valid = validate(usernameStr, passwordStr)
-                if (valid != null){
-                    Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
-                }else if(valid == null){
-                    doGetToken(AppConstants.API_KEY)
-                        .subscribe({token ->
-                            token.requestToken.let { tok ->
-                                mToken.onNext(tok as Token)
-                                this@LoginViewModel.tok = mToken.toString()
-                            }
-                        },{error ->
-                            Log.d("TAG", "error $error")
-                        }).addToDisposable()
+
+                doLogin(AppConstants.API_KEY, usernameStr, passwordStr, it.toString())
+                    .subscribe({ login ->
+                        mLogin.onNext(login as Login)
+                    }, { error ->
+                        Log.d("TAG", "error $error")
+                    })
+            }*/
+
+            val usernameStr = mUsername.value ?: ""
+            val passwordStr = mPassword.value ?: ""
+            token.flatMap { tok ->
+                triggerLogin.flatMap {
                     doLogin(AppConstants.API_KEY, usernameStr, passwordStr, tok)
-                        .subscribe({
-                            mLogin.onNext(true)
-                        },{error ->
-                            Log.d("TAG", "error $error")
-                        }).addToDisposable()
                 }
-            }
+            }.subscribe({ login ->
+                    mLogin.onNext(login)
+                }, { error ->
+                    Log.d("TAG", "error $error")
+                }).addToDisposable()
+
+/*            token.flatMap {
+                doLogin(AppConstants.API_KEY, usernameStr, passwordStr, it)
+            }.subscribe({ login ->
+                mLogin.onNext(login)
+            }, { error ->
+                Log.d("TAG", "error $error")
+            })*/
 
         }
 
 
-        return Output(mToken, mLogin)
+        return Output(mLogin)
     }
 
-    private fun doGetToken(apiKey: String): Observable<Token>{
-        return mDataManager.doGetToken(TokenRequest(apiKey))
-            .subscribeOn(mSchedulerProvider.io)
-            .observeOn(mSchedulerProvider.ui)
-    }
-
-    private fun doLogin(apiKey: String, username: String, password: String, requestToken: String): Observable<Login>{
+    private fun doLogin(
+        apiKey: String,
+        username: String,
+        password: String,
+        requestToken: String
+    ): Observable<Login> {
         return mDataManager.doLogin(LoginRequest(apiKey, username, password, requestToken))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)

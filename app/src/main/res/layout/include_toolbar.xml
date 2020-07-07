@@ -17,6 +17,8 @@
             android:layout_height="match_parent">
 
             <EditText
+                android:inputType="text"
+                android:imeOptions="actionSearch"
                 android:id="@+id/edtSearch"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -29,7 +31,6 @@
                 android:ems="10"
                 android:paddingEnd="@dimen/margin_40"
                 android:hint="@string/search"
-                android:inputType="textPersonName"
                 android:paddingStart="@dimen/margin_6"
                 android:textColor="@color/color_text_default"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -65,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
+                android:padding="@dimen/margin_2"
                 app:layout_constraintBottom_toBottomOf="@+id/edtSearch"
                 app:layout_constraintEnd_toEndOf="@+id/edtSearch"
                 app:layout_constraintTop_toTopOf="@+id/edtSearch"
