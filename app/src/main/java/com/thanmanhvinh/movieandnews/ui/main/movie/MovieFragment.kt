@@ -1,23 +1,25 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie
 
 import android.os.Bundle
-import android.view.View
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.jakewharton.rxbinding3.view.clicks
 import com.thanmanhvinh.movieandnews.R
-import com.thanmanhvinh.movieandnews.data.api.*
+import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
+import com.thanmanhvinh.movieandnews.data.api.MoviePopular
+import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
+import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
-import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import java.util.concurrent.TimeUnit
 
 
+@Suppress("UNREACHABLE_CODE")
 class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
     ItemOnClickTopRated, ItemOnClickUpcoming {
 
@@ -70,16 +72,42 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                 .subscribe { tokens ->
                     tokens.requestToken.let { tok ->
                         sendToken = tok
+                        tvLogin.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString(AppConstants.TOKEN, sendToken)
+                            findNavController().navigate(R.id.loginFragment, bundle)
+                            //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
+                        }
                     }
+                    //
+
                 }.addToDisposable()
 
+            //
         }
 
-        tvLogin.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString(AppConstants.TOKEN, sendToken)
-            findNavController().navigate(R.id.loginFragment, bundle)
-            Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
+        //menu
+        imgMenu.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(context, imgMenu)
+            popupMenu.menuInflater.inflate(R.menu.menu_right, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {item ->
+                when(item.itemId){
+                    R.id.logins ->{
+                        val bundle = Bundle()
+                        bundle.putString(AppConstants.TOKEN, sendToken)
+                        findNavController().navigate(R.id.loginFragment, bundle)
+                        //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.aa ->{
+                        //Toast.makeText(context, "aa", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.bb ->{
+                        //Toast.makeText(context, "bb", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                true
+            })
+            popupMenu.show()
         }
 
 
@@ -95,6 +123,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         showMovieUpcoming()
         showMoviePopular()
         showMovieTopRated()
+
 
         //
         tvSeeAllNowPlaying.setOnClickListener {
@@ -196,6 +225,11 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         }
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
     }
+
+    //menu
+
+
+
 
 
 

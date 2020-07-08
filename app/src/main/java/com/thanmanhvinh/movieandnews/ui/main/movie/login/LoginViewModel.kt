@@ -49,10 +49,11 @@ class LoginViewModel : BaseViewModel<LoginViewModel.Input, LoginViewModel.Output
                     })
             }*/
 
-            val usernameStr = mUsername.value ?: ""
-            val passwordStr = mPassword.value ?: ""
+
             token.flatMap { tok ->
                 triggerLogin.flatMap {
+                    val usernameStr = mUsername.value ?: ""
+                    val passwordStr = mPassword.value ?: ""
                     doLogin(AppConstants.API_KEY, usernameStr, passwordStr, tok)
                 }
             }.subscribe({ login ->
@@ -60,6 +61,28 @@ class LoginViewModel : BaseViewModel<LoginViewModel.Input, LoginViewModel.Output
                 }, { error ->
                     Log.d("TAG", "error $error")
                 }).addToDisposable()
+
+            //
+/*            token.flatMap { tok ->
+                    doLogin(AppConstants.API_KEY, username.toString(), password.toString(), tok)
+
+            }.subscribe({ login ->
+                triggerLogin.subscribe {
+                    val usernameStr = mUsername.value ?: ""
+                    val passwordStr = mPassword.value ?: ""
+                    doLogin(AppConstants.API_KEY, usernameStr, passwordStr, token.toString())
+                        .subscribe({
+                            mLogin.onNext(login)
+                        },{error ->
+                            Log.d("TAG", "error $error")
+
+                        }).addToDisposable()
+                }
+
+            }, { error ->
+                Log.d("TAG", "error $error")
+            }).addToDisposable()*/
+
 
 /*            token.flatMap {
                 doLogin(AppConstants.API_KEY, usernameStr, passwordStr, it)

@@ -134,5 +134,13 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(Login::class.java)
     }
 
+    override fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_SIMILAR)
+            .addPathParameter("movie_id", id.toString())
+            .addQueryParameter(movieSimilarRequest)
+            .build()
+            .getObjectObservable(MovieSimilar::class.java)
+    }
+
 
 }

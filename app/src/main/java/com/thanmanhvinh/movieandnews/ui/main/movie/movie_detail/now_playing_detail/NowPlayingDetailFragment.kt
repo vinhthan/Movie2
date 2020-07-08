@@ -8,17 +8,20 @@ import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.data.api.MovieReview
+import com.thanmanhvinh.movieandnews.data.api.MovieSimilar
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.CountryDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.ReviewDetailAdapter
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.SimilarAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
 import kotlinx.android.synthetic.main.item_review.*
 
 
-class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
+class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), ItemOnClickNowPlaying {
 
     private var id = BehaviorSubject.create<Int>()
     private lateinit var mListGenres: MutableList<MovieDetail.Genre>
@@ -27,6 +30,8 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
     private lateinit var mAdapterCountries: CountryDetailAdapter
     private lateinit var mListReview: MutableList<MovieReview.Result>
     private lateinit var mAdapterReview: ReviewDetailAdapter
+    private lateinit var mListSimilar: MutableList<MovieSimilar.Result>
+    private lateinit var mAdapterSimilar: SimilarAdapter
 
     override fun createViewModel(): Class<NowPlayingDetailViewModel> =
         NowPlayingDetailViewModel::class.java
@@ -71,6 +76,11 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
                     mAdapterReview.updateReview(listReview)
                 }
 
+            listSimilar.observeOn(schedulerProvider.ui)
+                .subscribe { listSimilar ->
+                    mAdapterSimilar.updateSimilar(listSimilar)
+                }
+
         }.addToDisposable()
 
 
@@ -93,6 +103,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
         showCountry()
         showViewAllOverview()
         showReview()
+        showSimilar()
 
 
 /*        val bundle  = arguments?.getSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL)
@@ -181,6 +192,22 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>() {
         mAdapterReview = ReviewDetailAdapter(context, mListReview)
         rcyReview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyReview.adapter = mAdapterReview
+    }
+
+    private fun showSimilar(){
+        mListSimilar = mutableListOf()
+        mAdapterSimilar = SimilarAdapter(context, mListSimilar, this)
+        rcySimilar.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcySimilar.adapter = mAdapterSimilar
+    }
+
+    override fun OnItemClickNowPlaying(position: Int) {
+        val bundle = Bundle()
+        if (mListSimilar.size > 0){
+            var movieId = mListSimilar[position].id
+            bundle.putInt(AppConstants.ID_MOVIE, movieId)
+        }
+        findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
     }
 
 }

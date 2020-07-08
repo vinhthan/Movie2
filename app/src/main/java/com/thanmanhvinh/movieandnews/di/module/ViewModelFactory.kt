@@ -9,6 +9,8 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.MovieViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.review_similar.review.ReviewViewModel
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.review_similar.similar.SimilarViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoViewModel
@@ -48,6 +50,8 @@ class ViewModelFactory @Inject constructor(
             ListVideoViewModel::class.java -> ListVideoViewModel() as T
             PlayVideoViewModel::class.java -> PlayVideoViewModel() as T
             LoginViewModel::class.java -> LoginViewModel() as T
+            SimilarViewModel::class.java -> SimilarViewModel() as T
+            ReviewViewModel::class.java -> ReviewViewModel() as T
 
 
             else -> throw IllegalArgumentException("Unknown ViewModel class ${modelClass.simpleName}")

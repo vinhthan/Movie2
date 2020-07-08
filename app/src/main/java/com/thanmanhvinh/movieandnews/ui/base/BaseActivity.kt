@@ -34,7 +34,7 @@ open abstract class BaseActivity<VM: BaseViewModel<*, *>>: DaggerAppCompatActivi
         super.onCreate(savedInstanceState)
         viewModel = ViewModelFactory(schedulerProvider, dataManager).create(createViewModel())
         setContentView(getContentView())
-        setSupportActionBar(toolBar)
+        //setSupportActionBar(toolBar)
         initView()
         bindViewModel()
 

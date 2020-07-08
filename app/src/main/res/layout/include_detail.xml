@@ -372,14 +372,26 @@
             android:id="@+id/rcyReview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/margin_5"
             android:layout_marginBottom="@dimen/margin_8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tvOverviewDetail"
-            app:layout_constraintTop_toBottomOf="@+id/tvOverviewDetail"
+            app:layout_constraintTop_toBottomOf="@+id/rcySimilar"
             app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcySimilar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="@dimen/margin_5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvOverviewDetail"
+            app:layout_constraintTop_toBottomOf="@+id/tvOverviewDetail" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

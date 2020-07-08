@@ -2,6 +2,10 @@ package com.thanmanhvinh.movieandnews.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
@@ -27,7 +31,7 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
     override fun initView() {
         mFragmentBackStackManager = FragmentBackStackManager(supportFragmentManager)
-        setSupportActionBar(toolBar)
+        //setSupportActionBar(toolBar)
 
         val bundle = intent.getBundleExtra(AppConstants.HOME)
 /*        when{
@@ -86,6 +90,28 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         }
         startActivity(intent)
     }
+
+/*    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        val inflater = MenuInflater(this)
+        inflater.inflate(R.menu.menu_right, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logins ->{
+                Toast.makeText(this, "login", Toast.LENGTH_SHORT).show()
+            }
+            R.id.aa ->{
+                Toast.makeText(this, "aa", Toast.LENGTH_SHORT).show()
+            }
+            R.id.bb ->{
+                Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }*/
 
 
 /*    override fun onCreate(savedInstanceState: Bundle?) {

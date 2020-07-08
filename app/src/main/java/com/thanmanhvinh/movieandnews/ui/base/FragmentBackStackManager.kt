@@ -8,6 +8,8 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.popular_detail.PopularDetailFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.review_similar.review.ReviewFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.review_similar.similar.SimilarFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detail.TopRatedDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail.UpcomingDetailFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoFragment
@@ -40,6 +42,8 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             ListVideoFragment::class -> ListVideoFragment()
             PlayVideoFragment::class -> PlayVideoFragment()
             LoginFragment::class -> LoginFragment()
+            SimilarFragment::class -> SimilarFragment()
+            ReviewFragment::class -> ReviewFragment()
 
 
             else -> throw Exception("fragment not found")

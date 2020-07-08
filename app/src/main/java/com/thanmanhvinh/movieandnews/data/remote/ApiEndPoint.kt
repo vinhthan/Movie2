@@ -13,6 +13,7 @@ object ApiEndPoint {
 
     const val ENDPOINT_TOKEN = "https://api.themoviedb.org/3/authentication/token/new"
     const val ENDPOINT_MOVIE_LOGIN = "https://api.themoviedb.org/3/authentication/token/validate_with_login"
+    const val ENDPOINT_MOVIE_SIMILAR = "https://api.themoviedb.org/3/movie/{movie_id}/similar"
 
 
 }

@@ -10,12 +10,14 @@ import com.thanmanhvinh.movieandnews.data.api.Token
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import java.util.concurrent.TimeUnit
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
     private var token = BehaviorSubject.create<String>()
+    private var trigger = PublishSubject.create<Unit>()
 
     override fun createViewModel(): Class<LoginViewModel> = LoginViewModel::class.java
 
@@ -35,22 +37,29 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
                 token,
                 edtUsername.textChanges().map { it.toString() },
                 edtPassword.textChanges().map { it.toString() },
-                btnLogin.clicks().throttleFirst(300, TimeUnit.MILLISECONDS)
+                triggerLogin = trigger
             )
         )
+
+        btnLogin.setOnClickListener {
+            trigger.onNext(Unit)
+            //Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
+        }
 
         with(output) {
             login.observeOn(schedulerProvider.ui)
                 .subscribe {
                     findNavController().navigate(R.id.movieFragment)
-                    Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
                 }
         }.addToDisposable()
 
     }
 
     override fun initData() {
-
+        imgBackLogin.setOnClickListener {
+            onButtonBackClick()
+        }
     }
 
 

@@ -18,7 +18,8 @@ class NowPlayingDetailViewModel :
         val detail: Observable<MovieDetail>,
         val listGenres: Observable<MutableList<MovieDetail.Genre>>,
         val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>,
-        val listReview: Observable<MutableList<MovieReview.Result>>
+        val listReview: Observable<MutableList<MovieReview.Result>>,
+        val listSimilar: Observable<MutableList<MovieSimilar.Result>>
     )
 
     override fun transform(input: Input): Output {
@@ -26,6 +27,7 @@ class NowPlayingDetailViewModel :
         val mListGenres = BehaviorSubject.create<MutableList<MovieDetail.Genre>>()
         val mListCountries = BehaviorSubject.create<MutableList<MovieDetail.ProductionCountry>>()
         val mListReview = BehaviorSubject.create<MutableList<MovieReview.Result>>()
+        val mListSimilar = BehaviorSubject.create<MutableList<MovieSimilar.Result>>()
 
         input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
             .subscribe({detail ->
@@ -52,6 +54,15 @@ class NowPlayingDetailViewModel :
                 //Log.d("TAG", "error $it")
             }).addToDisposable()
 
+        input.id.flatMap { doGetSimilar(it, AppConstants.API_KEY) }
+            .subscribe({similar ->
+                similar.results.let { list ->
+                    mListSimilar.onNext(list as MutableList<MovieSimilar.Result>)
+                }
+            },{
+
+            }).addToDisposable()
+
 /*        input.id.flatMap { doGetMovieVideo(it, AppConstants.API_KEY) }
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
@@ -72,7 +83,7 @@ class NowPlayingDetailViewModel :
              Log.d("TAG", "error $error")
          }).addToDisposable()*/
 
-        return Output(mDetail, mListGenres, mListCountries, mListReview)
+        return Output(mDetail, mListGenres, mListCountries, mListReview, mListSimilar)
     }
 
     private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail> {
@@ -83,6 +94,12 @@ class NowPlayingDetailViewModel :
 
     private fun doGetReview(id: Int, apiKey: String): Observable<MovieReview>{
         return mDataManager.doGetReview(id, MovieReviewRequest(apiKey))
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+    }
+
+    private fun doGetSimilar(id: Int, apiKey: String): Observable<MovieSimilar>{
+        return mDataManager.doGetSimilar(id, MovieSimilarRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }

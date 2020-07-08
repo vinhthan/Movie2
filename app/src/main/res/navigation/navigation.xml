@@ -74,4 +74,14 @@
         android:id="@+id/loginFragment"
         android:name="com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginFragment"
         android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.review_similar.review.ReviewFragment"
+        android:label="fragment_review"
+        tools:layout="@layout/fragment_review" />
+    <fragment
+        android:id="@+id/similarFragment"
+        android:name="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.review_similar.similar.SimilarFragment"
+        android:label="fragment_similar"
+        tools:layout="@layout/fragment_similar" />
 </navigation>

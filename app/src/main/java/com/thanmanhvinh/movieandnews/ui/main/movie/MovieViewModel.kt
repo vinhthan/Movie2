@@ -110,4 +110,6 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
             .observeOn(mSchedulerProvider.ui)
     }
 
+
+
 }

@@ -87,6 +87,8 @@ class AppDataManager @Inject constructor(
         return mApiService.doLogin(loginRequest)
     }
 
+
+
     //
     override val accessToken: String = mPreferencesHelper.accessToken
     override val username: String = mPreferencesHelper.username
@@ -104,6 +106,10 @@ class AppDataManager @Inject constructor(
      */
     override fun setAccessToken(token: String) {
         mPreferencesHelper.setAccessToken(token)
+    }
+
+    override fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar> {
+        return mApiService.doGetSimilar(id, movieSimilarRequest)
     }
 
 

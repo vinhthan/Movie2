@@ -52,6 +52,10 @@ interface ApiHelper {
      */
     fun doLogin(loginRequest: LoginRequest): Observable<Login>
 
+    /**
+     * get similar
+     */
+    fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar>
 
 
 
