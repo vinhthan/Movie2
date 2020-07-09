@@ -19,4 +19,5 @@ object AppConstants {
 
     const val HOME = "home"
     const val EN = "en"
+    const val HI = "hi"
 }

@@ -51,22 +51,22 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterNowPlaying.updateList(list)
-                }.addToDisposable()
+                }
 
             listUpcoming.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterUpcoming.updateList(list)
-                }.addToDisposable()
+                }
 
             listPopular.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterPopular.updateList(list)
-                }.addToDisposable()
+                }
 
             listTopRated.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterTopRated.updateList(list)
-                }.addToDisposable()
+                }
 
             token.observeOn(schedulerProvider.ui)
                 .subscribe { tokens ->
@@ -79,12 +79,14 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                             //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    //
-
-                }.addToDisposable()
+                }
+            errorToast.observeOn(schedulerProvider.ui)
+                .subscribe {
+                    Toast.makeText(context, R.string.please_try_again, Toast.LENGTH_SHORT).show()
+                }
 
             //
-        }
+        }.addToDisposable()
 
         //menu
         imgMenu.setOnClickListener {

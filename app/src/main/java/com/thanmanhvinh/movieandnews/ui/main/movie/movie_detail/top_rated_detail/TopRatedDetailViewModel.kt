@@ -16,7 +16,9 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
         val detail: Observable<MovieDetail>,
         val listGenres: Observable<MutableList<MovieDetail.Genre>>,
         val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>,
-        val listReview: Observable<MutableList<MovieReview.Result>>
+        val listReview: Observable<MutableList<MovieReview.Result>>,
+        val listSimilar: Observable<MutableList<MovieSimilar.Result>>,
+        val errorToast: Observable<String>
     )
 
     override fun transform(input: Input): Output {
@@ -24,6 +26,8 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
         val mListGenres = BehaviorSubject.create<MutableList<MovieDetail.Genre>>()
         val mListCountries = BehaviorSubject.create<MutableList<MovieDetail.ProductionCountry>>()
         val mListReview = BehaviorSubject.create<MutableList<MovieReview.Result>>()
+        val mListSimilar = BehaviorSubject.create<MutableList<MovieSimilar.Result>>()
+        val mErrorToast = BehaviorSubject.create<String>()
 
         input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
             .subscribe({detail ->
@@ -38,7 +42,7 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
                 }
 
             },{
-                //Log.d("TAG", "reeor $it")
+                mErrorToast.onNext(it.toString())
             }).addToDisposable()
 
         input.id.flatMap { doGetReview(it, AppConstants.API_KEY) }
@@ -47,11 +51,20 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
                     mListReview.onNext(list as MutableList<MovieReview.Result>)
                 }
             },{
-                //Log.d("TAG", "error $it")
+                mErrorToast.onNext(it.toString())
+            }).addToDisposable()
+
+        input.id.flatMap { doGetSimilar(it, AppConstants.API_KEY) }
+            .subscribe({similar ->
+                similar.results.let {list ->
+                    mListSimilar.onNext(list as MutableList<MovieSimilar.Result>)
+                }
+            }, {
+                mErrorToast.onNext(it.toString())
             }).addToDisposable()
 
 
-        return Output(mDetail, mListGenres, mListCountries, mListReview)
+        return Output(mDetail, mListGenres, mListCountries, mListReview, mListSimilar, mErrorToast)
     }
 
     private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail>{
@@ -62,6 +75,12 @@ class TopRatedDetailViewModel: BaseViewModel<TopRatedDetailViewModel.Input, TopR
 
     private fun doGetReview(id: Int, apiKey: String): Observable<MovieReview>{
         return mDataManager.doGetReview(id, MovieReviewRequest(apiKey))
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+    }
+
+    private fun doGetSimilar(id: Int, apiKey: String): Observable<MovieSimilar>{
+        return mDataManager.doGetSimilar(id, MovieSimilarRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }

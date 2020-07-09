@@ -1,6 +1,8 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -36,6 +38,12 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
 
     override fun bindViewModel() {
 
+/*        edtSearch.textChanges()
+            .subscribe(
+                { Toast.makeText(context, "change", Toast.LENGTH_SHORT).show() },
+                { Log.e("MainActivity", "$it") }
+            ).addToDisposable()*/
+
         val output = mViewModel.transform(
             MovieSearchViewModel.Input(
                 edtSearch.textChanges().map { it.toString() },
@@ -47,20 +55,36 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
             triggerSearch.onNext(Unit)
         }
 
-        with(output){
+        with(output) {
             loadList.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapter.updateListMovieSearch(list)
                     rcyMovieSearch.scrollToPosition(0)// Each search will return to the first position
-                }.addToDisposable()
+                }
+            errorToast.observeOn(schedulerProvider.ui)
+                .subscribe {
+                    Toast.makeText(context, R.string.please_try_again, Toast.LENGTH_SHORT).show()
+                }
 
-        }
+        }.addToDisposable()
 
+        /**
+         * listen to the event text changes continuously
+         */
+        edtSearch.textChanges().subscribe {
+            Handler().postDelayed({
+                triggerSearch.onNext(Unit)
+            }, 100)
+
+        }.addToDisposable()
+
+        /**
+         * search with software keyboard
+         */
         edtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // Do what you want here
                 //Toast.makeText(context, "click search", Toast.LENGTH_SHORT).show()
-
                 triggerSearch.onNext(Unit)
 
                 return@setOnEditorActionListener true
@@ -90,25 +114,24 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
 
     }
 
-    private fun showMovieSearch(){
+    private fun showMovieSearch() {
         mList = mutableListOf()
         mAdapter = MovieSearchAdapter(context, mList, this)
         rcyMovieSearch.setHasFixedSize(true)
-        rcyMovieSearch.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rcyMovieSearch.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyMovieSearch.adapter = mAdapter
 
     }
 
     override fun OnItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
-        if (mList.size > 0){
+        if (mList.size > 0) {
             val movieId = mList[position].id
             bundle.putInt(AppConstants.ID_MOVIE, movieId)
         }
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
     }
-
-
 
 
 }

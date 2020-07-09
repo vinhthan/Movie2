@@ -2,6 +2,7 @@ package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_det
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -18,7 +19,8 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.SimilarA
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
-import kotlinx.android.synthetic.main.item_review.*
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 
 class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), ItemOnClickNowPlaying {
@@ -81,6 +83,11 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
                     mAdapterSimilar.updateSimilar(listSimilar)
                 }
 
+            errorToast.observeOn(schedulerProvider.ui)
+                .subscribe {
+                    Toast.makeText(context, R.string.please_try_again, Toast.LENGTH_SHORT).show()
+                }
+
         }.addToDisposable()
 
 
@@ -141,6 +148,8 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         val language = movieDetail.originalLanguage
         if (language == AppConstants.EN){
             tvLanguageDetail.text = getText(R.string.english)
+        }else if (language == AppConstants.HI){
+            tvLanguageDetail.text = getText(R.string.hindi)
         }
         tvDateDetail.text = movieDetail.releaseDate
         var runtime = movieDetail.runtime
@@ -150,6 +159,12 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         tvM.text = m.toString()
         tvOverviewDetail.text = movieDetail.overview
         tvVoteDetail.text = movieDetail.voteAverage.toString()
+        var revenue = movieDetail.revenue
+
+        var pattern = "###,###,###,###.##"
+        var decimalFormat = DecimalFormat(pattern)
+        var format: String = decimalFormat.format(revenue)
+        tvRevenue.text = format
 
     }
 
@@ -170,10 +185,17 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
     }
 
     private fun showViewAllOverview(){
-        var lineCount: Int = tvOverviewDetail.lineCount
+/*        var lineCount: Int = tvOverviewDetail.lineCount
         if (lineCount == 3){
             tvViewAllOverview.visibility = View.GONE
+            tvCollapseOverview.visibility = View.GONE
+        }*/
+
+        if(tvOverviewDetail.maxLines == 3){
+            tvViewAllOverview.visibility = View.GONE
+            tvCollapseOverview.visibility = View.GONE
         }
+
         tvOverviewDetail.maxLines = 3
         tvViewAllOverview.setOnClickListener {
             tvOverviewDetail.maxLines = Int.MAX_VALUE

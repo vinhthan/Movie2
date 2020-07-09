@@ -1,6 +1,7 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail
 
 import android.util.Log
+import com.androidnetworking.error.ANError
 import com.thanmanhvinh.movieandnews.data.api.*
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
@@ -19,7 +20,8 @@ class NowPlayingDetailViewModel :
         val listGenres: Observable<MutableList<MovieDetail.Genre>>,
         val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>,
         val listReview: Observable<MutableList<MovieReview.Result>>,
-        val listSimilar: Observable<MutableList<MovieSimilar.Result>>
+        val listSimilar: Observable<MutableList<MovieSimilar.Result>>,
+        val errorToast: Observable<String>
     )
 
     override fun transform(input: Input): Output {
@@ -28,6 +30,7 @@ class NowPlayingDetailViewModel :
         val mListCountries = BehaviorSubject.create<MutableList<MovieDetail.ProductionCountry>>()
         val mListReview = BehaviorSubject.create<MutableList<MovieReview.Result>>()
         val mListSimilar = BehaviorSubject.create<MutableList<MovieSimilar.Result>>()
+        val mErrorToast = BehaviorSubject.create<String>()
 
         input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
             .subscribe({detail ->
@@ -42,7 +45,7 @@ class NowPlayingDetailViewModel :
                 }
 
             }, {
-                //Log.d("TAG", "error $it")
+                mErrorToast.onNext(it.toString())
             }).addToDisposable()
 
         input.id.flatMap { doGetReview(it, AppConstants.API_KEY) }
@@ -51,7 +54,7 @@ class NowPlayingDetailViewModel :
                     mListReview.onNext(list as MutableList<MovieReview.Result>)
                 }
             },{
-                //Log.d("TAG", "error $it")
+                mErrorToast.onNext(it.toString())
             }).addToDisposable()
 
         input.id.flatMap { doGetSimilar(it, AppConstants.API_KEY) }
@@ -59,7 +62,16 @@ class NowPlayingDetailViewModel :
                 similar.results.let { list ->
                     mListSimilar.onNext(list as MutableList<MovieSimilar.Result>)
                 }
-            },{
+            },{error ->
+                error.let {
+                    if (error is ANError){
+                        if (error.errorCode == 401){
+                            mErrorToast.onNext(error.toString())
+                        }else if (error.errorCode == 404){
+                            mErrorToast.onNext(error.toString())
+                        }
+                    }
+                }
 
             }).addToDisposable()
 
@@ -83,7 +95,7 @@ class NowPlayingDetailViewModel :
              Log.d("TAG", "error $error")
          }).addToDisposable()*/
 
-        return Output(mDetail, mListGenres, mListCountries, mListReview, mListSimilar)
+        return Output(mDetail, mListGenres, mListCountries, mListReview, mListSimilar, mErrorToast)
     }
 
     private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail> {

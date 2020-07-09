@@ -22,7 +22,8 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
         val listUpcoming: Observable<MutableList<MovieUpcoming.Result>>,
         val listPopular: Observable<MutableList<MoviePopular.Result>>,
         val listTopRated: Observable<MutableList<MovieTopRated.Results>>,
-        val token: Observable<Token>
+        val token: Observable<Token>,
+        val errorToast: Observable<String>
     )
 
 
@@ -32,6 +33,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
         val mListMoviePopular = BehaviorSubject.create<MutableList<MoviePopular.Result>>()
         val mListMovieTopRated = BehaviorSubject.create<MutableList<MovieTopRated.Results>>()
         val mToken = BehaviorSubject.create<Token>()
+        val mErrorToast = BehaviorSubject.create<String>()
 
         //
         doGetMovieNowPlaying(AppConstants.API_KEY).subscribe({ result ->
@@ -39,7 +41,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListNowPlaying.onNext(list)
             }
         }, { error ->
-            //Log.d("TAG", "transform: $error")
+            mErrorToast.onNext(error.toString())
         }).addToDisposable()
 
         doGetMovieUpcoming(AppConstants.API_KEY).subscribe({ result ->
@@ -47,7 +49,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListUpcoming.onNext(list)
             }
         }, { error ->
-            //Log.d("TAG", "transform: $error")
+            mErrorToast.onNext(error.toString())
         }).addToDisposable()
 
 
@@ -56,7 +58,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListMoviePopular.onNext(list)
             }
         }, { error ->
-            //Log.d("TAG", "transform: $error")
+            mErrorToast.onNext(error.toString())
         }).addToDisposable()
 
 
@@ -65,19 +67,19 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
                 mListMovieTopRated.onNext(it)
             }
         }, { error ->
-            //Log.d("TAG", "transform: $error")
+            mErrorToast.onNext(error.toString())
         }).addToDisposable()
 
         doGetToken(AppConstants.API_KEY)
             .subscribe({token ->
                 mToken.onNext(token)
             },{error ->
-                Log.d("TAG", "error $error")
+                mErrorToast.onNext(error.toString())
             }).addToDisposable()
 
 
 
-        return Output(mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated, mToken)
+        return Output(mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated, mToken, mErrorToast)
     }
 
     private fun doGetMovieNowPlaying(apiKey: String): Observable<MovieNowPlaying> {

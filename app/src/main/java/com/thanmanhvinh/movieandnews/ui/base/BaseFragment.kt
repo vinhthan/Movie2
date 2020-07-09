@@ -2,11 +2,16 @@ package com.thanmanhvinh.movieandnews.ui.base
 
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.content.ContextCompat.getSystemService
 import com.thanmanhvinh.movieandnews.data.DataManager
 import com.thanmanhvinh.movieandnews.di.module.ViewModelFactory
 import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
@@ -15,6 +20,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 import kotlin.reflect.KClass
+
 
 open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
 
@@ -95,6 +101,7 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
     private fun setupUI(view: View) {
         if (view !is EditText) {
             view.setOnTouchListener { _, _ ->
+                hideSoftKeyboard()
                 false
             }
         }
@@ -103,6 +110,14 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
                 val innerView = view.getChildAt(i)
                 setupUI(innerView)
             }
+        }
+    }
+
+    private fun hideSoftKeyboard() {
+        mActivity.currentFocus?.let {
+            val inputMethodManager =
+                mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 
@@ -132,5 +147,27 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
         compositeDisposable.add(this)
     }
 
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
 }

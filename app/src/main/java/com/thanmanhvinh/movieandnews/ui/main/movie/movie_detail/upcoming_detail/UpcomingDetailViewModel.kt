@@ -1,10 +1,7 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.upcoming_detail
 
 import android.util.Log
-import com.thanmanhvinh.movieandnews.data.api.MovieDetail
-import com.thanmanhvinh.movieandnews.data.api.MovieDetailRequest
-import com.thanmanhvinh.movieandnews.data.api.MovieReview
-import com.thanmanhvinh.movieandnews.data.api.MovieReviewRequest
+import com.thanmanhvinh.movieandnews.data.api.*
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
@@ -20,7 +17,9 @@ class UpcomingDetailViewModel :
         val detail: Observable<MovieDetail>,
         val listGenres: Observable<MutableList<MovieDetail.Genre>>,
         val listCountries: Observable<MutableList<MovieDetail.ProductionCountry>>,
-        val listReview: Observable<MutableList<MovieReview.Result>>
+        val listReview: Observable<MutableList<MovieReview.Result>>,
+        val listSimilar: Observable<MutableList<MovieSimilar.Result>>,
+        val errorToast: Observable<String>
     )
 
     override fun transform(input: Input): Output {
@@ -28,6 +27,8 @@ class UpcomingDetailViewModel :
         val mListGenres = BehaviorSubject.create<MutableList<MovieDetail.Genre>>()
         val mListCountries = BehaviorSubject.create<MutableList<MovieDetail.ProductionCountry>>()
         val mListReview = BehaviorSubject.create<MutableList<MovieReview.Result>>()
+        val mListSimilar = BehaviorSubject.create<MutableList<MovieSimilar.Result>>()
+        val mErrorToast = BehaviorSubject.create<String>()
 
         input.id.flatMap { doGetDetail(it, AppConstants.API_KEY) }
             .subscribeOn(mSchedulerProvider.io)
@@ -44,7 +45,7 @@ class UpcomingDetailViewModel :
                 }
 
             }, {
-                //Log.d("TAG", "error $it")
+                mErrorToast.onNext(it.toString())
             }).addToDisposable()
 
         input.id.flatMap { doGetReview(it, AppConstants.API_KEY) }
@@ -53,10 +54,19 @@ class UpcomingDetailViewModel :
                     mListReview.onNext(list as MutableList<MovieReview.Result>)
                 }
             },{
-                //Log.d("TAG", "error $it")
+                mErrorToast.onNext(it.toString())
             }).addToDisposable()
 
-        return Output(mDetail, mListGenres, mListCountries, mListReview)
+        input.id.flatMap { doGetSimilar(it, AppConstants.API_KEY) }
+            .subscribe({similar ->
+                similar.results.let { list ->
+                    mListSimilar.onNext(list as MutableList<MovieSimilar.Result>)
+                }
+            }, {
+                mErrorToast.onNext(it.toString())
+            }).addToDisposable()
+
+        return Output(mDetail, mListGenres, mListCountries, mListReview, mListSimilar, mErrorToast)
     }
 
     private fun doGetDetail(id: Int, apiKey: String): Observable<MovieDetail>{
@@ -67,6 +77,12 @@ class UpcomingDetailViewModel :
 
     private fun doGetReview(id: Int, apiKey: String): Observable<MovieReview>{
         return mDataManager.doGetReview(id, MovieReviewRequest(apiKey))
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+    }
+
+    private fun doGetSimilar(id: Int, apiKey: String): Observable<MovieSimilar>{
+        return mDataManager.doGetSimilar(id, MovieSimilarRequest(apiKey))
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }

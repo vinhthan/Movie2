@@ -19,16 +19,17 @@ class MovieSearchViewModel :
     )
 
     data class Output(
-        val loadList: Observable<MutableList<MovieSearch.Result>>
+        val loadList: Observable<MutableList<MovieSearch.Result>>,
+        val errorToast: Observable<String>
     )
 
     override fun transform(input: Input): Output {
         val mEdtSearch: BehaviorSubject<String> = BehaviorSubject.create()
         val mLoadList = BehaviorSubject.create<MutableList<MovieSearch.Result>>()
+        val mErrorToast = BehaviorSubject.create<String>()
 
         with(input) {
             edtSearch.subscribe(mEdtSearch)
-
             triggerSearch.subscribe {
                 val edtSearchStr = mEdtSearch.value ?: ""
                 doGetMovieSearch(AppConstants.API_KEY, edtSearchStr)
@@ -37,7 +38,7 @@ class MovieSearchViewModel :
                             mLoadList.onNext(list as MutableList<MovieSearch.Result>)
                         }
                     }, {
-                        //Log.d("TAGS", "error $it")
+                        //mErrorToast.onNext(it.toString())
                     })
             }.addToDisposable()
 
@@ -52,7 +53,11 @@ class MovieSearchViewModel :
                 Log.d("TAG", "error $it")
             }).addToDisposable()*/
 
-        return Output(mLoadList)
+
+        //combinelatest
+
+
+        return Output(mLoadList, mErrorToast)
     }
 
     private fun doGetMovieSearch(apiKey: String, query: String): Observable<MovieSearch> {

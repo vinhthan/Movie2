@@ -1,16 +1,16 @@
 package com.thanmanhvinh.movieandnews.ui.main
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.widget.Toast
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.base.FragmentBackStackManager
 import com.thanmanhvinh.movieandnews.ui.base.INavigatorActivity
+import com.thanmanhvinh.movieandnews.ui.splash.SplashActivity
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlin.reflect.KClass
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
 
     override fun bindViewModel() {
-
+        checkInternet()
 
     }
 
@@ -89,6 +89,25 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
             intent.putExtra(key, bundle)
         }
         startActivity(intent)
+    }
+
+    //
+    private fun checkInternet(): Unit {
+        var connected = false
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+                .state == NetworkInfo.State.CONNECTED ||
+            connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .state == NetworkInfo.State.CONNECTED
+        ) {
+            connected = true
+        } else {
+            connected = false
+            val intentNotConnect =
+                Intent(this@MainActivity, MainActivity2::class.java)
+            startActivity(intentNotConnect)
+        }
     }
 
 /*    override fun onCreateOptionsMenu(menu: Menu?): Boolean {

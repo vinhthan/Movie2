@@ -2,21 +2,26 @@ package com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.top_rated_detai
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieDetail
 import com.thanmanhvinh.movieandnews.data.api.MovieReview
+import com.thanmanhvinh.movieandnews.data.api.MovieSimilar
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.CountryDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.ReviewDetailAdapter
+import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.SimilarAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
+import java.text.DecimalFormat
 
-class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
+class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>(), ItemOnClickNowPlaying {
 
     private var id = BehaviorSubject.create<Int>()
     private lateinit var mListGenres: MutableList<MovieDetail.Genre>
@@ -25,6 +30,8 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
     private lateinit var mAdapterCountries: CountryDetailAdapter
     private lateinit var mListReview: MutableList<MovieReview.Result>
     private lateinit var mAdapterReview: ReviewDetailAdapter
+    private lateinit var mListSimilar: MutableList<MovieSimilar.Result>
+    private lateinit var mAdapterSimilar: SimilarAdapter
 
     override fun createViewModel(): Class<TopRatedDetailViewModel> = TopRatedDetailViewModel::class.java
 
@@ -67,6 +74,16 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
                 .subscribe { listReview ->
                     mAdapterReview.updateReview(listReview)
                 }
+
+            listSimilar.observeOn(schedulerProvider.ui)
+                .subscribe { list ->
+                    mAdapterSimilar.updateSimilar(list)
+                }
+
+            errorToast.observeOn(schedulerProvider.ui)
+                .subscribe {
+                    Toast.makeText(context, R.string.please_try_again, Toast.LENGTH_SHORT).show()
+                }
         }.addToDisposable()
 
         imgBackDetail.setOnClickListener {
@@ -88,6 +105,7 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
         showGenres()
         showCountries()
         showReview()
+        showSimilar()
     }
 
     private fun showDetail(movieDetail: MovieDetail) {
@@ -97,6 +115,8 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
         val language = movieDetail.originalLanguage
         if (language == AppConstants.EN){
             tvLanguageDetail.text = getText(R.string.english)
+        }else if (language == AppConstants.HI){
+            tvLanguageDetail.text = getText(R.string.hindi)
         }
         tvDateDetail.text = movieDetail.releaseDate
         var runtime = movieDetail.runtime
@@ -106,6 +126,12 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
         tvM.text = m.toString()
         tvOverviewDetail.text = movieDetail.overview
         tvVoteDetail.text = movieDetail.voteAverage.toString()
+        var revenue = movieDetail.revenue
+
+        var pattern = "###,###,###,###.##"
+        var decimalFormat = DecimalFormat(pattern)
+        var format: String = decimalFormat.format(revenue)
+        tvRevenue.text = format
     }
 
     private fun showViewAllOverview(){
@@ -145,6 +171,20 @@ class TopRatedDetailFragment : BaseFragment<TopRatedDetailViewModel>() {
         mAdapterReview = ReviewDetailAdapter(context, mListReview)
         rcyReview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyReview.adapter = mAdapterReview
+    }
+
+    private fun showSimilar(){
+        mListSimilar = mutableListOf()
+        mAdapterSimilar = SimilarAdapter(context, mListSimilar, this)
+        rcySimilar.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcySimilar.adapter = mAdapterSimilar
+    }
+
+    override fun OnItemClickNowPlaying(position: Int) {
+        val bundle = Bundle()
+        val movieId = mListSimilar[position].id
+        bundle.putInt(AppConstants.ID_MOVIE, movieId)
+        findNavController().navigate(R.id.topRatedDetailFragment, bundle)
     }
 
 }
