@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import androidx.navigation.findNavController
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
@@ -104,9 +105,11 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
             connected = true
         } else {
             connected = false
-            val intentNotConnect =
-                Intent(this@MainActivity, MainActivity2::class.java)
+            val intentNotConnect = Intent(this@MainActivity, MainActivity2::class.java)
             startActivity(intentNotConnect)
+
+            //
+            
         }
     }
 
