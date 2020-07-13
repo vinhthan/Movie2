@@ -20,6 +20,7 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.popular.SeeAllPopular
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.top_rated.SeeAllTopRatedFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.upcoming.SeeAllUpcomingFragment
 import com.thanmanhvinh.movieandnews.ui.main.news.NewsFragment
+import com.thanmanhvinh.movieandnews.ui.main_2.no_internet.NoInternetFragment
 import java.lang.Exception
 import kotlin.reflect.KClass
 
@@ -28,6 +29,7 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
     private fun getInstanceFragment(fragment: KClass<*>): Fragment{
         return when(fragment){
 
+            //Main Activity
             MovieFragment::class -> MovieFragment()
             NewsFragment::class -> NewsFragment()
             NowPlayingDetailFragment::class -> NowPlayingDetailFragment()
@@ -44,6 +46,9 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             LoginFragment::class -> LoginFragment()
             SimilarFragment::class -> SimilarFragment()
             ReviewFragment::class -> ReviewFragment()
+
+            //Main Activity 2
+            NoInternetFragment::class -> NoInternetFragment()
 
 
             else -> throw Exception("fragment not found")

@@ -15,6 +15,8 @@ import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import io.reactivex.subjects.BehaviorSubject
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
     ItemOnClickTopRated, ItemOnClickUpcoming {
 
-    //private var tokenRequest = BehaviorSubject.create<String>()
+    private val triggerLogout = BehaviorSubject.create<Unit>()
 
     private lateinit var sendToken: String
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
@@ -44,7 +46,9 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     override fun bindViewModel() {
 
         val ouput = mViewModel.transform(
-            Any()
+            MovieViewModel.Input(
+                triggerLogout = triggerLogout
+            )
         )
 
         with(ouput) {
@@ -85,10 +89,11 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                     Toast.makeText(context, R.string.please_try_again, Toast.LENGTH_SHORT).show()
                 }
 
-            //
         }.addToDisposable()
 
-        //menu
+        /**
+         * menu
+         */
         imgMenu.setOnClickListener {
             val popupMenu: PopupMenu = PopupMenu(context, imgMenu)
             popupMenu.menuInflater.inflate(R.menu.menu_right, popupMenu.menu)
@@ -100,11 +105,12 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                         findNavController().navigate(R.id.loginFragment, bundle)
                         //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
                     }
-                    R.id.aa ->{
-                        //Toast.makeText(context, "aa", Toast.LENGTH_SHORT).show()
-                    }
-                    R.id.bb ->{
-                        //Toast.makeText(context, "bb", Toast.LENGTH_SHORT).show()
+                    R.id.logout ->{
+                        mViewModel.triggerLogout()
+                        val bundle = Bundle()
+                        bundle.putString(AppConstants.TOKEN, sendToken)
+                        findNavController().navigate(R.id.loginFragment, bundle)
+                        Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
                     }
                 }
                 true
@@ -112,12 +118,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             popupMenu.show()
         }
 
-
-/*        tvLogin.setOnClickListener {
-            val bundle = Bundle()
-            //bundle.putString(AppConstants.TOKEN)
-            findNavController().navigate(R.id.loginFragment, bundle)
-        }*/
     }
 
     override fun initData() {
@@ -227,10 +227,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         }
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
     }
-
-    //menu
-
-
 
 
 

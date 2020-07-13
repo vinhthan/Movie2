@@ -6,8 +6,9 @@ import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 
-class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
+class MovieViewModel : BaseViewModel<MovieViewModel.Input, MovieViewModel.Output>() {
 
 /*    private var page = AppConstants.LIST_PAGE
     private var limit = AppConstants.LIST_LIMIT
@@ -17,7 +18,12 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
         val triggerRefresh: Observable<Boolean>
     )*/
 
+    data class Input (
+        val triggerLogout: Observable<Unit>
+    )
+
     data class Output(
+        val isLogout: Observable<Boolean>,
         val listNowPlaying: Observable<MutableList<MovieNowPlaying.Results>>,
         val listUpcoming: Observable<MutableList<MovieUpcoming.Result>>,
         val listPopular: Observable<MutableList<MoviePopular.Result>>,
@@ -27,13 +33,29 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
     )
 
 
-    override fun transform(input: Any): Output {
+
+
+    override fun transform(input: Input): Output {
+        val mIsLogout = PublishSubject.create<Boolean>()
         val mListNowPlaying = BehaviorSubject.create<MutableList<MovieNowPlaying.Results>>()
         val mListUpcoming = BehaviorSubject.create<MutableList<MovieUpcoming.Result>>()
         val mListMoviePopular = BehaviorSubject.create<MutableList<MoviePopular.Result>>()
         val mListMovieTopRated = BehaviorSubject.create<MutableList<MovieTopRated.Results>>()
         val mToken = BehaviorSubject.create<Token>()
         val mErrorToast = BehaviorSubject.create<String>()
+
+        with(input){
+            triggerLogout.observeOn(mSchedulerProvider.ui)
+                .subscribe({
+                    if (mDataManager.checkLogin()){
+                        mIsLogout.onNext(true)
+                    }else{
+                        mIsLogout.onNext(false)
+                    }
+                },{
+
+                })
+        }.addToDisposable()
 
         //
         doGetMovieNowPlaying(AppConstants.API_KEY).subscribe({ result ->
@@ -79,7 +101,7 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
 
 
 
-        return Output(mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated, mToken, mErrorToast)
+        return Output(mIsLogout, mListNowPlaying, mListUpcoming, mListMoviePopular, mListMovieTopRated, mToken, mErrorToast)
     }
 
     private fun doGetMovieNowPlaying(apiKey: String): Observable<MovieNowPlaying> {
@@ -111,6 +133,28 @@ class MovieViewModel : BaseViewModel<Any, MovieViewModel.Output>() {
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }
+
+    /**
+     * logout
+     */
+    fun triggerLogout(){
+        mDataManager.doLogout(LogoutRequest(AppConstants.API_KEY, AppConstants.SESSION_ID))
+            .subscribeOn(mSchedulerProvider.io)
+            .observeOn(mSchedulerProvider.ui)
+            .subscribe ({
+                mDataManager.logout()
+            }, {
+
+            }).addToDisposable()
+    }
+
+/*    fun doLogout(apiKey: String, sessionId: String){
+        mDataManager.doLogout(LogoutRequest(apiKey, sessionId))
+    }*/
+
+
+
+
 
 
 

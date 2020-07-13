@@ -114,7 +114,6 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>(), ItemOnClic
     }
 
     override fun initData() {
-        showViewAllOverview()
         showGenres()
         showCountries()
         showReview()
@@ -145,13 +144,13 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>(), ItemOnClic
         var decimalFormat = DecimalFormat(pattern)
         var format: String = decimalFormat.format(revenue)
         tvRevenue.text = format
-    }
 
-    private fun showViewAllOverview(){
-        var lineCount: Int = tvOverviewDetail.lineCount
-        if (lineCount == 3){
+        //View all and Collapse
+        if(tvOverviewDetail.lineCount <= 3){
             tvViewAllOverview.visibility = View.GONE
+            tvCollapseOverview.visibility = View.GONE
         }
+
         tvOverviewDetail.maxLines = 3
         tvViewAllOverview.setOnClickListener {
             tvOverviewDetail.maxLines = Int.MAX_VALUE
@@ -164,6 +163,7 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>(), ItemOnClic
             tvViewAllOverview.visibility = View.VISIBLE
         }
     }
+
 
     private fun showGenres(){
         mListGenres = mutableListOf()

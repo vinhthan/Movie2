@@ -8,6 +8,7 @@ object AppConstants {
     const val MOVIE_UPCOMING_DETAIL = "MOVIE_UPCOMING_DETAIL"
     const val ID_MOVIE = "ID_MOVIE"
     const val TOKEN = "TOKEN"
+    const val SESSION_ID = "2629f70fb498edc263a0adb99118ac41f0053e8c"
 
 
 

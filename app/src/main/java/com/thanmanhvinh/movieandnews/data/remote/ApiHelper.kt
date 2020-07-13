@@ -43,6 +43,11 @@ interface ApiHelper {
     fun doGetReview(id: Int, movieReviewRequest: MovieReviewRequest): Observable<MovieReview>
 
     /**
+     * get similar
+     */
+    fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar>
+
+    /**
      * get token
      */
     fun doGetToken(tokenRequest: TokenRequest): Observable<Token>
@@ -53,9 +58,12 @@ interface ApiHelper {
     fun doLogin(loginRequest: LoginRequest): Observable<Login>
 
     /**
-     * get similar
+     * logout
      */
-    fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar>
+    fun doLogout(logoutRequest: LogoutRequest): Observable<Logout>
+
+
+
 
 
 

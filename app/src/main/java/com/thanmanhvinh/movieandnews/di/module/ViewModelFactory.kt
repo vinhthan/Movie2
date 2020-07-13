@@ -21,6 +21,8 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.popular.SeeAllPopular
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.top_rated.SeeAllTopRatedViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.see_all.upcoming.SeeAllUpcomingViewModel
 import com.thanmanhvinh.movieandnews.ui.main.news.NewsViewModel
+import com.thanmanhvinh.movieandnews.ui.main_2.MainViewModel2
+import com.thanmanhvinh.movieandnews.ui.main_2.no_internet.NoInternetViewModel
 import com.thanmanhvinh.movieandnews.ui.splash.SplashViewModel
 import com.thanmanhvinh.movieandnews.utils.rx.SchedulerProvider
 import java.lang.IllegalArgumentException
@@ -34,6 +36,7 @@ class ViewModelFactory @Inject constructor(
 ) : ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when(modelClass){
+            //Main Activity
             MainViewModel::class.java -> MainViewModel() as T
             MovieViewModel::class.java -> MovieViewModel() as T
             NewsViewModel::class.java -> NewsViewModel() as T
@@ -52,6 +55,10 @@ class ViewModelFactory @Inject constructor(
             LoginViewModel::class.java -> LoginViewModel() as T
             SimilarViewModel::class.java -> SimilarViewModel() as T
             ReviewViewModel::class.java -> ReviewViewModel() as T
+
+            //Main Activity 2
+            MainViewModel2::class.java -> MainViewModel2() as T
+            NoInternetViewModel::class.java -> NoInternetViewModel() as T
 
 
             else -> throw IllegalArgumentException("Unknown ViewModel class ${modelClass.simpleName}")

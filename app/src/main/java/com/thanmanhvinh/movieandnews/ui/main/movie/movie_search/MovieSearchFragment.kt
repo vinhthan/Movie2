@@ -51,10 +51,6 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
             )
         )
 
-        imgSearchMovie.setOnClickListener {
-            triggerSearch.onNext(Unit)
-        }
-
         with(output) {
             loadList.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
@@ -68,13 +64,21 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
 
         }.addToDisposable()
 
+
+        /**
+         * search
+         */
+        imgSearchMovie.setOnClickListener {
+            triggerSearch.onNext(Unit)
+        }
+
         /**
          * listen to the event text changes continuously
          */
         edtSearch.textChanges().subscribe {
             Handler().postDelayed({
                 triggerSearch.onNext(Unit)
-            }, 100)
+            }, 0)
 
         }.addToDisposable()
 

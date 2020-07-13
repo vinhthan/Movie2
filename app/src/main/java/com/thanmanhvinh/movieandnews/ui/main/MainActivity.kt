@@ -5,14 +5,15 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import androidx.navigation.findNavController
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.base.FragmentBackStackManager
 import com.thanmanhvinh.movieandnews.ui.base.INavigatorActivity
-import com.thanmanhvinh.movieandnews.ui.splash.SplashActivity
+import com.thanmanhvinh.movieandnews.ui.main_2.MainActivity2
+import com.thanmanhvinh.movieandnews.ui.main_2.no_internet.NoInternetFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlin.reflect.KClass
 
@@ -107,9 +108,10 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
             connected = false
             val intentNotConnect = Intent(this@MainActivity, MainActivity2::class.java)
             startActivity(intentNotConnect)
+            finish()
 
             //
-            
+
         }
     }
 
@@ -136,12 +138,7 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
     }*/
 
 
-/*    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }*/
+
+
 }
-//api key: 034bbd1b233d6726e0c7dc7f338657f9
-//url: https://api.themoviedb.org/3/movie/popular?api_key=034bbd1b233d6726e0c7dc7f338657f9
-//poster: https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
 

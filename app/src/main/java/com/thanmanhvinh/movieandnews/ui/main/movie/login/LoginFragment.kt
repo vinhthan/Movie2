@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
     private var token = BehaviorSubject.create<String>()
-    private var trigger = PublishSubject.create<Unit>()
+    private var triggerLogin = PublishSubject.create<Unit>()
 
     override fun createViewModel(): Class<LoginViewModel> = LoginViewModel::class.java
 
@@ -38,12 +38,12 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
                 token,
                 edtUsername.textChanges().map { it.toString() },
                 edtPassword.textChanges().map { it.toString() },
-                triggerLogin = trigger
+                triggerLogin = triggerLogin
             )
         )
 
         btnLogin.setOnClickListener {
-            trigger.onNext(Unit)
+            triggerLogin.onNext(Unit)
             //Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
         }
 
@@ -77,7 +77,21 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         imgBackLogin.setOnClickListener {
             onButtonBackClick()
         }
+
     }
 
+    override fun onResume() {
+        checkLogin()
+        super.onResume()
+    }
 
+    private fun checkLogin() {
+        if (mViewModel.isUnauthorized()) {
+            btnLogin.isEnabled = false
+        } else {
+            btnLogin.isEnabled = true
+        }
+
+
+    }
 }

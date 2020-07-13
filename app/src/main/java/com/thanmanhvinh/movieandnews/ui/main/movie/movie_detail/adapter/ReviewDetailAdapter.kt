@@ -33,6 +33,7 @@ class ReviewDetailAdapter(
             holder.tvViewAllReview.visibility = View.GONE
             holder.tvCollapseReview.visibility = View.VISIBLE
         }
+
         holder.tvCollapseReview.setOnClickListener {
             holder.tvContentReview.maxLines = 2
             holder.tvCollapseReview.visibility = View.GONE
@@ -44,8 +45,9 @@ class ReviewDetailAdapter(
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
         var tvContentReview: TextView = itemView.findViewById(R.id.tvContentReview)
-        var tvViewAllReview: TextView = itemView.findViewById(R.id.tvViewAllReview)
         var tvCollapseReview: TextView = itemView.findViewById(R.id.tvCollapseReview)
+        var tvViewAllReview: TextView = itemView.findViewById(R.id.tvViewAllReview)
+
     }
 
     fun updateReview(review: MutableList<MovieReview.Result>){

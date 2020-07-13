@@ -3,9 +3,7 @@
 
     <item android:id="@+id/logins"
         android:title="Login"/>
-    <item android:id="@+id/aa"
-        android:title="aa"/>
-    <item android:id="@+id/bb"
-        android:title="bb"/>
+    <item android:id="@+id/logout"
+        android:title="Logout"/>
 
 </menu>

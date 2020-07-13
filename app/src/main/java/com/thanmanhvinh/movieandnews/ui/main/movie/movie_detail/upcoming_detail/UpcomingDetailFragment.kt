@@ -101,7 +101,6 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>(), ItemOnCl
     }
 
     override fun initData() {
-        showViewAllOverview()
         showGenres()
         showCountries()
         showReview()
@@ -132,13 +131,13 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>(), ItemOnCl
         var decimalFormat = DecimalFormat(pattern)
         var format: String = decimalFormat.format(revenue)
         tvRevenue.text = format
-    }
 
-    private fun showViewAllOverview(){
-        var lineCount: Int = tvOverviewDetail.lineCount
-        if (lineCount == 3){
+        //View all and Collapse
+        if(tvOverviewDetail.lineCount <= 3){
             tvViewAllOverview.visibility = View.GONE
+            tvCollapseOverview.visibility = View.GONE
         }
+
         tvOverviewDetail.maxLines = 3
         tvViewAllOverview.setOnClickListener {
             tvOverviewDetail.maxLines = Int.MAX_VALUE
@@ -151,6 +150,7 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>(), ItemOnCl
             tvViewAllOverview.visibility = View.VISIBLE
         }
     }
+
 
     private fun showGenres(){
         mListGenres = mutableListOf()

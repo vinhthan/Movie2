@@ -308,6 +308,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/collapse"
+            android:paddingTop="@dimen/margin_2"
+            android:paddingBottom="@dimen/margin_2"
+            android:paddingStart="@dimen/margin_2"
             android:textColor="@color/color_text_see_all"
             android:textSize="@dimen/size_14"
             app:layout_constraintEnd_toEndOf="@+id/tvOverviewDetail"
@@ -381,6 +384,36 @@
             app:layout_constraintStart_toStartOf="@+id/tvOverviewDetail"
             app:layout_constraintTop_toBottomOf="@+id/rcySimilar"
             app:layout_constraintVertical_bias="0.0" />
+
+<!--        <TextView
+            android:id="@+id/tvViewAllReviewS"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_2"
+            android:paddingTop="@dimen/margin_2"
+            android:paddingBottom="@dimen/margin_2"
+            android:text="@string/view_all"
+            android:textColor="@color/color_text_see_all"
+            android:textSize="@dimen/size_14"
+            app:layout_constraintEnd_toEndOf="@+id/rcyReview"
+            app:layout_constraintTop_toBottomOf="@+id/rcyReview" />
+
+        <TextView
+            android:id="@+id/tvCollapseReviewS"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_2"
+            android:paddingTop="@dimen/margin_2"
+            android:paddingBottom="@dimen/margin_2"
+            android:text="@string/collapse"
+            android:textColor="@color/color_text_see_all"
+            android:textSize="@dimen/size_14"
+            app:layout_constraintEnd_toEndOf="@+id/rcyReview"
+            app:layout_constraintTop_toBottomOf="@+id/rcyReview" />-->
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcySimilar"

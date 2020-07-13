@@ -12,6 +12,14 @@ class AppDataManager @Inject constructor(
     private val mPreferencesHelper: PreferencesHelper,
     private val mApiService: AppApiHelper
 ): DataManager {
+    private var mAccessToken: String? = mPreferencesHelper.accessToken
+    private var mEmail: String? = mPreferencesHelper.username
+    private var mPassword: String? = mPreferencesHelper.password
+
+    //
+    override val accessToken: String = mPreferencesHelper.accessToken
+    override val username: String = mPreferencesHelper.username
+    override val password: String = mPreferencesHelper.password
 
     /**
      * Load 1 page at home screen
@@ -74,6 +82,13 @@ class AppDataManager @Inject constructor(
     }
 
     /**
+     * get similar
+     */
+    override fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar> {
+        return mApiService.doGetSimilar(id, movieSimilarRequest)
+    }
+
+    /**
      * get token
      */
     override fun doGetToken(tokenRequest: TokenRequest): Observable<Token> {
@@ -87,30 +102,42 @@ class AppDataManager @Inject constructor(
         return mApiService.doLogin(loginRequest)
     }
 
-
-
-    //
-    override val accessToken: String = mPreferencesHelper.accessToken
-    override val username: String = mPreferencesHelper.username
-    override val password: String = mPreferencesHelper.password
-
     /**
-     * get token
+     * logout
      */
+    override fun doLogout(logoutRequest: LogoutRequest): Observable<Logout> {
+        return mApiService.doLogout(logoutRequest)
+    }
+
+
     override fun savePassword(password: String) {
         mPreferencesHelper.savePassword(password)
     }
 
-    /**
-     * login
-     */
     override fun setAccessToken(token: String) {
         mPreferencesHelper.setAccessToken(token)
     }
 
-    override fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar> {
-        return mApiService.doGetSimilar(id, movieSimilarRequest)
+    override fun checkLogin(): Boolean {
+        val isLogin = mPreferencesHelper.checkLogin()
+        if (isLogin){
+            setAccount(username, password, token = String())
+        }
+        return isLogin
     }
+
+    override fun setAccount(username: String?, password: String?, token: String?) {
+
+    }
+
+    override fun saveAccount(username: String, password: String, token: String) {
+        mPreferencesHelper.saveAccount(username, password, token)
+    }
+
+    override fun logout() {
+        setAccount(null, null, null)
+    }
+
 
 
 

@@ -8,5 +8,10 @@ interface PreferencesHelper {
     fun savePassword(password: String)
     fun setAccessToken(token: String)
 
+    fun checkLogin(): Boolean
+    fun setAccount(username: String?, password: String?, token: String?)
+
+
+    fun saveAccount(username: String, password: String, token: String)
 
 }

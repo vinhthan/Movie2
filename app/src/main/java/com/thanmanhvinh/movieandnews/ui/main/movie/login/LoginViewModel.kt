@@ -50,6 +50,7 @@ class LoginViewModel : BaseViewModel<LoginViewModel.Input, LoginViewModel.Output
                         doLogin(AppConstants.API_KEY, usernameStr, passwordStr, toks(tok = String()))
                             .subscribe({ login ->
                                 mLogin.onNext(login)
+                                mDataManager.saveAccount(usernameStr, passwordStr, toks(tok = String()))
                             }, {error ->
                                 //mErrorToast.onNext(error.toString())
                                 error.let {
@@ -126,6 +127,11 @@ class LoginViewModel : BaseViewModel<LoginViewModel.Input, LoginViewModel.Output
             }
             else -> null
         }
+    }
+
+
+    fun isUnauthorized(): Boolean {
+        return mDataManager.checkLogin()
     }
 
 

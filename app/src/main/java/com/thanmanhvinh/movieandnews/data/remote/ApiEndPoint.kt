@@ -14,6 +14,8 @@ object ApiEndPoint {
     const val ENDPOINT_TOKEN = "https://api.themoviedb.org/3/authentication/token/new"
     const val ENDPOINT_MOVIE_LOGIN = "https://api.themoviedb.org/3/authentication/token/validate_with_login"
     const val ENDPOINT_MOVIE_SIMILAR = "https://api.themoviedb.org/3/movie/{movie_id}/similar"
+    const val ENDPOINT_MOVIE_LOGOUT = "https://api.themoviedb.org/3/authentication/session"
+
 
 
 }
@@ -33,3 +35,8 @@ object ApiEndPoint {
 //username thanmanhvinh
 //password vinhmcmvc
 //request_token c4d1514744c59f936df788570de331dd786a4a69 //co han sd
+
+//logout
+//api_key 034bbd1b233d6726e0c7dc7f338657f9
+//"session_id": "2629f70fb498edc263a0adb99118ac41f0053e8c"
+//

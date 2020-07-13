@@ -19,6 +19,7 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.SimilarA
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
+import kotlinx.android.synthetic.main.item_review.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -97,7 +98,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
 
         imgPlayDetail.setOnClickListener {
             val bundleId = Bundle()
-            if (movieId != null){
+            if (movieId != null) {
                 bundleId.putInt(AppConstants.ID_MOVIE, movieId)
             }
             findNavController().navigate(R.id.videoFragment, bundleId)
@@ -108,7 +109,6 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
 
         showGenres()
         showCountry()
-        showViewAllOverview()
         showReview()
         showSimilar()
 
@@ -146,9 +146,9 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
         tvTitleDetail.text = movieDetail.title
         val language = movieDetail.originalLanguage
-        if (language == AppConstants.EN){
+        if (language == AppConstants.EN) {
             tvLanguageDetail.text = getText(R.string.english)
-        }else if (language == AppConstants.HI){
+        } else if (language == AppConstants.HI) {
             tvLanguageDetail.text = getText(R.string.hindi)
         }
         tvDateDetail.text = movieDetail.releaseDate
@@ -166,32 +166,10 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         var format: String = decimalFormat.format(revenue)
         tvRevenue.text = format
 
-    }
-
-    private fun showGenres(){
-        mListGenres = mutableListOf()
-        mAdapterGenres = GenresDetailAdapter(context, mListGenres)
-        //rcyGenresDetail.setHasFixedSize(true)
-        rcyGenresDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        rcyGenresDetail.adapter = mAdapterGenres
-
-    }
-
-    private fun showCountry(){
-        mListCountries = mutableListOf()
-        mAdapterCountries = CountryDetailAdapter(context, mListCountries)
-        rcyCountryDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        rcyCountryDetail.adapter = mAdapterCountries
-    }
-
-    private fun showViewAllOverview(){
-/*        var lineCount: Int = tvOverviewDetail.lineCount
-        if (lineCount == 3){
-            tvViewAllOverview.visibility = View.GONE
-            tvCollapseOverview.visibility = View.GONE
-        }*/
-
-        if(tvOverviewDetail.maxLines == 3){
+        /**
+         * View all and Collapse
+         */
+        if (tvOverviewDetail.lineCount <= 3) {
             tvViewAllOverview.visibility = View.GONE
             tvCollapseOverview.visibility = View.GONE
         }
@@ -204,28 +182,50 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         }
         tvCollapseOverview.setOnClickListener {
             tvOverviewDetail.maxLines = 3
-            tvCollapseOverview.visibility= View.GONE
+            tvCollapseOverview.visibility = View.GONE
             tvViewAllOverview.visibility = View.VISIBLE
         }
+
+
     }
 
-    private fun showReview(){
+    private fun showGenres() {
+        mListGenres = mutableListOf()
+        mAdapterGenres = GenresDetailAdapter(context, mListGenres)
+        //rcyGenresDetail.setHasFixedSize(true)
+        rcyGenresDetail.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyGenresDetail.adapter = mAdapterGenres
+
+    }
+
+    private fun showCountry() {
+        mListCountries = mutableListOf()
+        mAdapterCountries = CountryDetailAdapter(context, mListCountries)
+        rcyCountryDetail.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcyCountryDetail.adapter = mAdapterCountries
+    }
+
+    private fun showReview() {
         mListReview = mutableListOf()
         mAdapterReview = ReviewDetailAdapter(context, mListReview)
         rcyReview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyReview.adapter = mAdapterReview
     }
 
-    private fun showSimilar(){
+
+    private fun showSimilar() {
         mListSimilar = mutableListOf()
         mAdapterSimilar = SimilarAdapter(context, mListSimilar, this)
-        rcySimilar.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rcySimilar.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcySimilar.adapter = mAdapterSimilar
     }
 
     override fun OnItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
-        if (mListSimilar.size > 0){
+        if (mListSimilar.size > 0) {
             var movieId = mListSimilar[position].id
             bundle.putInt(AppConstants.ID_MOVIE, movieId)
         }

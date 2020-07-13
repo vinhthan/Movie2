@@ -54,8 +54,6 @@ class MovieSearchViewModel :
             }).addToDisposable()*/
 
 
-        //combinelatest
-
 
         return Output(mLoadList, mErrorToast)
     }
@@ -66,3 +64,6 @@ class MovieSearchViewModel :
             .observeOn(mSchedulerProvider.ui)
     }
 }
+
+//khi ma k co du lieu thi se ngung call api ngay luc do de xly ng dung nhap qua nhieu ky tu vao o tim kiem
+//collapse se bo viewholder... de co the xly dc bam 2 lan ms nhan

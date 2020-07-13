@@ -115,6 +115,17 @@ class AppApiHelper @Inject constructor() : ApiHelper {
     }
 
     /**
+     * get similar
+     */
+    override fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_SIMILAR)
+            .addPathParameter("movie_id", id.toString())
+            .addQueryParameter(movieSimilarRequest)
+            .build()
+            .getObjectObservable(MovieSimilar::class.java)
+    }
+
+    /**
      * get token
      */
     override fun doGetToken(tokenRequest: TokenRequest): Observable<Token> {
@@ -134,13 +145,17 @@ class AppApiHelper @Inject constructor() : ApiHelper {
             .getObjectObservable(Login::class.java)
     }
 
-    override fun doGetSimilar(id: Int, movieSimilarRequest: MovieSimilarRequest): Observable<MovieSimilar> {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_MOVIE_SIMILAR)
-            .addPathParameter("movie_id", id.toString())
-            .addQueryParameter(movieSimilarRequest)
+    /**
+     * logout
+     */
+    override fun doLogout(logoutRequest: LogoutRequest): Observable<Logout> {
+        return Rx2AndroidNetworking.delete(ApiEndPoint.ENDPOINT_MOVIE_LOGOUT)
+            .addQueryParameter(logoutRequest)
             .build()
-            .getObjectObservable(MovieSimilar::class.java)
+            .getObjectObservable(Logout::class.java)
     }
+
+
 
 
 }
