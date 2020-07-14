@@ -1,14 +1,11 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
-import android.util.Log
-import android.widget.Toast
 import com.thanmanhvinh.movieandnews.data.api.MovieSearch
 import com.thanmanhvinh.movieandnews.data.api.MovieSearchRequest
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 
 class MovieSearchViewModel :
     BaseViewModel<MovieSearchViewModel.Input, MovieSearchViewModel.Output>() {
@@ -28,21 +25,32 @@ class MovieSearchViewModel :
         val mLoadList = BehaviorSubject.create<MutableList<MovieSearch.Result>>()
         val mErrorToast = BehaviorSubject.create<String>()
 
-        with(input) {
-            edtSearch.subscribe(mEdtSearch)
-            triggerSearch.subscribe {
-                val edtSearchStr = mEdtSearch.value ?: ""
-                doGetMovieSearch(AppConstants.API_KEY, edtSearchStr)
-                    .subscribe({ movie ->
-                        movie.results.let { list ->
-                            mLoadList.onNext(list as MutableList<MovieSearch.Result>)
-                        }
-                    }, {
-                        //mErrorToast.onNext(it.toString())
-                    })
-            }.addToDisposable()
+        try {
+            with(input) {
+                edtSearch.subscribe(mEdtSearch)
+                triggerSearch.subscribe {
+                    val edtSearchStr = mEdtSearch.value ?: ""
+                    doGetMovieSearch(AppConstants.API_KEY, edtSearchStr)
+                        .subscribe({ movie ->
+                            movie.results.let { list ->
+                                mLoadList.onNext(list as MutableList<MovieSearch.Result>)
+                            }
+                        }, {
 
+                        })
+                }.addToDisposable()
+
+            }
+        }catch (e: Exception){
+            /*for (error in e.getErrors()) {
+                if (error is RateExceededError) {
+                    val rateExceeded: RateExceededError = error as RateExceededError
+                    Thread.sleep(rateExceeded.getRetryAfterSeconds() * 1000)
+                }
+            }*/
         }
+
+
 
 /*        doGetMovieSearch(AppConstants.API_KEY, mEdtSearch.toString())
             .subscribe({movie ->

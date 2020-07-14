@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -48,12 +49,14 @@
 
     <TextView
         android:id="@+id/tvViewAllReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_2"
-        android:paddingStart="@dimen/margin_2"
-        android:paddingTop="@dimen/margin_2"
-        android:paddingBottom="@dimen/margin_2"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:paddingStart="@dimen/margin_4"
+        android:paddingTop="@dimen/margin_4"
+        android:paddingBottom="@dimen/margin_4"
         android:text="@string/view_all"
         android:textColor="@color/color_text_see_all"
         android:textSize="@dimen/size_14"
@@ -63,12 +66,14 @@
 
     <TextView
         android:id="@+id/tvCollapseReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_2"
-        android:paddingStart="@dimen/margin_2"
-        android:paddingTop="@dimen/margin_2"
-        android:paddingBottom="@dimen/margin_2"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:paddingStart="@dimen/margin_4"
+        android:paddingTop="@dimen/margin_4"
+        android:paddingBottom="@dimen/margin_4"
         android:text="@string/collapse"
         android:textColor="@color/color_text_see_all"
         android:textSize="@dimen/size_14"

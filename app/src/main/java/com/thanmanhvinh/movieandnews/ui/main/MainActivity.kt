@@ -5,17 +5,19 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import com.facebook.AccessToken
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.base.FragmentBackStackManager
 import com.thanmanhvinh.movieandnews.ui.base.INavigatorActivity
 import com.thanmanhvinh.movieandnews.ui.main_2.MainActivity2
-import com.thanmanhvinh.movieandnews.ui.main_2.no_internet.NoInternetFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlin.reflect.KClass
+
 
 class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
@@ -49,6 +51,39 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
     override fun bindViewModel() {
         checkInternet()
+
+        /**
+         * get KeyHash facebook
+         */
+/*        try {
+            val packageInfo = packageManager.getPackageInfo(
+                "com.thanmanhvinh.movieandnews",
+                GET_SIGNATURES
+            )
+            for (signature in packageInfo.signatures) {
+                val messageDigest =
+                    MessageDigest.getInstance("SHA")
+                messageDigest.update(signature.toByteArray())
+                Log.d(
+                    "KeyHash",
+                    Base64.encodeToString(
+                        messageDigest.digest(),
+                        Base64.DEFAULT
+                    )
+                )
+            }
+        } catch (e: Exception) {
+        }*/
+
+        /**
+         * Facebook
+         */
+        FacebookSdk.sdkInitialize(applicationContext)
+        AppEventsLogger.activateApp(this)
+
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+
 
     }
 
@@ -93,7 +128,9 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         startActivity(intent)
     }
 
-    //
+    /**
+     * Check internet
+     */
     private fun checkInternet(): Unit {
         var connected = false
         val connectivityManager =
@@ -110,34 +147,8 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
             startActivity(intentNotConnect)
             finish()
 
-            //
-
         }
     }
-
-/*    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
-        val inflater = MenuInflater(this)
-        inflater.inflate(R.menu.menu_right, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.logins ->{
-                Toast.makeText(this, "login", Toast.LENGTH_SHORT).show()
-            }
-            R.id.aa ->{
-                Toast.makeText(this, "aa", Toast.LENGTH_SHORT).show()
-            }
-            R.id.bb ->{
-                Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }*/
-
-
 
 
 }

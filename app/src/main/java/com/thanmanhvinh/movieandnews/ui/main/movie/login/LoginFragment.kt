@@ -1,22 +1,26 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.login
 
-import android.util.Log
+import android.content.Intent
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.jakewharton.rxbinding3.view.clicks
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.thanmanhvinh.movieandnews.R
-import com.thanmanhvinh.movieandnews.data.api.Token
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import com.thanmanhvinh.movieandnews.utils.exception.AuthenticateException
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.include_toolbar.*
-import java.util.concurrent.TimeUnit
+
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
+    var callbackManager: CallbackManager = CallbackManager.Factory.create()
+
     private var token = BehaviorSubject.create<String>()
     private var triggerLogin = PublishSubject.create<Unit>()
 
@@ -62,6 +66,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
                         AuthenticateException.EMPTY_PASSWORD, AuthenticateException.PASSWORD_TOO_SHORT -> {
                             edtPassword.error = getString(error.message)
                         }
+                        else -> null
                     }
                 }
             errorToast.observeOn(schedulerProvider.ui)
@@ -77,6 +82,32 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         imgBackLogin.setOnClickListener {
             onButtonBackClick()
         }
+
+        /**
+         * Facebook
+         */
+        login_button.fragment = this
+
+        login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                // App code
+                findNavController().navigate(R.id.movieFragment)
+            }
+
+            override fun onCancel() {
+                // App code
+            }
+
+            override fun onError(exception: FacebookException) {
+                // App code
+            }
+        })
+
+        login_button.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+
+        }
+
 
     }
 
@@ -94,4 +125,18 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
 
     }
+
+
+    /**
+     * result login Facebook
+     */
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
 }

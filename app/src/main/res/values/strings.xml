@@ -38,5 +38,9 @@
     <string name="wrong_username_password">Wrong username or password</string>
     <string name="login_success">login success</string>
 
+    //Facebook
+    <string name="facebook_app_id">279397549950032</string> <string name="fb_login_protocol_scheme">fb279397549950032</string>
+
+
 
 </resources>

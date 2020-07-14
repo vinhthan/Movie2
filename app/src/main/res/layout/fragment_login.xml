@@ -3,6 +3,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         tools:context=".ui.main.movie.login.LoginFragment">
 
         <androidx.appcompat.widget.Toolbar
@@ -25,7 +25,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -34,7 +34,7 @@
                     android:foregroundGravity="center"
                     android:text="@string/login"
                     android:textColor="@color/color_text_default"
-                    android:textSize="@dimen/size_17"
+                    android:textSize="@dimen/_17sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,9 +44,9 @@
                     android:id="@+id/imgBackLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin_10"
-                    android:paddingEnd="@dimen/margin_10"
-                    android:paddingBottom="@dimen/margin_10"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
                     android:src="@drawable/left"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,10 +59,10 @@
         <EditText
             android:id="@+id/edtUsername"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:background="@drawable/bg_edittext"
             android:ems="10"
             android:hint="@string/username"
@@ -75,12 +75,12 @@
         <EditText
             android:id="@+id/edtPassword"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="@dimen/margin_32"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             android:background="@drawable/bg_edittext"
             android:ems="10"
-            android:inputType="textPassword"
             android:hint="@string/password"
+            android:inputType="textPassword"
             android:text="vinhmcmvc"
             app:layout_constraintEnd_toEndOf="@+id/edtUsername"
             app:layout_constraintHorizontal_bias="0.0"
@@ -90,13 +90,13 @@
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_32"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             android:background="@drawable/bg_button_login"
             android:text="@string/login"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/size_18"
+            android:textSize="@dimen/_18sdp"
             app:layout_constraintEnd_toEndOf="@+id/edtPassword"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/edtPassword"
@@ -106,10 +106,27 @@
             android:id="@+id/imageView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/_8sdp"
             android:src="@drawable/splash_backgound"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+            app:layout_constraintStart_toStartOf="@+id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
