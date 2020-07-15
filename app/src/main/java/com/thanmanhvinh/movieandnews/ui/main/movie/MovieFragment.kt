@@ -76,12 +76,12 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                 .subscribe { tokens ->
                     tokens.requestToken.let { tok ->
                         sendToken = tok
-                        tvLogin.setOnClickListener {
+                        /*tvLogin.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putString(AppConstants.TOKEN, sendToken)
                             findNavController().navigate(R.id.loginFragment, bundle)
                             //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
-                        }
+                        }*/
                     }
                 }
             errorToast.observeOn(schedulerProvider.ui)

@@ -1,17 +1,12 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieSearch
@@ -21,7 +16,10 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_movie_search.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import java.lang.Exception
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.timerTask
 
 
 class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNowPlaying {
@@ -37,12 +35,6 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
     override fun getTitleActionBar(): Int = R.string.empty
 
     override fun bindViewModel() {
-
-/*        edtSearch.textChanges()
-            .subscribe(
-                { Toast.makeText(context, "change", Toast.LENGTH_SHORT).show() },
-                { Log.e("MainActivity", "$it") }
-            ).addToDisposable()*/
 
         val output = mViewModel.transform(
             MovieSearchViewModel.Input(
@@ -75,12 +67,26 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
         /**
          * listen to the event text changes continuously
          */
-        edtSearch.textChanges().subscribe {
-            Handler().postDelayed({
+        var timer: Timer? = Timer()
+        edtSearch.textChanges()
+            .debounce (500, TimeUnit.MILLISECONDS)// only emit an item from an Observable if a particular time span has passed without it emitting another item. // replay timer
+            .subscribe(
+            {
                 triggerSearch.onNext(Unit)
-            }, 0)
+                /*timer?.cancel()
+                timer = Timer()
+                timer!!.schedule(
+                    object : TimerTask() {
+                        override fun run() {
+                            triggerSearch.onNext(Unit)
+                        }
+                    }, 500
+                )*/
+            }, {
 
-        }.addToDisposable()
+            }
+        ).addToDisposable()
+
 
         /**
          * search with software keyboard

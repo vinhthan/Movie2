@@ -1,11 +1,13 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
+import android.util.Log
 import com.thanmanhvinh.movieandnews.data.api.MovieSearch
 import com.thanmanhvinh.movieandnews.data.api.MovieSearchRequest
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import java.util.logging.Handler
 
 class MovieSearchViewModel :
     BaseViewModel<MovieSearchViewModel.Input, MovieSearchViewModel.Output>() {
@@ -25,11 +27,12 @@ class MovieSearchViewModel :
         val mLoadList = BehaviorSubject.create<MutableList<MovieSearch.Result>>()
         val mErrorToast = BehaviorSubject.create<String>()
 
-        try {
-            with(input) {
-                edtSearch.subscribe(mEdtSearch)
-                triggerSearch.subscribe {
-                    val edtSearchStr = mEdtSearch.value ?: ""
+        with(input) {
+            edtSearch.subscribe(mEdtSearch)
+            triggerSearch.subscribe {
+                val edtSearchStr = mEdtSearch.value ?: ""
+
+                //android.os.Handler().postDelayed({
                     doGetMovieSearch(AppConstants.API_KEY, edtSearchStr)
                         .subscribe({ movie ->
                             movie.results.let { list ->
@@ -38,30 +41,11 @@ class MovieSearchViewModel :
                         }, {
 
                         })
-                }.addToDisposable()
+                //}, 1000)
 
-            }
-        }catch (e: Exception){
-            /*for (error in e.getErrors()) {
-                if (error is RateExceededError) {
-                    val rateExceeded: RateExceededError = error as RateExceededError
-                    Thread.sleep(rateExceeded.getRetryAfterSeconds() * 1000)
-                }
-            }*/
+
+            }.addToDisposable()
         }
-
-
-
-/*        doGetMovieSearch(AppConstants.API_KEY, mEdtSearch.toString())
-            .subscribe({movie ->
-                movie.results.let { list ->
-                    mLoadList.onNext(list as MutableList<MovieSearch.Result>)
-                }
-            }, {
-                Log.d("TAG", "error $it")
-            }).addToDisposable()*/
-
-
 
         return Output(mLoadList, mErrorToast)
     }
@@ -71,7 +55,7 @@ class MovieSearchViewModel :
             .subscribeOn(mSchedulerProvider.io)
             .observeOn(mSchedulerProvider.ui)
     }
+
 }
 
-//khi ma k co du lieu thi se ngung call api ngay luc do de xly ng dung nhap qua nhieu ky tu vao o tim kiem
 //collapse se bo viewholder... de co the xly dc bam 2 lan ms nhan

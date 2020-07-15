@@ -42,11 +42,6 @@ class MovieSearchAdapter(
             onClick.OnItemClickNowPlaying(position)
         }
 
-        /**
-         * don't allow holder reuse view
-         */
-        holder.setIsRecyclable(false)
-
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

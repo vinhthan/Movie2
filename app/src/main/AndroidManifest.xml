@@ -4,6 +4,9 @@
     package="com.thanmanhvinh.movieandnews">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -46,7 +49,10 @@
         </activity>
 
 
-        <activity android:name=".ui.main_2.MainActivity2"></activity>
+        <activity android:name=".ui.main_2.MainActivity2">
+
+        </activity>
+
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -56,7 +62,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.main.MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

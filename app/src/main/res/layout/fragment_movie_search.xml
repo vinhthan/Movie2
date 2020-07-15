@@ -7,7 +7,7 @@
     android:layout_marginStart="@dimen/margin_5"
     android:layout_marginEnd="@dimen/margin_5"
     android:background="@color/back_ground_home"
-    tools:context=".ui.main.movie.movie_search.MovieSearchFragment">
+    tools:context="com.thanmanhvinh.movieandnews.ui.main.movie.movie_search.MovieSearchFragment">
 
     <include layout="@layout/include_toolbar"/>
 
