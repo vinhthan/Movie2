@@ -1,8 +1,10 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -16,10 +18,8 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_movie_search.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.timerTask
 
 
 class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNowPlaying {
@@ -142,6 +142,8 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
         }
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
     }
+
+
 
 
 }

@@ -17,11 +17,11 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDe
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.ReviewDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.SimilarAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import com.thanmanhvinh.movieandnews.utils.extensions.decimalFormat
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
-import kotlinx.android.synthetic.main.item_review.*
 import java.text.DecimalFormat
-import java.text.NumberFormat
 
 
 class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), ItemOnClickNowPlaying {
@@ -142,8 +142,13 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
     }
 
     private fun showDetail(movieDetail: MovieDetail) {
-        context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
-        context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
+        //context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
+        //context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
+
+        //use extension
+        imgBigDetail.loadUrl(movieDetail.getImageBackdropPath())
+        imgSmallDetail.loadUrl(movieDetail.getImagePosterPath())
+
         tvTitleDetail.text = movieDetail.title
         val language = movieDetail.originalLanguage
         if (language == AppConstants.EN) {
@@ -159,12 +164,14 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         tvM.text = m.toString()
         tvOverviewDetail.text = movieDetail.overview
         tvVoteDetail.text = movieDetail.voteAverage.toString()
-        var revenue = movieDetail.revenue
-
+/*        var revenue = movieDetail.revenue
         var pattern = "###,###,###,###.##"
         var decimalFormat = DecimalFormat(pattern)
         var format: String = decimalFormat.format(revenue)
-        tvRevenue.text = format
+        tvRevenue.text = format*/
+
+        //use extension
+        tvRevenue.text = movieDetail.revenue.decimalFormat()
 
         /**
          * View all and Collapse
@@ -192,7 +199,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
     private fun showGenres() {
         mListGenres = mutableListOf()
         mAdapterGenres = GenresDetailAdapter(context, mListGenres)
-        //rcyGenresDetail.setHasFixedSize(true)
+        rcyGenresDetail.setHasFixedSize(true)
         rcyGenresDetail.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcyGenresDetail.adapter = mAdapterGenres
@@ -202,6 +209,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
     private fun showCountry() {
         mListCountries = mutableListOf()
         mAdapterCountries = CountryDetailAdapter(context, mListCountries)
+        rcyReview.setHasFixedSize(true)
         rcyCountryDetail.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcyCountryDetail.adapter = mAdapterCountries
@@ -210,6 +218,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
     private fun showReview() {
         mListReview = mutableListOf()
         mAdapterReview = ReviewDetailAdapter(context, mListReview)
+        rcyReview.setHasFixedSize(true)
         rcyReview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcyReview.adapter = mAdapterReview
     }
@@ -218,6 +227,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
     private fun showSimilar() {
         mListSimilar = mutableListOf()
         mAdapterSimilar = SimilarAdapter(context, mListSimilar, this)
+        rcyReview.setHasFixedSize(true)
         rcySimilar.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rcySimilar.adapter = mAdapterSimilar

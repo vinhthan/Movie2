@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 
 class MovieTopRatedAdapter(
     val context: Context?,
@@ -35,7 +36,8 @@ class MovieTopRatedAdapter(
 
     override fun onBindViewHolder(holder: MovieTopRatedAdapter.ViewHolder, position: Int) {
         holder.titleTopRated.text = list[position].title
-        context?.let { Glide.with(it).load(list[position].getImagePosterPathTopRated()).into(holder.imgTopRated) }
+        //context?.let { Glide.with(it).load(list[position].getImagePosterPathTopRated()).into(holder.imgTopRated) }
+        holder.imgTopRated.loadUrl(list[position].getImagePosterPathTopRated())
 
         holder.itemView.setOnClickListener {
             onClick.OnItemClickTopRated(position)

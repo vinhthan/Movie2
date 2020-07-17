@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/back_ground_home"
     android:paddingBottom="@dimen/margin_10"
-    tools:context=".ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment"
+    tools:context="com.thanmanhvinh.movieandnews.ui.main.movie.see_all.now_playing.SeeAllNowPlayingFragment"
     tools:ignore="RtlSymmetry">
 
     <androidx.appcompat.widget.Toolbar
@@ -58,7 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingStart="@dimen/margin_10"
-        android:paddingTop="@dimen/margin_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 

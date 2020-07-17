@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieSimilar
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 
 class SimilarAdapter(
     val context: Context?,
@@ -32,7 +33,8 @@ class SimilarAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvTitleMovie.text = list[position].title
-        context?.let { Glide.with(it).load(list[position].getImagePosterPath()).into(holder.imgMovie) }
+        //context?.let { Glide.with(it).load(list[position].getImagePosterPath()).into(holder.imgMovie) }
+        holder.imgMovie.loadUrl(list[position].getImagePosterPath())
 
         holder.itemView.setOnClickListener {
             onClick.OnItemClickNowPlaying(position)

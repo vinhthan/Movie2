@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_ground_home"
-    tools:context=".ui.main.movie.movie_detail.video.ListVideoFragment">
+    tools:context="com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.video.ListVideoFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -17,6 +17,8 @@ import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.GenresDe
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.ReviewDetailAdapter
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.adapter.SimilarAdapter
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import com.thanmanhvinh.movieandnews.utils.extensions.decimalFormat
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.include_detail.*
 import java.text.DecimalFormat
@@ -108,8 +110,8 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>(), ItemOnCl
     }
 
     private fun showDetail(movieDetail: MovieDetail){
-        context?.let { Glide.with(it).load(movieDetail.getImageBackdropPath()).into(imgBigDetail) }
-        context?.let { Glide.with(it).load(movieDetail.getImagePosterPath()).into(imgSmallDetail) }
+        imgBigDetail.loadUrl(movieDetail.getImageBackdropPath())
+        imgSmallDetail.loadUrl(movieDetail.getImagePosterPath())
         tvTitleDetail.text = movieDetail.title
         val language = movieDetail.originalLanguage
         if (language == AppConstants.EN){
@@ -125,12 +127,7 @@ class UpcomingDetailFragment : BaseFragment<UpcomingDetailViewModel>(), ItemOnCl
         tvM.text = m.toString()
         tvOverviewDetail.text = movieDetail.overview
         tvVoteDetail.text = movieDetail.voteAverage.toString()
-        var revenue = movieDetail.revenue
-
-        var pattern = "###,###,###,###.##"
-        var decimalFormat = DecimalFormat(pattern)
-        var format: String = decimalFormat.format(revenue)
-        tvRevenue.text = format
+        tvRevenue.text = movieDetail.revenue.decimalFormat()
 
         //View all and Collapse
         if(tvOverviewDetail.lineCount <= 3){

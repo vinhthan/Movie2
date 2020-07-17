@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieSearch
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 
 class MovieSearchAdapter(
     val context: Context?,
@@ -32,11 +33,11 @@ class MovieSearchAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvTitleMovieSearch.text = list[position].title
-        context?.let { Glide.with(it).load(list[position].getImageBackdropPath()).into(holder.imgMovieSearch) }
+        //context?.let { Glide.with(it).load(list[position].getImageBackdropPath()).into(holder.imgMovieSearch) }
+        holder.imgMovieSearch.loadUrl(list[position].getImageBackdropPath())
         var voteAverage = list[position].voteAverage / 2 //rate star default 10 score scale -> / 2 return 5 score scale
         holder.ratingBar.rating = voteAverage.toFloat()
         //holder.ratingBar.isEnabled = false
-
 
         holder.itemView.setOnClickListener {
             onClick.OnItemClickNowPlaying(position)

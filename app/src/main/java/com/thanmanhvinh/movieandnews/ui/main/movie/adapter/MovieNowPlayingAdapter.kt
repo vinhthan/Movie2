@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 
 class MovieNowPlayingAdapter(
     val context: Context?,
@@ -36,8 +37,10 @@ class MovieNowPlayingAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvTitleMovieNowPlaying.text = list[position].title
-        context?.let { Glide.with(it).load(list[position].getImagePosterPathNowPlaying()).into(holder.imgMovieNowPlaying) }
+        //context?.let { Glide.with(it).load(list[position].getImagePosterPathNowPlaying()).into(holder.imgMovieNowPlaying) }
 
+        //use extension
+        holder.imgMovieNowPlaying.loadUrl(list[position].getImagePosterPathNowPlaying())
         holder.itemView.setOnClickListener {
             onClick.OnItemClickNowPlaying(position)
         }

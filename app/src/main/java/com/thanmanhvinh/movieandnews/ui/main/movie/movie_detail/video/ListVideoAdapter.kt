@@ -12,6 +12,7 @@ import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieVideo
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 
 class ListVideoAdapter(
     val context: Context?,
@@ -34,7 +35,8 @@ class ListVideoAdapter(
         var key = listVideo[position].key
         var linkVideo = AppConstants.LINK_YOU_TOBE + listVideo[position].key
         holder.tvLinkVideoYouTobe.text = linkVideo
-        context?.let { Glide.with(it).load("https://i3.ytimg.com/vi/$key/hqdefault.jpg").into(holder.imgThumnaiVideo) }
+        //context?.let { Glide.with(it).load("https://i3.ytimg.com/vi/$key/hqdefault.jpg").into(holder.imgThumnaiVideo) }
+        holder.imgThumnaiVideo.loadUrl("https://i3.ytimg.com/vi/$key/hqdefault.jpg")
         holder.tvTitleVideo.text = listVideo[position].name
 
         holder.itemView.setOnClickListener {

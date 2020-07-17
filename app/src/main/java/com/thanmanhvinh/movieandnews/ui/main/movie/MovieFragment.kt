@@ -110,7 +110,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                         val bundle = Bundle()
                         bundle.putString(AppConstants.TOKEN, sendToken)
                         findNavController().navigate(R.id.loginFragment, bundle)
-                        Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
                     }
                 }
                 true

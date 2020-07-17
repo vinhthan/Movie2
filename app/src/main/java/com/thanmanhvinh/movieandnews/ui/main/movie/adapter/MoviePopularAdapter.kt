@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
+import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
 
 class MoviePopularAdapter(
     val context: Context?,
@@ -35,7 +36,8 @@ class MoviePopularAdapter(
 
     override fun onBindViewHolder(holder: MoviePopularAdapter.ViewHolder, position: Int) {
         holder.titlePopular.text = list[position].title
-        context?.let { Glide.with(it).load(list[position].getImagePosterPathPopular()).into(holder.imgPopular) }
+        //context?.let { Glide.with(it).load(list[position].getImagePosterPathPopular()).into(holder.imgPopular) }
+        holder.imgPopular.loadUrl(list[position].getImagePosterPathPopular())
 
         holder.itemView.setOnClickListener {
             onClick.OnItemClickPopular(position)

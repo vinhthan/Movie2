@@ -21,4 +21,6 @@ object AppConstants {
     const val HOME = "home"
     const val EN = "en"
     const val HI = "hi"
+
+    const val VIEW_ALL = "View all"
 }

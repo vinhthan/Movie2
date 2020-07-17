@@ -13,6 +13,7 @@ import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import com.thanmanhvinh.movieandnews.utils.exception.AuthenticateException
+import com.thanmanhvinh.movieandnews.utils.extensions.toast
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -71,8 +72,8 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
                 }
             errorToast.observeOn(schedulerProvider.ui)
                 .subscribe {
-                    Toast.makeText(context, R.string.wrong_username_password, Toast.LENGTH_SHORT).show()
-                    //Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, R.string.wrong_username_password, Toast.LENGTH_SHORT).show()
+                    context?.toast(getString(R.string.wrong_username_password))
                 }
         }.addToDisposable()
 
