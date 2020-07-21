@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.thanmanhvinh.movieandnews.di.Preferences
+import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -74,6 +75,15 @@ class AppPreferencesHelper @Inject constructor(
         //editor.apply()
         editor.commit()
 
+    }
+
+    override val isFirst: String
+        get() = mPref.getString(AppConstants.IS_FIRST, "")!!
+
+    override fun setIsFirst(yes: String?) {
+        mPref.edit {
+            putString(AppConstants.IS_FIRST, AppConstants.YES)
+        }
     }
 
 

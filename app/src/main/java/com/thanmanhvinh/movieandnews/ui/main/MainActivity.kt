@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlin.reflect.KClass
 
 
-class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
+class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity{
 
     override lateinit var currentFragment: BaseFragment<*>
     private lateinit var mFragmentBackStackManager: FragmentBackStackManager
@@ -46,7 +46,33 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
         //currentFragment.onButtonBackClick()
 
 
+        // NavigationView
+/*        navigationView.setNavigationItemSelectedListener { menuItem ->
+            // set item as selected to persist highlight
+            menuItem.isChecked = true
+            // close drawer when item is tapped
+            drawerLayout.closeDrawers()
+            // Handle navigation view item clicks here.
+            when (menuItem.itemId) {
+                R.id.login1 -> {
+                    switchFragment(LoginFragment::class, true, null)
+                }
+                R.id.logout1 -> {
+                    toast("logout")
+                }
+                // Add code here to update the UI based on the item selected
+                // For example, swap UI fragments here
+            }
+            true
+        }
+
+        imgMenu.setOnClickListener {
+            drawerLayout.openDrawer(Gravity.LEFT)
+        }*/
+
     }
+
+
 
 
     override fun bindViewModel() {

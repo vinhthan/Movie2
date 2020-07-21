@@ -134,6 +134,13 @@ class AppDataManager @Inject constructor(
         mPreferencesHelper.saveAccount(username, password, token)
     }
 
+    override val isFirst: String
+        get() = mPreferencesHelper.isFirst
+
+    override fun setIsFirst(yes: String?) {
+        mPreferencesHelper.setIsFirst(yes)
+    }
+
     override fun logout() {
         setAccount(null, null, null)
     }

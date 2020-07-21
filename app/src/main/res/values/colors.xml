@@ -16,6 +16,11 @@
     <color name="color_rating_bar">#FEB900</color>
     <color name="color_Author">#3B5998</color>
 
+    //
+    <color name="transparentBlack">#48000000</color>
+    <color name="grey">#C0C0C0</color>
+    <color name="divider">#e6e6e6</color>
+
 
 
 </resources>

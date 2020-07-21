@@ -42,5 +42,17 @@
     <string name="facebook_app_id">279397549950032</string> <string name="fb_login_protocol_scheme">fb279397549950032</string>
 
 
+    //
+    <string name="next">Next</string>
+    <string name="shop">Shop</string>
+    <string name="offers">Offers</string>
+    <string name="rewards">Rewards</string>
+    <string name="discover_text">Look for things around you</string>
+    <string name="shop_text"><![CDATA[Get the best deals & Coupons]]></string>
+    <string name="offers_text">Find great offers while you discover</string>
+    <string name="rewards_text"><![CDATA[Free recharge coupons & more]]></string>
+    <string name="get_started">Get Started</string>
+    <string name="continues">continues</string>
+    <string name="skip">skip</string>
 
 </resources>

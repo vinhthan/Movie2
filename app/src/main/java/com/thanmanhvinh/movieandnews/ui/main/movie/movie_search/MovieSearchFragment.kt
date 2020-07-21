@@ -1,10 +1,8 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie.movie_search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -18,6 +16,7 @@ import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_movie_search.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.item_movie_search.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -62,6 +61,7 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
          */
         imgSearchMovie.setOnClickListener {
             triggerSearch.onNext(Unit)
+            hideSoftKeyboard()
         }
 
         /**
@@ -94,8 +94,8 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
         edtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // Do what you want here
-                //Toast.makeText(context, "click search", Toast.LENGTH_SHORT).show()
                 triggerSearch.onNext(Unit)
+                hideSoftKeyboard()
 
                 return@setOnEditorActionListener true
             }
@@ -142,8 +142,6 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
         }
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
     }
-
-
 
 
 }

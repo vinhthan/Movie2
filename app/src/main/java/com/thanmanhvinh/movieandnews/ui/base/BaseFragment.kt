@@ -113,7 +113,7 @@ open abstract class BaseFragment<VM: BaseViewModel<*, *>>: DaggerFragment() {
         }
     }
 
-    private fun hideSoftKeyboard() {
+    fun hideSoftKeyboard() {
         mActivity.currentFocus?.let {
             val inputMethodManager =
                 mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

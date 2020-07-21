@@ -91,5 +91,21 @@ dependencies {
     //implementation 'com.facebook.android:facebook-android-sdk:4.6.0'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 
+    //ViewPage2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //google material
+    implementation 'com.google.android.material:material:1.1.0'
+
+    // AndroidX Capable version
+    implementation 'com.github.AppIntro:AppIntro:6.0.0'
+
+    // *** OR ***
+
+    // Latest version compatible with the old Support Library
+    implementation 'com.github.AppIntro:AppIntro:4.2.3'
+
+    //
+    implementation 'com.google.android.material:material:1.2.0-alpha01'
 
 }

@@ -11,6 +11,7 @@ import com.facebook.login.LoginResult
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import com.thanmanhvinh.movieandnews.utils.exception.AuthenticateException
 import com.thanmanhvinh.movieandnews.utils.extensions.toast

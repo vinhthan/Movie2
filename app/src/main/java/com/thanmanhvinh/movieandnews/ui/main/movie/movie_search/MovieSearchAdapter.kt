@@ -43,6 +43,7 @@ class MovieSearchAdapter(
             onClick.OnItemClickNowPlaying(position)
         }
 
+
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

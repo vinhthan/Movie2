@@ -1,12 +1,19 @@
 package com.thanmanhvinh.movieandnews.ui.main.movie
 
 import android.os.Bundle
-import android.view.*
+import android.os.Handler
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.tabs.TabLayoutMediator
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
@@ -16,9 +23,9 @@ import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlin.math.abs
 
 
 @Suppress("UNREACHABLE_CODE")
@@ -26,6 +33,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     ItemOnClickTopRated, ItemOnClickUpcoming {
 
     private val triggerLogout = BehaviorSubject.create<Unit>()
+    private var page = 0
 
     private lateinit var sendToken: String
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
@@ -36,6 +44,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     lateinit var mAdapterUpcoming: MovieUpcomingAdapter
     lateinit var mAdapterPopular: MoviePopularAdapter
     lateinit var mAdapterTopRated: MovieTopRatedAdapter
+    lateinit var mSlideAdapter: SlideAdapter
 
     override fun createViewModel(): Class<MovieViewModel> = MovieViewModel::class.java
 
@@ -60,6 +69,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             listUpcoming.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterUpcoming.updateList(list)
+                    //showSlide(list)
                 }
 
             listPopular.observeOn(schedulerProvider.ui)
@@ -76,12 +86,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                 .subscribe { tokens ->
                     tokens.requestToken.let { tok ->
                         sendToken = tok
-                        /*tvLogin.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putString(AppConstants.TOKEN, sendToken)
-                            findNavController().navigate(R.id.loginFragment, bundle)
-                            //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
-                        }*/
                     }
                 }
             errorToast.observeOn(schedulerProvider.ui)
@@ -103,14 +107,12 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
                         val bundle = Bundle()
                         bundle.putString(AppConstants.TOKEN, sendToken)
                         findNavController().navigate(R.id.loginFragment, bundle)
-                        //Toast.makeText(context, "click login", Toast.LENGTH_SHORT).show()
                     }
                     R.id.logout ->{
                         mViewModel.triggerLogout()
                         val bundle = Bundle()
                         bundle.putString(AppConstants.TOKEN, sendToken)
                         findNavController().navigate(R.id.loginFragment, bundle)
-                        //Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
                     }
                 }
                 true
@@ -125,6 +127,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         showMovieUpcoming()
         showMoviePopular()
         showMovieTopRated()
+
 
 
         //
@@ -145,6 +148,17 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         imgSearch.setOnClickListener {
             findNavController().navigate(R.id.movieSearchFragment)
         }
+
+
+        //ViewPager
+/*        val viewPager = view?.findViewById<ViewPager>(R.id.viewPager)
+        viewPager?.offscreenPageLimit = 2
+        if (viewPager != null) {
+            val adapter = fragmentManager?.let { ViewPagerAdapter(requireContext(), listMovieUpcoming) }
+            viewPager.adapter = adapter
+        }*/
+
+
 
 
     }
@@ -229,6 +243,25 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     }
 
 
+/*    private val slideRunable =
+        Runnable { viewPager2!!.setCurrentItem(viewPager2!!.getCurrentItem() + 1) }
+
+
+    private fun showSlide(list: MutableList<MovieUpcoming.Result>){
+        mSlideAdapter = SlideAdapter()
+        mSlideAdapter.set(list)
+        with(viewPager2) {
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 4
+            adapter = mSlideAdapter
+            TabLayoutMediator(
+                tabLayout,
+                viewPager2,
+                TabLayoutMediator.TabConfigurationStrategy { _, _ -> }).attach()
+            setHasOptionsMenu(true)
+        }
+    }*/
 
 
 }

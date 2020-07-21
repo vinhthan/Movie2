@@ -23,4 +23,7 @@ object AppConstants {
     const val HI = "hi"
 
     const val VIEW_ALL = "View all"
+
+    const val IS_FIRST = "IS_FIRST"
+    const val YES = "YES"
 }

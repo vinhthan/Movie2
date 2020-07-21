@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.thanmanhvinh.movieandnews.data.DataManager
 import com.thanmanhvinh.movieandnews.ui.base.BaseViewModel
 import com.thanmanhvinh.movieandnews.ui.main.MainViewModel
+import com.thanmanhvinh.movieandnews.ui.main.intro.IntroViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.MovieViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginViewModel
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailViewModel
@@ -55,6 +56,7 @@ class ViewModelFactory @Inject constructor(
             LoginViewModel::class.java -> LoginViewModel() as T
             SimilarViewModel::class.java -> SimilarViewModel() as T
             ReviewViewModel::class.java -> ReviewViewModel() as T
+            IntroViewModel::class.java -> IntroViewModel() as T
 
             //Main Activity 2
             MainViewModel2::class.java -> MainViewModel2() as T
