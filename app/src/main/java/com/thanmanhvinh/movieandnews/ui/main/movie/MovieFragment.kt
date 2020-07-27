@@ -6,8 +6,10 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
@@ -61,13 +63,13 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
 
     override fun bindViewModel() {
 
-        val ouput = mViewModel.transform(
+        val output = mViewModel.transform(
             MovieViewModel.Input(
                 triggerLogout = triggerLogout
             )
         )
 
-        with(ouput) {
+        with(output) {
             listNowPlaying.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterNowPlaying.updateList(list)
@@ -239,6 +241,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     }
 
     /**
+     * ViewPager2
      * link tham khao: https://itnext.io/android-viewpager2-tablayout-3099aae2f396
      */
     //api
@@ -246,6 +249,8 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         mAdapterViewPager = context?.let { PagerAdapter(it, listMovieUpcoming, this) }!!
         viewPagerMovie.adapter = mAdapterViewPager
         viewPagerMovie.scrollState
+        viewPagerMovie.offscreenPageLimit = 10
+        viewPagerMovie.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
 
         TabLayoutMediator(
             tabLayoutMovie,
