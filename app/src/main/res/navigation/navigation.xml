@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/intro2Fragment">
+    app:startDestination="@id/movieFragment">
 
     <fragment
         android:id="@+id/movieFragment"
@@ -85,8 +85,4 @@
         android:label="fragment_similar"
         tools:layout="@layout/fragment_similar" />
 
-    <fragment
-        android:id="@+id/intro2Fragment"
-        android:name="com.thanmanhvinh.movieandnews.ui.main.intro.IntroFragment"
-        android:label="Intro2Fragment" />
 </navigation>

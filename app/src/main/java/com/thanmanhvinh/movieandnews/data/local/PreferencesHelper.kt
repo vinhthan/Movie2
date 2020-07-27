@@ -14,7 +14,9 @@ interface PreferencesHelper {
 
     fun saveAccount(username: String, password: String, token: String)
 
+/*
     val isFirst: String
     fun setIsFirst(yes: String?)
+*/
 
 }

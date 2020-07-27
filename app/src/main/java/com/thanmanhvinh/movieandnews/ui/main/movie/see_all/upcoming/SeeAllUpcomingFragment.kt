@@ -62,7 +62,7 @@ class SeeAllUpcomingFragment : BaseFragment<SeeAllUpcomingViewModel>(), PageIndi
         rcySeeAllUpcoming.initLoadMore(refreshSeeAllUpcoming, this)
     }
 
-    override fun OnItemClickUpcoming(position: Int) {
+    override fun onItemClickUpcoming(position: Int) {
         val bundle = Bundle()
         if (mList.size > 0){
             val movie = mList[position]

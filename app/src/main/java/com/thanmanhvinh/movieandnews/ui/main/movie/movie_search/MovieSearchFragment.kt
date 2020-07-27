@@ -134,7 +134,7 @@ class MovieSearchFragment : BaseFragment<MovieSearchViewModel>(), ItemOnClickNow
 
     }
 
-    override fun OnItemClickNowPlaying(position: Int) {
+    override fun onItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
         if (mList.size > 0) {
             val movieId = mList[position].id

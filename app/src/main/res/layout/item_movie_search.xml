@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_5"
         android:layout_marginTop="@dimen/margin_5"
-        android:text="TextView"
+        android:text=""
         android:textColor="@color/color_text_default"
         android:textSize="@dimen/size_14"
         app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -42,17 +42,21 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="@dimen/margin_40"
-        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="@dimen/margin_8"
-        android:progressTint="@color/color_rating_bar"
+        android:numStars="5"
+        android:isIndicator="true"
+        android:theme="@style/RatingBar"
         android:rating="3.5"
+        android:saveEnabled="false"
         android:scaleX="0.5"
         android:scaleY="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
@@ -62,7 +66,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent="0.42" />
+        app:layout_constraintGuide_percent="0.46" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,7 +64,7 @@ class SeeAllTopRatedFragment : BaseFragment<SeeAllTopRatedViewModel>(), PageIndi
         rcySeeAllTopRated.initLoadMore(refreshSeeAllTopRated, this)
     }
 
-    override fun OnItemClickTopRated(position: Int) {
+    override fun onItemClickTopRated(position: Int) {
         val bundle = Bundle()
         if (mList.size > 0){
             val movie = mList[position]

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
 import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
@@ -42,7 +41,7 @@ class MovieNowPlayingAdapter(
         //use extension
         holder.imgMovieNowPlaying.loadUrl(list[position].getImagePosterPathNowPlaying())
         holder.itemView.setOnClickListener {
-            onClick.OnItemClickNowPlaying(position)
+            onClick.onItemClickNowPlaying(position)
         }
 
     }

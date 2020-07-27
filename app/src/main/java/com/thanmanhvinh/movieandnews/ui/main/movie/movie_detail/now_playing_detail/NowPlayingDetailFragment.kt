@@ -233,7 +233,7 @@ class NowPlayingDetailFragment : BaseFragment<NowPlayingDetailViewModel>(), Item
         rcySimilar.adapter = mAdapterSimilar
     }
 
-    override fun OnItemClickNowPlaying(position: Int) {
+    override fun onItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
         if (mListSimilar.size > 0) {
             var movieId = mListSimilar[position].id

@@ -62,7 +62,7 @@ class SeeAllNowPlayingFragment : BaseFragment<SeeAllNowPlayingViewModel>(), Page
         rcySeeAllNowPlaying.initLoadMore(refreshSeeAllNowPlaying, this)
     }
 
-    override fun OnItemClickNowPlaying(position: Int) {
+    override fun onItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
         if (mList.size > 0) {
             val movie = mList[position]

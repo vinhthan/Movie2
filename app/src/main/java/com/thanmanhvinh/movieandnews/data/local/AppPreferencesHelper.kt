@@ -77,14 +77,14 @@ class AppPreferencesHelper @Inject constructor(
 
     }
 
-    override val isFirst: String
+/*    override val isFirst: String
         get() = mPref.getString(AppConstants.IS_FIRST, "")!!
 
     override fun setIsFirst(yes: String?) {
         mPref.edit {
             putString(AppConstants.IS_FIRST, AppConstants.YES)
         }
-    }
+    }*/
 
 
 }

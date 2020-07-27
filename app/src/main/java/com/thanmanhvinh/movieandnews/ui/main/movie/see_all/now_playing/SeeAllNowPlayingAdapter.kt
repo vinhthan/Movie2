@@ -33,7 +33,7 @@ class SeeAllNowPlayingAdapter(
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(movie: MovieNowPlaying.Results){
             itemView.setOnClickListener {
-                onClick.OnItemClickNowPlaying(position)
+                onClick.onItemClickNowPlaying(position)
             }
             itemView.tvTitleSeeAll.text = movie.title
             context?.let { Glide.with(it).load(movie.getImagePosterPathNowPlaying()).into(itemView.imgSeeAll) }

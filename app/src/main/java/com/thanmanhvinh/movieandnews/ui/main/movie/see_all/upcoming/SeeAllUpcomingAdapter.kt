@@ -32,7 +32,7 @@ class SeeAllUpcomingAdapter(
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(movie: MovieUpcoming.Result){
             itemView.setOnClickListener {
-                onClick.OnItemClickUpcoming(position)
+                onClick.onItemClickUpcoming(position)
             }
             itemView.tvTitleSeeAll.text = movie.title
             context?.let { Glide.with(it).load(movie.getImagePosterPathUpcoming()).into(itemView.imgSeeAll) }

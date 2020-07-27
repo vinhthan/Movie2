@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
@@ -40,7 +39,7 @@ class MovieUpcomingAdapter(
         holder.imgUpcoming.loadUrl(list[position].getImagePosterPathUpcoming())
 
         holder.itemView.setOnClickListener {
-            onClick.OnItemClickUpcoming(position)
+            onClick.onItemClickUpcoming(position)
         }
     }
 

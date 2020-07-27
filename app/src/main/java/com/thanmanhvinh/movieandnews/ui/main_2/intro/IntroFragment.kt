@@ -1,11 +1,14 @@
-package com.thanmanhvinh.movieandnews.ui.main.intro
+package com.thanmanhvinh.movieandnews.ui.main_2.intro
 
+import android.content.Context
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.main.MainActivity
+import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import kotlinx.android.synthetic.main.fragment_intro.*
 
@@ -65,21 +68,23 @@ class IntroFragment : BaseFragment<IntroViewModel>(), View.OnClickListener{
     }
 
     override fun initData() {
-        /*val prefs = this.requireActivity().getSharedPreferences("Prefe", Context.MODE_PRIVATE)
+        val prefs = this.requireActivity().getSharedPreferences("Prefe", Context.MODE_PRIVATE)
         val firstStart = prefs.getString("firstStart", "")
         if (firstStart.equals("yes")){
-            findNavController().navigate(R.id.movieFragment)
+            mNavigatorActivity.showActivity(MainActivity::class.java)
+            mActivity?.finish()
         }else{
             val editor = prefs.edit()
             editor.putString("firstStart", "yes")
             editor.apply()
-        }*/
+        }
 
-        if (dataManager.isFirst == AppConstants.YES){
+/*        if (dataManager.isFirst == AppConstants.YES){
             findNavController().navigate(R.id.movieFragment)
         }else{
             dataManager.setIsFirst(AppConstants.YES)
-        }
+        }*/
+
 
     }
 
@@ -105,7 +110,8 @@ class IntroFragment : BaseFragment<IntroViewModel>(), View.OnClickListener{
                 }
             }
             R.id.tvSkip -> {
-                findNavController().navigate(R.id.movieFragment)
+                mNavigatorActivity.showActivity(MainActivity::class.java)
+                mActivity?.finish()
             }
         }
     }

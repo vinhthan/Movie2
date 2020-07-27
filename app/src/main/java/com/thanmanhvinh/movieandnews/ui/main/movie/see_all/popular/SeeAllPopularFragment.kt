@@ -60,7 +60,7 @@ class SeeAllPopularFragment : BaseFragment<SeeAllPopularViewModel>(), PageIndica
         rcySeeAllPopular.initLoadMore(refreshSeeAllPopular, this)
     }
 
-    override fun OnItemClickPopular(position: Int) {
+    override fun onItemClickPopular(position: Int) {
         val bundle = Bundle()
         if (mList.size > 0){
             val movie = mList[position]

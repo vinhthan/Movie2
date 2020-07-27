@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.ui.base.BaseActivity
 import com.thanmanhvinh.movieandnews.ui.main.MainActivity
+import com.thanmanhvinh.movieandnews.ui.main_2.MainActivity2
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -38,7 +39,7 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
 
 
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
         finish()
 

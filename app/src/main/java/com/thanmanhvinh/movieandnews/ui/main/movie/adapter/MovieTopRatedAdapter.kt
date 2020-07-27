@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
 import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
@@ -40,7 +39,7 @@ class MovieTopRatedAdapter(
         holder.imgTopRated.loadUrl(list[position].getImagePosterPathTopRated())
 
         holder.itemView.setOnClickListener {
-            onClick.OnItemClickTopRated(position)
+            onClick.onItemClickTopRated(position)
         }
     }
 

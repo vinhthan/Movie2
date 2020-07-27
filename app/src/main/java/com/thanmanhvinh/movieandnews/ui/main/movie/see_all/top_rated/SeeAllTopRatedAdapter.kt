@@ -33,7 +33,7 @@ class SeeAllTopRatedAdapter(
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(movie: MovieTopRated.Results){
             itemView.setOnClickListener {
-                onClick.OnItemClickTopRated(position)
+                onClick.onItemClickTopRated(position)
             }
             itemView.tvTitleSeeAll.text = movie.title
             context?.let { Glide.with(it).load(movie.getImagePosterPathTopRated()).into(itemView.imgSeeAll) }

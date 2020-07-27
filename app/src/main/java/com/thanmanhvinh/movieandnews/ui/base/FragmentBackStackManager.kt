@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.thanmanhvinh.movieandnews.R
-import com.thanmanhvinh.movieandnews.ui.main.intro.IntroFragment
+import com.thanmanhvinh.movieandnews.ui.main_2.intro.IntroFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.MovieFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.login.LoginFragment
 import com.thanmanhvinh.movieandnews.ui.main.movie.movie_detail.now_playing_detail.NowPlayingDetailFragment
@@ -47,10 +47,11 @@ class FragmentBackStackManager(private val supportFragmentManager: FragmentManag
             LoginFragment::class -> LoginFragment()
             SimilarFragment::class -> SimilarFragment()
             ReviewFragment::class -> ReviewFragment()
-            IntroFragment::class -> IntroFragment()
+
 
             //Main Activity 2
             NoInternetFragment::class -> NoInternetFragment()
+            IntroFragment::class -> IntroFragment()
 
 
             else -> throw Exception("fragment not found")

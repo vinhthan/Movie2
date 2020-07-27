@@ -18,7 +18,9 @@ abstract class BaseRecyclerView<T> : RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
-    interface ActionUserListener<T>{
+
+    interface ActionUserListener<T> {
         fun select(t: T?)
     }
+
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
 import com.thanmanhvinh.movieandnews.utils.extensions.loadUrl
@@ -40,7 +39,7 @@ class MoviePopularAdapter(
         holder.imgPopular.loadUrl(list[position].getImagePosterPathPopular())
 
         holder.itemView.setOnClickListener {
-            onClick.OnItemClickPopular(position)
+            onClick.onItemClickPopular(position)
         }
     }
 

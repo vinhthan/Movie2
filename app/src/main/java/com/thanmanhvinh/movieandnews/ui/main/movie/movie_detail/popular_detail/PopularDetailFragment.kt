@@ -190,7 +190,7 @@ class PopularDetailFragment : BaseFragment<PopularDetailViewModel>(), ItemOnClic
         rcySimilar.adapter = mAdapterSimilar
     }
 
-    override fun OnItemClickNowPlaying(position: Int) {
+    override fun onItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
         var movieId = mListSimilar[position].id
         bundle.putInt(AppConstants.ID_MOVIE, movieId)

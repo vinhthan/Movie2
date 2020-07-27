@@ -32,7 +32,7 @@ class SeeAllPopularAdapter(
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(movie: MoviePopular.Result){
             itemView.setOnClickListener {
-                onClick.OnItemClickPopular(position)
+                onClick.onItemClickPopular(position)
             }
             itemView.tvTitleSeeAll.text = movie.title
             context?.let { Glide.with(it).load(movie.getImagePosterPathPopular()).into(itemView.imgSeeAll) }

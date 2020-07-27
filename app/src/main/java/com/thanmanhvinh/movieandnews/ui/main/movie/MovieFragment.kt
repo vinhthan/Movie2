@@ -6,34 +6,41 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieNowPlaying
 import com.thanmanhvinh.movieandnews.data.api.MoviePopular
 import com.thanmanhvinh.movieandnews.data.api.MovieTopRated
 import com.thanmanhvinh.movieandnews.data.api.MovieUpcoming
 import com.thanmanhvinh.movieandnews.ui.base.BaseFragment
+import com.thanmanhvinh.movieandnews.ui.base.BaseRecyclerView
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.*
 import com.thanmanhvinh.movieandnews.utils.common.AppConstants
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import kotlin.math.abs
 
 
 @Suppress("UNREACHABLE_CODE")
 class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, ItemOnClickPopular,
-    ItemOnClickTopRated, ItemOnClickUpcoming {
+    ItemOnClickTopRated, ItemOnClickUpcoming, ItemOnClickViewPager,
+    BaseRecyclerView.ActionUserListener<MovieUpcoming.Result> {
 
     private val triggerLogout = BehaviorSubject.create<Unit>()
     private var page = 0
+    private val handler = Handler()
+/*    private var mList = intArrayOf(
+        R.drawable.angry4,
+        R.drawable.angry4,
+        R.drawable.angry4,
+        R.drawable.angry4,
+        R.drawable.angry4,
+        R.drawable.angry4
+    )*/
 
     private lateinit var sendToken: String
     lateinit var listMovieNowPlaying: MutableList<MovieNowPlaying.Results>
@@ -44,7 +51,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     lateinit var mAdapterUpcoming: MovieUpcomingAdapter
     lateinit var mAdapterPopular: MoviePopularAdapter
     lateinit var mAdapterTopRated: MovieTopRatedAdapter
-    lateinit var mSlideAdapter: SlideAdapter
+    lateinit var mAdapterViewPager: PagerAdapter
 
     override fun createViewModel(): Class<MovieViewModel> = MovieViewModel::class.java
 
@@ -69,7 +76,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             listUpcoming.observeOn(schedulerProvider.ui)
                 .subscribe { list ->
                     mAdapterUpcoming.updateList(list)
-                    //showSlide(list)
+                    mAdapterViewPager.updateItemMovie(list)
                 }
 
             listPopular.observeOn(schedulerProvider.ui)
@@ -101,14 +108,14 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         imgMenu.setOnClickListener {
             val popupMenu: PopupMenu = PopupMenu(context, imgMenu)
             popupMenu.menuInflater.inflate(R.menu.menu_right, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {item ->
-                when(item.itemId){
-                    R.id.logins ->{
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.logins -> {
                         val bundle = Bundle()
                         bundle.putString(AppConstants.TOKEN, sendToken)
                         findNavController().navigate(R.id.loginFragment, bundle)
                     }
-                    R.id.logout ->{
+                    R.id.logout -> {
                         mViewModel.triggerLogout()
                         val bundle = Bundle()
                         bundle.putString(AppConstants.TOKEN, sendToken)
@@ -127,7 +134,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         showMovieUpcoming()
         showMoviePopular()
         showMovieTopRated()
-
+        showViewPager()
 
 
         //
@@ -144,21 +151,10 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             findNavController().navigate(R.id.seeAllUpcomingFragment)
         }
 
-        //
+        //search movie
         imgSearch.setOnClickListener {
             findNavController().navigate(R.id.movieSearchFragment)
         }
-
-
-        //ViewPager
-/*        val viewPager = view?.findViewById<ViewPager>(R.id.viewPager)
-        viewPager?.offscreenPageLimit = 2
-        if (viewPager != null) {
-            val adapter = fragmentManager?.let { ViewPagerAdapter(requireContext(), listMovieUpcoming) }
-            viewPager.adapter = adapter
-        }*/
-
-
 
 
     }
@@ -199,7 +195,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         rcyTopRated.adapter = mAdapterTopRated
     }
 
-    override fun OnItemClickNowPlaying(position: Int) {
+    override fun onItemClickNowPlaying(position: Int) {
 /*        val movieNowPlayingDetail: MovieNowPlaying.Results = listMovieNowPlaying[position]
         val bundle = Bundle()
         bundle.putSerializable(AppConstants.MOVIE_NOW_PLAYING_DETAIL, movieNowPlayingDetail)*/
@@ -212,7 +208,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         findNavController().navigate(R.id.nowPlayingDetailFragment, bundle)
     }
 
-    override fun OnItemClickPopular(position: Int) {
+    override fun onItemClickPopular(position: Int) {
         val bundle = Bundle()
         if (listMoviePopular.size > 0) {
             val moviePopular = listMoviePopular[position]
@@ -222,7 +218,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         findNavController().navigate(R.id.popularDetailFragment, bundle)
     }
 
-    override fun OnItemClickTopRated(position: Int) {
+    override fun onItemClickTopRated(position: Int) {
         val bundle = Bundle()
         if (listMovieTopRated.size > 0) {
             val movieTopRated = listMovieTopRated[position]
@@ -232,7 +228,7 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         findNavController().navigate(R.id.topRatedDetailFragment, bundle)
     }
 
-    override fun OnItemClickUpcoming(position: Int) {
+    override fun onItemClickUpcoming(position: Int) {
         val bundle = Bundle()
         if (listMovieUpcoming.size > 0) {
             val movieUpcoming = listMovieUpcoming[position]
@@ -242,26 +238,67 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         findNavController().navigate(R.id.upcomingDetailFragment, bundle)
     }
 
+    /**
+     * link tham khao: https://itnext.io/android-viewpager2-tablayout-3099aae2f396
+     */
+    //api
+    private fun showViewPager() {
+        mAdapterViewPager = context?.let { PagerAdapter(it, listMovieUpcoming, this) }!!
+        viewPagerMovie.adapter = mAdapterViewPager
+        viewPagerMovie.scrollState
 
-/*    private val slideRunable =
-        Runnable { viewPager2!!.setCurrentItem(viewPager2!!.getCurrentItem() + 1) }
+        TabLayoutMediator(
+            tabLayoutMovie,
+            viewPagerMovie,
+            TabConfigurationStrategy { _, _ -> // Styling each tab here
+                //tab.text = "Tab $position"
+            }
+        ).attach()
 
+        //
+        viewPagerMovie.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(slideRunnable)
+                handler.postDelayed(slideRunnable, 2000)
+            }
+        })
 
-    private fun showSlide(list: MutableList<MovieUpcoming.Result>){
-        mSlideAdapter = SlideAdapter()
-        mSlideAdapter.set(list)
-        with(viewPager2) {
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 4
-            adapter = mSlideAdapter
-            TabLayoutMediator(
-                tabLayout,
-                viewPager2,
-                TabLayoutMediator.TabConfigurationStrategy { _, _ -> }).attach()
-            setHasOptionsMenu(true)
+    }
+
+    private val slideRunnable = Runnable {
+        if (viewPagerMovie != null) {
+            viewPagerMovie.currentItem = viewPagerMovie.currentItem + 1
         }
+    }
+
+    //offline
+/*    private fun showViewPager(){
+        mAdapterViewPager = context?.let { PagerAdapter(it) }!!
+        viewPagerMovie.adapter = mAdapterViewPager
+        TabLayoutMediator(
+            tabLayoutMovie,
+            viewPagerMovie,
+            TabConfigurationStrategy { _, _ -> // Styling each tab here
+
+            }
+        ).attach()
     }*/
+
+
+    override fun select(t: MovieUpcoming.Result?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onItemClickViewPager(position: Int) {
+        val bundle = Bundle()
+        if (listMovieUpcoming.size > 0) {
+            val movie = listMovieUpcoming[position]
+            val id = movie.id
+            bundle.putInt(AppConstants.ID_MOVIE, id)
+        }
+        findNavController().navigate(R.id.upcomingDetailFragment, bundle)
+    }
 
 
 }

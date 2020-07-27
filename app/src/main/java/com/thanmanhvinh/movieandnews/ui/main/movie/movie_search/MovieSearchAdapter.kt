@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieSearch
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
@@ -40,7 +39,7 @@ class MovieSearchAdapter(
         //holder.ratingBar.isEnabled = false
 
         holder.itemView.setOnClickListener {
-            onClick.OnItemClickNowPlaying(position)
+            onClick.onItemClickNowPlaying(position)
         }
 
 

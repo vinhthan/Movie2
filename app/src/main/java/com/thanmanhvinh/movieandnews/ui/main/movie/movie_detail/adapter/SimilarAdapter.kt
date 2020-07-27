@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thanmanhvinh.movieandnews.R
 import com.thanmanhvinh.movieandnews.data.api.MovieSimilar
 import com.thanmanhvinh.movieandnews.ui.main.movie.adapter.ItemOnClickNowPlaying
@@ -37,7 +36,7 @@ class SimilarAdapter(
         holder.imgMovie.loadUrl(list[position].getImagePosterPath())
 
         holder.itemView.setOnClickListener {
-            onClick.OnItemClickNowPlaying(position)
+            onClick.onItemClickNowPlaying(position)
         }
     }
 

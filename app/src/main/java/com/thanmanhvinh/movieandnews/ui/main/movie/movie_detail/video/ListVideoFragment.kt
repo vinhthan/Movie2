@@ -65,7 +65,7 @@ class ListVideoFragment : BaseFragment<ListVideoViewModel>(), ItemOnClickNowPlay
         rcyVideo.adapter = mAdapter
     }
 
-    override fun OnItemClickNowPlaying(position: Int) {
+    override fun onItemClickNowPlaying(position: Int) {
         val bundle = Bundle()
         if (mList.size > 0) {
             val video = AppConstants.LINK_YOU_TOBE + mList[position].key

@@ -1,4 +1,4 @@
-package com.thanmanhvinh.movieandnews.ui.main.intro
+package com.thanmanhvinh.movieandnews.ui.main_2.intro
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
