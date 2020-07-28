@@ -15,7 +15,7 @@
         tools:context="com.thanmanhvinh.movieandnews.ui.main.MainActivity">
 
 
-<!--        <include layout="@layout/include_toolbar"/>-->
+        <!--<include layout="@layout/include_toolbar"/>-->
 
 
         <fragment

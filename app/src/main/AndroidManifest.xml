@@ -63,3 +63,7 @@
     </application>
 
 </manifest>
+<!--
+    khi ma bi loi app co dau x do k chay default activity dc ma phai chon nothing thi => D: \ File ung dung \ app \ build \ output \ apk \ debug \ app-debug.apk'
+    xoa het may file trong nay di
+-->

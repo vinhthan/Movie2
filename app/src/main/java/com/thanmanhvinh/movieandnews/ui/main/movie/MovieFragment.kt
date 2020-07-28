@@ -154,9 +154,9 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         }
 
         //search movie
-        imgSearch.setOnClickListener {
+        /*imgSearch.setOnClickListener {
             findNavController().navigate(R.id.movieSearchFragment)
-        }
+        }*/
 
 
     }

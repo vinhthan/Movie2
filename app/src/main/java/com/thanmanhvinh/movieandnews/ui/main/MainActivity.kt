@@ -5,6 +5,9 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.facebook.AccessToken
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
@@ -19,10 +22,11 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlin.reflect.KClass
 
 
-class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity{
+class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity {
 
     override lateinit var currentFragment: BaseFragment<*>
     private lateinit var mFragmentBackStackManager: FragmentBackStackManager
+    private lateinit var navController: NavController
 
     override fun createViewModel(): Class<MainViewModel> {
         return MainViewModel::class.java
@@ -73,10 +77,14 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity{
     }
 
 
-
-
     override fun bindViewModel() {
         checkInternet()
+        navController = this.findNavController(R.id.container)
+
+        /*imgSearch.setOnClickListener {
+            navController.navigate(R.id.movieSearchFragment)
+        }*/
+
 
         /**
          * get KeyHash facebook
@@ -116,14 +124,8 @@ class MainActivity : BaseActivity<MainViewModel>(), INavigatorActivity{
 
     override fun onFragmentResumed(fragment: BaseFragment<*>) {
         currentFragment = fragment
-        //toolBar.visibility = if (fragment.showToolBar) View.VISIBLE else View.GONE
-        //tvTitleToolbar.text = getString(fragment.getTitleActionBar())
-
-/*        toolBar.visibility = if (fragment.showToolBar) View.VISIBLE else View.GONE
+        /*toolBar.visibility = if (fragment.showToolBar) View.VISIBLE else View.GONE
         tvTitleToolbar.text = getString(fragment.getTitleActionBar())*/
-        /*if(fragment.isRegisterFragment){
-            toolBar.background = getDrawable(R.drawable.bg_toolbar_register)
-        }*/
     }
 
     override fun switchFragment(
