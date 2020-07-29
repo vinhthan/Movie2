@@ -2,14 +2,14 @@ package com.thanmanhvinh.movieandnews.ui.main.movie
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
@@ -33,7 +33,6 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
     BaseRecyclerView.ActionUserListener<MovieUpcoming.Result> {
 
     private val triggerLogout = BehaviorSubject.create<Unit>()
-    private var page = 0
     private val handler = Handler()
 /*    private var mList = intArrayOf(
         R.drawable.angry4,
@@ -249,9 +248,10 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
         mAdapterViewPager = context?.let { PagerAdapter(it, listMovieUpcoming, this) }!!
         viewPagerMovie.adapter = mAdapterViewPager
         viewPagerMovie.scrollState
-        viewPagerMovie.offscreenPageLimit = 10
-        viewPagerMovie.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
+        //viewPagerMovie.offscreenPageLimit = 3
+        //viewPagerMovie.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
+        //connect viewpager2 and tablayout
         TabLayoutMediator(
             tabLayoutMovie,
             viewPagerMovie,
@@ -260,15 +260,19 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             }
         ).attach()
 
-        //
         viewPagerMovie.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(slideRunnable)
                 handler.postDelayed(slideRunnable, 2000)
+                //run continuously
+                if (position == listMovieUpcoming.size - 1){
+                    viewPagerMovie.currentItem = 0
+                }
             }
-        })
 
+        })
+        viewPagerMovie.setPageTransformer(ViewPagerTransformation())
     }
 
     private val slideRunnable = Runnable {
@@ -276,6 +280,25 @@ class MovieFragment : BaseFragment<MovieViewModel>(), ItemOnClickNowPlaying, Ite
             viewPagerMovie.currentItem = viewPagerMovie.currentItem + 1
         }
     }
+    //animation viewpager2
+    class ViewPagerTransformation: ViewPager2.PageTransformer{
+        override fun transformPage(page: View, position: Float) {
+            val absPos = Math.abs(position)
+            page.apply {
+                translationY = absPos * 500f
+                translationX = absPos * 500f
+                scaleX = 0.86f
+                scaleY = 0.86f
+            }
+            when {
+                position < -1 -> page.alpha = 0f
+                position <= 1 -> page.alpha = Math.max(0f, 1 - Math.abs(position))
+                else -> page.alpha = 0f
+            }
+        }
+
+    }
+
 
     //offline
 /*    private fun showViewPager(){
